@@ -15,7 +15,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "/topup/",
+                    url: "/topup",
                     method: 'POST',
                     dataType: 'json',
                     data: {
