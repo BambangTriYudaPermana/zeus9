@@ -96,21 +96,23 @@ class TrenballController extends Controller
             }
         }
         // dd($max);        
-        $number = $this->getNumber($game, $min, $max, $roll, $request->type);
+        $number = $this->getNumber($game, $min, $max, $roll, $request->type, $amount);
         return $number;
     }
 
-    function getNumber($game, $min, $max, $roll, $type_play)
+    function getNumber($game, $min, $max, $roll, $type_play, $amount)
     {
-        // dd($max);
+        $model = User::findOrFail(Auth::user()->id);
+
         $data_number = [0];
         if ($game == 'win') {
             $start = 0;
             $randomNumber = mt_rand($start, $max); 
 
-            $model = User::findOrFail(Auth::user()->id);
             $ttl_win = ($model->ttl_win)-1;
+            $balance = ($model->wallet) + $amount;
 
+            $model->wallet = $balance;
             $model->ttl_win = $ttl_win;
             $model->save();
         }else{
@@ -124,6 +126,12 @@ class TrenballController extends Controller
                 $min = 100;
                 $max = 200;
             }
+
+            $balance = ($model->wallet) - $amount;
+
+            $model->wallet = $balance;
+            $model->save();
+
             $start = $min;
             $randomNumber = mt_rand($start, $max); 
             // dump($start, $max+=10);
@@ -138,11 +146,13 @@ class TrenballController extends Controller
             $nilai += $selisih;
             array_push($data_number, number_format($nilai, 2));   
         }
+        $model = User::findOrFail(Auth::user()->id);
 
         // dd($data_number, $win_number, $selisih);
         return [
             'status' => $game == "win" ? true : false,
             'data_number' => $data_number,
+            'balance' => $model->wallet,
             'win_number' => $win_number,
             'min' => $min,
             'max' => $max,

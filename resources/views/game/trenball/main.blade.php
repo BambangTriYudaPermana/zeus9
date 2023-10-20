@@ -98,6 +98,9 @@
         $(document).ready(function () {
 
         });
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
 
         function random_number(min, max, data_index, btn) {
             var amount = $('#form_amount').val();
@@ -116,7 +119,7 @@
                     type: btn
                 },
                 success: function (response) {
-                    trenball(data_index, response.data_number, response.win_number);
+                    trenball(data_index, response.data_number, response.win_number, response.balance);
                 }
             });
             return  (Math.random() * (max - min) + min).toFixed(2);
@@ -157,7 +160,7 @@
             random_number(1000, 2000, data_index, 'moon');
         }
 
-        function trenball(data_index, data_res, max_count) {
+        function trenball(data_index, data_res, max_count, balance) {
             // console.log(max_count);
             var myChart = echarts.init(document.getElementById('chart_trenball'));
             myChart.clear();
@@ -206,6 +209,10 @@
                 complete: function () {
                     $('#number-counter').text(end);
                     $('.button-play').prop('disabled', false);
+
+                    $('#wallet-user-general').html(numberWithCommas(balance));
+                    $('#wallet-user').html(numberWithCommas(balance));
+                    $('#wallet-user-1').html(numberWithCommas(balance));
                 }
             });
         }
