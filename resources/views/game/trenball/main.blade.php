@@ -105,7 +105,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/play-tb/",
+                url: "/play-tb",
                 method: 'POST',
                 dataType: 'json',
                 data: {
