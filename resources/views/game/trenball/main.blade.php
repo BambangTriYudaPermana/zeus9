@@ -192,9 +192,7 @@
                 },
                 yAxis: {
                     type: 'value',
-                    label: {
-                    show: true
-                    }
+                    show: false
                 },
                 series: [
                     {
