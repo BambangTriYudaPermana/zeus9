@@ -52,7 +52,7 @@
                             <div class="col-md-12">
                                 {{-- <div id="chart" style="width: 600px; height: 400px;"></div> --}}
                                 <div class="text-center">
-                                    <span id="number-counter">0</span>x 
+                                    <span id="number-counter" style="font-size: 17pt;">0</span>x 
                                     {{-- <span id="res_game">WIN!</span> --}}
                                     <span class="ml-10" id="balance-color">
                                         <i class="fa fa-check-circle-o me-2" aria-hidden="true" style="display: none" id="icon-win"> <b class="result_game"></b></i>
@@ -198,15 +198,16 @@
                 },
                 series: [
                     {
-                    data: data_res,
-                    type: 'line',
-                    // symbol: 'image://https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmFD8F8vOBtFsHcKnJ7tYV5bSMJHkzSkZ5Q1vcBdZiGHgBezD2C9KpSC6KS1adcALkCYI&usqp=CAU',
-                    // symbolSize: 40,
-                    // symbolRepeat: false,
-                    // label: {
-                    //     show: true
-                    // },
-                    smooth: true
+                        data: data_res,
+                        type: 'line',
+                        // symbol: 'image://https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmFD8F8vOBtFsHcKnJ7tYV5bSMJHkzSkZ5Q1vcBdZiGHgBezD2C9KpSC6KS1adcALkCYI&usqp=CAU',
+                        // symbolSize: 40,
+                        // symbolRepeat: false,
+                        // label: {
+                        //     show: true
+                        // },
+                        smooth: true,
+                        areaStyle: {}
                     }
                 ]
             };
