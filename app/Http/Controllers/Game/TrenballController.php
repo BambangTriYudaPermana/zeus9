@@ -79,7 +79,8 @@ class TrenballController extends Controller
         // dd($request);
         $min = (int)$request->min;
         $max = (float)$request->max;
-        $amount = (int)$request->amount;
+        $amount = (double)$request->amount;
+        // dd($amount);
         $roll = 40-1;
 
         $get_win = Auth::user()->ttl_win;

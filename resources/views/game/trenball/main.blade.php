@@ -51,7 +51,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {{-- <div id="chart" style="width: 600px; height: 400px;"></div> --}}
-                                <div class="text-center"><span id="number-counter">0</span>x</div>
+                                <div class="text-center">
+                                    <span id="number-counter">0</span>x 
+                                    {{-- <span id="res_game">WIN!</span> --}}
+                                    <span class="ml-10" id="balance-color">
+                                        <i class="fa fa-check-circle-o me-2" aria-hidden="true" style="display: none" id="icon-win"> <b class="result_game"></b></i>
+                                        <i class="fa fa-frown-o me-2" aria-hidden="true" style="display: none" id="icon-lose"> <b class="result_game"></b></i>
+                                    </span>
+                                </div>
                                 <div id="chart_trenball" style="width: 100% !important; min-width: 100%; height:400px;"></div>
                             </div>
                         </div>
@@ -64,7 +71,7 @@
                                         <span class="input-icon-addon">
                                             <i class="fa fa-dollar"></i>
                                         </span>
-                                        <input type="text" class="form-control money" placeholder="Amount" id="form_amount" required>
+                                        <input type="text" class="form-control form_decimal" placeholder="Amount" id="form_amount" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-3">
@@ -119,7 +126,7 @@
                     type: btn
                 },
                 success: function (response) {
-                    trenball(data_index, response.data_number, response.win_number, response.balance);
+                    trenball(data_index, response.data_number, response.win_number, response.balance, response.status);
                 }
             });
             return  (Math.random() * (max - min) + min).toFixed(2);
@@ -127,6 +134,10 @@
 
         function tren_red() {
             $('.button-play').prop('disabled', true);
+            $('#form_amount').prop('disabled', true);
+            $('#icon-win').hide();
+            $('#icon-lose').hide();
+
             var data_index = [];
             var data_res = [];
             for (let index = 1; index <= 40; index++) {
@@ -138,6 +149,10 @@
 
         function tren_grenn() {
             $('.button-play').prop('disabled', true);
+            $('#form_amount').prop('disabled', true);
+            $('#icon-win').hide();
+            $('#icon-lose').hide();
+
             var data_index = [];
             var data_res = [];
             for (let index = 1; index <= 40; index++) {
@@ -150,6 +165,10 @@
 
         function tren_moon() {
             $('.button-play').prop('disabled', true);
+            $('#form_amount').prop('disabled', true);
+            $('#icon-win').hide();
+            $('#icon-lose').hide();
+
             var data_index = [];
             var data_res = [];
             for (let index = 1; index <= 40; index++) {
@@ -160,7 +179,7 @@
             random_number(1000, 2000, data_index, 'moon');
         }
 
-        function trenball(data_index, data_res, max_count, balance) {
+        function trenball(data_index, data_res, max_count, balance, status) {
             // console.log(max_count);
             var myChart = echarts.init(document.getElementById('chart_trenball'));
             myChart.clear();
@@ -183,6 +202,7 @@
                     type: 'line',
                     // symbol: 'image://https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmFD8F8vOBtFsHcKnJ7tYV5bSMJHkzSkZ5Q1vcBdZiGHgBezD2C9KpSC6KS1adcALkCYI&usqp=CAU',
                     // symbolSize: 40,
+                    // symbolRepeat: false,
                     // label: {
                     //     show: true
                     // },
@@ -207,8 +227,29 @@
                     $('#number-counter').text(Math.floor(this.countNum * 100) / 100);
                 },
                 complete: function () {
+                    if (status) {
+                        var win = new Audio("{{asset('assets/slot/src/sounds/win.mp3')}}");
+                        win.play();
+                        $('.result_game').html("WIN!");
+
+                        $('#balance-color').attr('class', '');
+                        $('#balance-color').addClass('text-success');
+                        $('#icon-win').show();
+                        $('#icon-lose').hide();
+                    }else{
+                        var lose = new Audio("{{asset('assets/slot/src/sounds/lose.mp3')}}");
+                        lose.play();
+                        $('.result_game').html("LOSE!");
+
+                        $('#balance-color').attr('class', '');
+                        $('#balance-color').addClass('text-danger');
+                        $('#icon-win').hide();
+                        $('#icon-lose').show();
+                    }
                     $('#number-counter').text(end);
+
                     $('.button-play').prop('disabled', false);
+                    $('#form_amount').prop('disabled', false);
 
                     $('#wallet-user-general').html(numberWithCommas(balance));
                     $('#wallet-user').html(numberWithCommas(balance));
