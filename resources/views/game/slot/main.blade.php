@@ -79,18 +79,18 @@
                                     <section id="Slots">
                                         <div class="row">
                                             
-                                                {{-- <div class="col-md-4" id="slot1" class="a1"></div>
-                                                <div class="col-md-4" id="slot2" class="a1"></div>
-                                                <div class="col-md-4" id="slot3" class="a1"></div> --}}
-                                                <div class="col-sm-14 col-md-4 col-lg-4 col-xl-4">
+                                                <div id="slot1" class="a1"></div>
+                                                <div id="slot2" class="a1"></div>
+                                                <div id="slot3" class="a1"></div>
+                                                {{-- <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                                     <div id="slot1" class="a1" style="margin-right: 0;"></div>
                                                 </div>
-                                                <div class="col-sm-14 col-md-4 col-lg-4 col-xl-4">
+                                                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                                     <div id="slot2" class="a1" style="margin-right: 0;"></div>
                                                 </div>
-                                                <div class="col-sm-14 col-md-4 col-lg-4 col-xl-4">
+                                                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                                     <div id="slot3" class="a1" style="margin-right: 0;"></div>
-                                                </div>
+                                                </div> --}}
                                             
                                         </div>
                                     </section>
@@ -104,35 +104,31 @@
                             </div>
                             {{-- leaderboard --}}
                             <div class="col-md-3">
-                                {{-- <div class="leaderboard">
-                                    <table>
-                                        <td>
-                                            <tr>
-                                                <h1 class="leader-title">LEADERBOARD 🏆</h1>
-                                            </tr>
-                                            <tr>
-                                                <div id="leader-group">
-                                                    <div class="first">
-                                                        <h3 class="leader-num" style="background-color: #d8a114;">1º</h3><h3 id="score1">Dout: 4600</h3>
-                                                    </div>
-                                                    <div class="second">
-                                                        <h3 class="leader-num" style="background-color: #a6a6a6;">2º</h3><h3 id="score2">Pedro: 2500</h3>
-                                                    </div>
-                                                    <div class="third">
-                                                        <h3 class="leader-num" style="background-color: #7a3619;">3º</h3><h3 id="score3">Player395: 2300</h3>
-                                                    </div>
-                                                    <h3 class="scores" id="score4">The Joker: 2100</h3>
-                                                    <h3 class="scores" id="score5">Bob: 1900</h3>
-                                                    <h3 class="scores" id="score6">xXTonyXx: 1500</h3>
-                                                    <h3 class="scores" id="score7">Santiago: 1300</h3>
-                                                    <h3 class="scores" id="score8">Alexia Mine: 900</h3>
-                                                    <h3 class="scores" id="score9">Mike: 500</h3>
-                                                    <h3 class="scores" id="score10">Alex: 200</h3>
-                                                </div>
-                                            </tr>
-                                        </td>
-                                    </table>
-                                </div> --}}
+                                <div class="row">
+                                    <div class="form-row">
+                                        <div class="col-md-3 mb-3">
+                                            <label for="form-amount">Amount</label>
+                                            <div class="input-icon">
+                                                <span class="input-icon-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="text" class="form-control form_decimal" placeholder="Amount" id="form_amount" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="form-win-change">Bet Red (Payout 1.96x)</label>
+                                            <button class="btn btn-danger w-100 button-play" id="tren_red" onclick="tren_red()">Play</button>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="form-win-change">Bet Green (Payout 2x)</label>
+                                            <button class="btn btn-success w-100 button-play" id="tren_grenn" onclick="tren_grenn()">Play</button>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="form-win-change">Bet Moon (Payout 10x)</label>
+                                            <button class="btn btn-warning w-100 button-play" id="tren_moon" onclick="tren_moon()">Play</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

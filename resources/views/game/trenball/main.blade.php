@@ -50,7 +50,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                {{-- <div id="chart" style="width: 600px; height: 400px;"></div> --}}
+                                {{-- <div id="chart-container" style="width: 600px; height: 400px;"></div> --}}
                                 <div class="text-center">
                                     <span id="number-counter" style="font-size: 17pt;">0</span>x 
                                     {{-- <span id="res_game">WIN!</span> --}}
@@ -62,7 +62,7 @@
                                 <div id="chart_trenball" style="width: 100% !important; min-width: 100%; height:400px;"></div>
                             </div>
                         </div>
-                        <br>
+                        {{-- <br> --}}
                         <div class="row row-sm mt-2">
                             <div class="form-row">
                                 <div class="col-md-3 mb-3">
@@ -103,7 +103,7 @@
         var global_var = [];
 
         $(document).ready(function () {
-
+            
         });
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -188,7 +188,8 @@
                 animationDuration: 5000,
                 xAxis: {
                     type: 'category',
-                    data: data_index
+                    data: data_index,
+                    show: false
                 },
                 yAxis: {
                     type: 'value',
