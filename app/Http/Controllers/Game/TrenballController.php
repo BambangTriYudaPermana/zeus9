@@ -145,7 +145,12 @@ class TrenballController extends Controller
         $nilai = 0;
         for ($i=0; $i < $roll; $i++) { 
             $nilai += $selisih;
-            array_push($data_number, number_format($nilai, 2));   
+            if ($i < 20) {
+                array_push($data_number, number_format($nilai, 2));   
+            }else{
+                array_push($data_number, null);   
+            }
+            
         }
         $model = User::findOrFail(Auth::user()->id);
 

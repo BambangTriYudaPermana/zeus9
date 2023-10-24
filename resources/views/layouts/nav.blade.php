@@ -33,10 +33,13 @@
         </li>
         <li><h3>Game</h3></li>
         <li>
-            <a class="side-menu__item" href="/slide"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Slider</span></a>
+            <a class="side-menu__item" href="/slide"><i class="side-menu__icon fa fa-sliders"></i><span class="side-menu__label">Slider</span></a>
         </li>
         <li>
-            <a class="side-menu__item" href="/trenball"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">TrenBall</span></a>
+            <a class="side-menu__item" href="/trenball"><i class="side-menu__icon fa fa-gamepad"></i><span class="side-menu__label">TrenBall</span></a>
+        </li>
+        <li>
+            <a class="side-menu__item" href="/slot"><i class="side-menu__icon fa fa-gamepad"></i><span class="side-menu__label">Slot</span></a>
         </li>
 </aside>
 <!--/APP-SIDEBAR-->

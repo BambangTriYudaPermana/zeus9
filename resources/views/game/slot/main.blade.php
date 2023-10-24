@@ -77,36 +77,51 @@
                                         </div>
                                     </div>
                                     <section id="Slots">
-                                        <div class="row">
-                                            
-                                                <div id="slot1" class="a1"></div>
-                                                <div id="slot2" class="a1"></div>
-                                                <div id="slot3" class="a1"></div>
-                                                {{-- <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                                    <div id="slot1" class="a1" style="margin-right: 0;"></div>
-                                                </div>
-                                                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                                    <div id="slot2" class="a1" style="margin-right: 0;"></div>
-                                                </div>
-                                                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                                    <div id="slot3" class="a1" style="margin-right: 0;"></div>
-                                                </div> --}}
-                                            
-                                        </div>
+                                        <div id="slot1" class="a1"></div>
+                                        <div id="slot2" class="a1"></div>
+                                        <div id="slot3" class="a1"></div>
                                     </section>
+                                    <div class="row">
+                                        <div class="col-md-12 mt-3">
+                                            {{-- <label for="form-amount">Amount</label> --}}
+                                            <div class="input-icon">
+                                                <span class="input-icon-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="text" class="form-control form_decimal" placeholder="Amount" id="form_amount" required>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-3"> --}}
+                                            {{-- <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" /> --}}
+                                        {{-- </div> --}}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <section onclick="doSlot()" id="Gira">SPIN</section>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
                                     <div class="bottom">
-                                        <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" />
-                                        <section onclick="doSlot()" id="Gira">SPIN</section>
-                                         
+                                        {{-- <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" />
+                                        <section onclick="doSlot()" id="Gira">SPIN</section> --}}
+                                        {{-- <div class="row">
+                                            <div class="col-md-6">
+                                                <section onclick="doSlot()" id="Gira">SPIN</section>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" />
+                                            </div>
+                                        </div>  --}}
                                     </div>
                                     <canvas id="my-canvas"></canvas>
                                 </main>
                             </div>
                             {{-- leaderboard --}}
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="row">
                                     <div class="form-row">
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-12 mb-3">
                                             <label for="form-amount">Amount</label>
                                             <div class="input-icon">
                                                 <span class="input-icon-addon">
@@ -115,20 +130,36 @@
                                                 <input type="text" class="form-control form_decimal" placeholder="Amount" id="form_amount" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-12 mb-3">
                                             <label for="form-win-change">Bet Red (Payout 1.96x)</label>
                                             <button class="btn btn-danger w-100 button-play" id="tren_red" onclick="tren_red()">Play</button>
                                         </div>
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-12 mb-3">
                                             <label for="form-win-change">Bet Green (Payout 2x)</label>
                                             <button class="btn btn-success w-100 button-play" id="tren_grenn" onclick="tren_grenn()">Play</button>
                                         </div>
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-12 mb-3">
                                             <label for="form-win-change">Bet Moon (Payout 10x)</label>
                                             <button class="btn btn-warning w-100 button-play" id="tren_moon" onclick="tren_moon()">Play</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        {{-- slot new --}}
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-12">
+                            <!-- Content for the first column -->
+                            Column 1
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-12">
+                            <!-- Content for the second column -->
+                            Column 2
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-12">
+                            <!-- Content for the third column -->
+                            Column 3
                             </div>
                         </div>
                     </div>

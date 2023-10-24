@@ -92,38 +92,94 @@ section#options{
 .option:hover{
     cursor: pointer
 }
-@media only screen and (max-device-width: 640px) {
-    #slot1, #slot2, #slot3 {
-    display: inline-block;
-    margin-top: 30px;
-    margin-left: 20px;
-    margin-right: 15px;
-    background-size: 60px;
-    width: 60px;
-    height: 60px;
-}
-}
-    
-@media only screen and (max-device-width: 768px) {
-    #slot1, #slot2, #slot3 {
-    display: inline-block;
-    margin-top: 30px;
-    margin-left: 20px;
-    margin-right: 15px;
-    background-size: 60px;
-    width: 60px;
-    height: 60px;
-}
-}
-/* #slot1, #slot2, #slot3{
+
+#slot1, #slot2, #slot3{
 	display: inline-block;
 	margin-top: 30px;
-	margin-left: 20px;
-	margin-right: 15px;
+	margin-left: 30px;
+	margin-right: 20px;
 	background-size: 135px;
 	width: 135px;
 	height: 135px;
-} */
+}
+
+@media only screen and (min-width: 960px) {
+	/* styles for browsers larger than 960px; */
+}
+@media only screen and (min-width: 1440px) {
+	/* styles for browsers larger than 1440px; */
+}
+@media only screen and (min-width: 2000px) {
+	/* for sumo sized (mac) screens */
+}  
+@media only screen and (max-device-width: 480px) {
+	/* styles for mobile browsers smaller than 480px; (iPhone) */
+	#slot1, #slot2, #slot3 {
+		 display: inline-block;
+		 margin-top: 30px;
+		 margin-left: 9px;
+		 margin-right: 15px;
+		 background-size: 60px;
+		 width: 60px;
+		 height: 60px;
+	 }
+	 section#Slots {
+		 border-radius: 15px;
+		 background-color: #FAFAFA;
+		 height: 130px;
+		 border-style: solid;
+		 border-color: #9e9e9e;
+		 border-width: 10px;
+	 }
+ }
+ @media screen and (max-device-width: 640px) {
+    #slot1, #slot2, #slot3 {
+		display: inline-block;
+		margin-top: 30px;
+		margin-left: 20px;
+		margin-right: 15px;
+		background-size: 55px;
+		width: 55px;
+		height: 55px;
+	}
+	section#Slots {
+		border-radius: 15px;
+		background-color: #FAFAFA;
+		height: 130px;
+		border-style: solid;
+		border-color: #9e9e9e;
+		border-width: 10px;
+	}
+}
+@media only screen and (device-width: 768px) {
+	/* default iPad screens */
+	#slot1, #slot2, #slot3 {
+		 display: inline-block;
+		 margin-top: 30px;
+		 margin-left: 13px;
+		 margin-right: 7px;
+		 background-size: 70px;
+		 width: 70px;
+		 height: 70px;
+	 }
+ 
+	 section#Slots {
+		 border-radius: 15px;
+		 background-color: #FAFAFA;
+		 height: 150px;
+		 border-style: solid;
+		 border-color: #9e9e9e;
+		 border-width: 10px;
+	 }
+ } 
+/* different techniques for iPad screening */
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+/* For portrait layouts only */
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+/* For landscape layouts only */
+}
 
 
 

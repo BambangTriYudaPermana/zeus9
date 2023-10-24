@@ -16,7 +16,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/brand/favicon.ico')}}" />
 
 		<!-- TITLE -->
-		<title>TrX.Game</title>
+		<title>Tron-X.Game</title>
 
 		<!-- BOOTSTRAP CSS -->
 		<link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
