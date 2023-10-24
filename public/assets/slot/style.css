@@ -114,6 +114,7 @@ section#options{
 		background-size: 50px;
 		width: 50px;
 		height: 50px;
+		background-repeat: no-repeat;
 	}
 	section#Slots {
 		border-radius: 15px;
@@ -141,6 +142,7 @@ section#options{
 		background-size: 65px;
 		width: 65px;
 		height: 65px;
+		background-repeat: no-repeat;
 	}
 	section#Slots {
 		border-radius: 15px;
@@ -163,11 +165,12 @@ section#options{
 	#slot1, #slot2, #slot3 {
 		display: inline-block;
 		margin-top: 30px;
-		margin-left: 15px;
-		margin-right: 7px;
-		background-size: 70px;
-		width: 70px;
-		height: 70px;
+		margin-left: 5px;
+		margin-right: 5px;
+		background-size: 100%;
+		width: 27.5%;
+		height: 100%;
+		background-repeat: no-repeat;
 	}
 	section#Slots {
 		border-radius: 15px;
