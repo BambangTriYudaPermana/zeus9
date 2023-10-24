@@ -99,6 +99,9 @@
                                         <div class="col-md-3"></div>
                                         <div class="col-md-6 d-flex justify-content-center">
                                             <section onclick="doSlot()" id="Gira">SPIN</section>
+                                            <span id="mobile-css-s">s</span>
+                                            <span id="mobile-css-m">m</span>
+                                            <span id="mobile-css-l">l</span>
                                         </div>
                                         <div class="col-md-3"></div>
                                     </div>
