@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3"></div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 d-flex justify-content-center">
                                             <section onclick="doSlot()" id="Gira">SPIN</section>
                                         </div>
                                         <div class="col-md-3"></div>
@@ -144,22 +144,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        {{-- slot new --}}
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4 col-12">
-                            <!-- Content for the first column -->
-                            Column 1
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-12">
-                            <!-- Content for the second column -->
-                            Column 2
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-12">
-                            <!-- Content for the third column -->
-                            Column 3
                             </div>
                         </div>
                     </div>
