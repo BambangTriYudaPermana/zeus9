@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
-use App\Models\MAddress;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use App\Models\User;
+use App\Models\MAddress;
+
+use TrxHelper; 
 
 class RegisterController extends Controller
 {
@@ -65,14 +68,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $address = MAddress::where(['status' => 1])->first();
-        // dd($address->id);
+        // create address for transaction
+        $data_add = TrxHelper::createAddress();
+        // dd($data_add);
+        $create_address = MAddress::create([
+            'address' => $data_add['address'],
+            'private_key' => $data_add['private_key'],
+            'public_key' => $data_add['public_key'],
+            'address_hex' => $data_add['address_hex'],
+            'status' => 1,
+            'created_date' => date('Y-m-d H:i:s')
+        ]);
+        $id_address = $create_address->id;
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'id_role' => 1,
-            'id_address' => $address->id,
+            'id_address' => $id_address,
         ]);
     }
 }

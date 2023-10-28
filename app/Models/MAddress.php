@@ -15,9 +15,12 @@ class MAddress extends Model
 
     protected $fillable = [
         'address',
-        'description',
-        'currentcy',
+        'private_key',
+        'public_key',
+        'address_hex',
+        'balance_address',
         'status',
         'created_at'
+
     ];
 }

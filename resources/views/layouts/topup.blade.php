@@ -21,7 +21,7 @@
     </div>
 </div> --}}
 
-<div class="row">
+{{-- <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
         <div class="card bg-primary img-card box-primary-shadow">
             <div class="card-body">
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div><!-- COL END -->
-</div>
+</div> --}}
 
 <div class="modal fade"  id="modaldemo8">
     <div class="modal-dialog modal-dialog-centered modal-lg text-center" role="document">

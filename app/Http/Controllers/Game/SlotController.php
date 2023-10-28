@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Game;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
+use Illuminate\Support\Facades\Auth;
+
 class SlotController extends Controller
 {
     /**
@@ -22,6 +26,45 @@ class SlotController extends Controller
         return view('game.slot.main',[
 
         ]);
+    }
+
+    public function result_play(Request $request)
+    {
+        $mod_user = User::findOrFail(Auth::user()->id);
+
+        $data = [];
+        if ($request->result_game == "WIN") {
+            $mod_user->update([
+                // 'wallet' => $wallet
+            ]);
+        }elseif ($request->result_game == "LOSE") {
+            $mod_user->update([
+                // 'wallet' => ($mod_user->wallet - $amount_bet)
+            ]);
+        }
+
+        return [
+            'status' => true,
+            'message' => 'ok',
+            'wallet' => $mod_user->wallet,
+            'data' => $data
+        ];
+    }
+
+    public function playS(Request $request)
+    {
+        $mod_user = User::findOrFail(Auth::user()->id);
+        $amount_bet = ($mod_user->wallet - $request->amount_bet);
+        $amount_bet = round($amount_bet, 2);
+
+        $mod_user->update([
+            'wallet' => $amount_bet
+        ]); 
+
+        return [
+            'status'=> true,
+            'wallet' => $amount_bet,
+        ];
     }
 
     /**

@@ -55,14 +55,17 @@
                                 <div>
                                     <table>
                                         <td>
-                                            <tr>
-                                                <h1 class="stats-title">STATS 📊</h1>
+                                            <tr class="mb-10">
+                                                <h3 class="stats-title">Rules <i class="fa fa-info-circle"></i></h3>
                                             </tr>
-                                            <tr>
+                                            {{-- <tr>
                                                 <div class="stats-group">
                                                     <h3 id="score">Score: 0</h3>
                                                     <h3 id="wins">Wins: 0</h3>
                                                 </div>
+                                            </tr> --}}
+                                            <tr>
+                                                <h5 class="text-center">1x Spin = 0.2 Trx</h5>
                                             </tr>
                                         </td>
                                     </table>
@@ -76,47 +79,44 @@
                                             <section id="status"><h3 id="text">WELCOME!</h3></section>
                                         </div>
                                     </div>
-                                    <section id="Slots">
+                                    {{-- <section id="Slots">
                                         <div id="slot1" class="a1"></div>
                                         <div id="slot2" class="a1"></div>
                                         <div id="slot3" class="a1"></div>
-                                    </section>
-                                    <div class="row">
-                                        <div class="col-md-12 mt-3">
-                                            {{-- <label for="form-amount">Amount</label> --}}
-                                            <div class="input-icon">
-                                                <span class="input-icon-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="text" class="form-control form_decimal" placeholder="Amount" id="form_amount" required>
+                                    </section> --}}
+                                    <section id="Slots">
+                                        <div class="row">
+                                            <div class="col-md-4 w-30">
+                                                <div id="slot1" class="a1"></div>
+                                            </div>
+                                            <div class="col-md-4 w-30">
+                                                <div id="slot2" class="a1"></div>
+                                            </div>
+                                            <div class="col-md-4 w-30">
+                                                <div id="slot3" class="a1"></div>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-md-3"> --}}
-                                            {{-- <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" /> --}}
-                                        {{-- </div> --}}
+                                    </section>
+                                    <div class="row mt-5">
+                                        <div class="col-md-12 mb-3">
+                                            <button class="btn btn-danger w-100 button-play" id="tren_red" onclick="doSlot(0)">Spin 1x</button>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <button class="btn btn-success w-100 button-play" id="tren_grenn" onclick="doSlot(4)">Spin 5x</button>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <button class="btn btn-warning w-100 button-play" id="tren_moon" onclick="doSlot(9)">Spin 10x</button>
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-md-3"></div>
                                         <div class="col-md-6 d-flex justify-content-center">
                                             <section onclick="doSlot()" id="Gira">SPIN</section>
-                                            {{-- <span id="mobile-css-s">s</span>
-                                            <span id="mobile-css-m">m</span>
-                                            <span id="mobile-css-l">l</span> --}}
                                         </div>
                                         <div class="col-md-3"></div>
                                     </div>
                                     <div class="bottom">
-                                        {{-- <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" />
-                                        <section onclick="doSlot()" id="Gira">SPIN</section> --}}
-                                        {{-- <div class="row">
-                                            <div class="col-md-6">
-                                                <section onclick="doSlot()" id="Gira">SPIN</section>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <img src="{{asset('assets/slot/src/icons/audioOn.png')}}" id="audio" class="option" onclick="toggleAudio()" />
-                                            </div>
-                                        </div>  --}}
-                                    </div>
+                                    </div> --}}
                                     <canvas id="my-canvas"></canvas>
                                 </main>
                             </div>
@@ -142,6 +142,8 @@
         $(document).ready(function () {
             
         });
+        var max_spin = 0;
+
         var doing = false;
         var url_spinMp3 = '{{ asset("assets/slot/src/sounds/spin.mp3") }}';
     
@@ -207,7 +209,12 @@
             }
         });
 
-        function doSlot(){
+        function doSlot(role_spin = 1){
+            max_spin = role_spin;
+            // console.log(max_spin);
+            balance(0.2); 
+            $('.button-play').prop('disabled', true);
+
             if(blinkId != 0){
                 clearInterval(blinkId);
             }
@@ -282,22 +289,24 @@
             var slot2 = document.getElementById("slot2").className
             var slot3 = document.getElementById("slot3").className
 
-            if (((slot1 == slot2 && slot2 == slot3) ||
-                (slot1 == slot2 && slot3 == "a7") ||
-                (slot1 == slot3 && slot2 == "a7") ||
-                (slot2 == slot3 && slot1 == "a7") ||
-                (slot1 == slot2 && slot1 == "a7") ||
-                (slot1 == slot3 && slot1 == "a7") ||
-                (slot2 == slot3 && slot2 == "a7") )){
-                if((slot1 == slot2 && slot2 == slot3)&&(slot1!="a7" && slot2!="a7" && slot3!="a7")){
+            if (
+                (
+                    (slot1 == slot2 && slot2 == slot3) ||
+                    (slot1 == slot2 && slot3 == "a7") ||
+                    (slot1 == slot3 && slot2 == "a7") ||
+                    (slot2 == slot3 && slot1 == "a7") ||
+                    (slot1 == slot2 && slot1 == "a7") ||
+                    (slot1 == slot3 && slot1 == "a7") ||
+                    (slot2 == slot3 && slot2 == "a7") 
+                )
+                )   {
+                if ( (slot1 == slot2 && slot2 == slot3) && (slot1!="a7" && slot2!="a7" && slot3!="a7") ){
                     text.innerHTML = "BIG WIN!";
                     addWin(500)
-                }
-                else if((slot1=="a7" && slot2=="a7" && slot3=="a7")){
+                }else if((slot1=="a7" && slot2=="a7" && slot3=="a7")){
                     text.innerHTML = "JACKPOT!";
                     addWin(1000)
-                }
-                else{
+                }else{
                     text.innerHTML = "YOU WIN!";
                     addWin(100)
                 }
@@ -313,6 +322,9 @@
                 lose.play();
             }
             doing = false;
+
+            // checkPlay();
+            setTimeout(checkPlay, 3500)
         }
 
         function main()
@@ -421,6 +433,38 @@
                 for(var i=0; i<10; i++){
                     leaderLines[i] = document.getElementById("score"+(i+1).toString())
                     leaderLines[i].innerText = leader_scores[i][0] + ": " + leader_scores[i][1]
+                }
+            });
+        }
+
+        function checkPlay()
+        {
+            if (max_spin == 0) {
+                $('.button-play').prop('disabled', false);
+            }else{
+                max_spin = max_spin-1;
+                doSlot(max_spin);
+            }
+        }
+        
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function balance(amount_bet) 
+        {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/playS/",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    amount_bet: amount_bet
+                },
+                success: function (response) {
+                    $('#wallet-user-general').html(numberWithCommas(response.wallet));
                 }
             });
         }

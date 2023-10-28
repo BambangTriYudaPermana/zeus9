@@ -191,7 +191,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'WebHelper' => App\Helpers\WebHelper::class, 
+        'TrxHelper' => App\Helpers\TrxHelper::class, 
     ])->toArray(),
 
 ];

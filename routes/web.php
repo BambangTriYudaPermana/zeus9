@@ -32,6 +32,8 @@ Route::post('/topup/', 'App\Http\Controllers\Transaction\AmountController@topup'
 
 // management
 Route::resource('/address', 'App\Http\Controllers\Management\AddressController');
+    // collect 
+Route::resource('/collect', 'App\Http\Controllers\Management\CollectController');
 
 // game
 Route::resource('/slide', 'App\Http\Controllers\Game\SlideController');
@@ -39,3 +41,4 @@ Route::resource('/trenball', 'App\Http\Controllers\Game\TrenballController');
 Route::post('/play-tb/', 'App\Http\Controllers\Game\TrenballController@PlayTrenBall');
 
 Route::resource('/slot', 'App\Http\Controllers\Game\SlotController');
+Route::post('/playS/', 'App\Http\Controllers\Game\SlotController@playS');

@@ -2,13 +2,12 @@
 <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="side-header">
-        <a class="header-brand1" href="index.html">
-            <div><img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img desktop-logo" alt="logo" style="float: left;"><span class="text-white" style="font-size: 16pt;">TRON-X</span></div>
+        <a class="header-brand1" href="/">
+            <div><img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img desktop-logo" alt="logo" style="float: left;"></div>
             {{-- <img src="{{asset('assets/images/brand/logo.png')}}" class="header-brand-img desktop-logo" alt="logo"> --}}
-            {{-- <img src="{{asset('assets/images/brand/logo-1.png')}}" class="header-brand-img toggle-logo" alt="logo">
-            <img src="{{asset('assets/images/brand/logo-2.png')}}" class="header-brand-img light-logo" alt="logo"> --}}
-            {{-- <div><img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img light-logo1 float-left" alt="logo"><span>TRON-X</span></div> --}}
-            {{-- <img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img light-logo1" alt="logo"> --}}
+            <img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img toggle-logo" alt="logo">
+            <img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img light-logo" alt="logo">
+            <img src="{{asset('assets/images/logo/logo.png')}}" class="header-brand-img light-logo1" alt="logo">
         </a><!-- LOGO -->
     </div>
     <ul class="side-menu">

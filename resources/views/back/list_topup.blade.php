@@ -39,12 +39,12 @@
                             <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
                                 <thead>
                                     <tr>
-                                        <th class="wd-15p border-bottom-0">No</th>
-                                        <th class="wd-15p border-bottom-0">Email User</th>
-                                        <th class="wd-20p border-bottom-0">Saldo TopUp</th>
-                                        <th class="wd-15p border-bottom-0">Status</th>
-                                        <th class="wd-10p border-bottom-0">Date Request</th>
-                                        <th class="wd-25p border-bottom-0">Action</th>
+                                        <th class="wd-15p border-bottom-0 text-center">No</th>
+                                        <th class="wd-15p border-bottom-0 text-center">Email User</th>
+                                        <th class="wd-20p border-bottom-0 text-center">Saldo TopUp</th>
+                                        <th class="wd-15p border-bottom-0 text-center">Status</th>
+                                        <th class="wd-10p border-bottom-0 text-center">Date Request</th>
+                                        <th class="wd-25p border-bottom-0 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,9 +56,10 @@
                                             <td>{{number_format($item['saldo'])}}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>{{$item['created_at']}}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 <button class="btn btn-sm btn-success" title="ACC" onclick="topup('acc', {{$item['id']}})"><i class="fa fa-check"></i></button>
                                                 <button class="btn btn-sm btn-danger" title="Reject" onclick="topup('reject', {{$item['id']}})"><i class="fa fa-times"></i></button>
+                                                <button class="btn btn-sm btn-warning" title="Sync" onclick="topup('sync', {{$item['id']}})"><i class="fa fa-refresh"></i></button>
                                             </td>
                                         </tr>
                                         <?php $no++?>

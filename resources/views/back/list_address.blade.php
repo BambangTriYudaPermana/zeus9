@@ -49,9 +49,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $no = 1?>
-                                    @foreach ($data as $item )
-                                        <tr>
+                                    {{-- <?php $no = 1?> --}}
+                                    {{-- @foreach ($data as $item ) --}}
+                                        {{-- <tr>
                                             <td>{{$no}}</td>
                                             <td>{{$item['address']}}</td>
                                             <td>{{$item['description']}}</td>
@@ -62,9 +62,9 @@
                                                 <button class="btn btn-sm btn-warning" title="Edit" onclick="action_edit({{$item['id']}})"><i class="fa fa-pencil"></i></button>
                                                 <button class="btn btn-sm btn-danger" title="Delete" onclick="action_delete({{$item['id']}})"><i class="fa fa-trash"></i></button>
                                             </td>
-                                        </tr>
-                                        <?php $no++?>
-                                    @endforeach
+                                        </tr> --}}
+                                        {{-- <?php $no++?> --}}
+                                    {{-- @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

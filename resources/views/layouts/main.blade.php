@@ -14,7 +14,7 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 		<!-- FAVICON -->
-		<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/brand/favicon.ico')}}" />
+		<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/logo/favicon.ico')}}" />
 
 		<!-- TITLE -->
 		<title>Tron-X.Game</title>

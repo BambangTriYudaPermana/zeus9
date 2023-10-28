@@ -5,7 +5,12 @@
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
             <a class="header-brand1 d-flex d-md-none" href="index.html">
                 @if (Auth::user())
-                <a class="header-brand-img desktop-logo" style="width: 80%; margin-top: 12px; margin-left: 20px;">Your Balance : <i class="fa fa-dollar"></i> <span id="wallet-user-general">{{Auth::user()->wallet}}</span></a>
+                <a class="header-brand-img desktop-logo" style="width: 80%; margin-top: 12px; margin-left: 20px;">
+                    {{-- Your Balance :  --}}
+                    {{-- <i class="fa fa-dollar"></i>  --}}
+                    <img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" class="m-0">
+                    <span id="wallet-user-general">{{Auth::user()->wallet}}</span>
+                </a>
                 @endif
                 {{-- <img src="{{asset('assets/images/brand/logo.png')}}" class="header-brand-img desktop-logo" alt="logo">
                 <img src="{{asset('assets/images/brand/logo-1.png')}}" class="header-brand-img toggle-logo" alt="logo">
