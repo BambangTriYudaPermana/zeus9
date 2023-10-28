@@ -42,7 +42,7 @@
                 <img src="{{asset('assets/images/logo/logo1.jpg')}}" alt="" srcset="">
             </div>
         </div> --}}
-        @include('layouts.topup')
+        @include('layouts.topup.topup')
         <!-- ROW-1 -->
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -260,4 +260,4 @@
     </script>
 @endsection
 
-@include('layouts.js-topup')
+@include('layouts.topup.js-topup')

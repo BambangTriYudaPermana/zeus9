@@ -43,7 +43,7 @@
                 <img src="{{asset('assets/images/logo/logo1.jpg')}}" alt="" srcset="">
             </div>
         </div> --}}
-        @include('layouts.topup')
+        @include('layouts.topup.topup')
         <!-- ROW-1 -->
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -55,7 +55,7 @@
                                 <div>
                                     <table>
                                         <td>
-                                            <tr class="mb-10">
+                                            <tr>
                                                 <h3 class="stats-title">Rules <i class="fa fa-info-circle"></i></h3>
                                             </tr>
                                             {{-- <tr>
@@ -457,7 +457,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/playS/",
+                url: "/playS",
                 method: 'POST',
                 dataType: 'json',
                 data: {
@@ -471,4 +471,4 @@
     </script>
 @endsection
 
-@include('layouts.js-topup')
+@include('layouts.topup.js-topup')
