@@ -27,9 +27,9 @@ class AddressController extends Controller
         // dd($send);
 
         // get balance
-        $balance = TrxHelper::getBalance('TSSvVd5QVBbA3YrMRfxFJBQgrEohCucvc3');
+        // $balance = TrxHelper::getBalance('TSSvVd5QVBbA3YrMRfxFJBQgrEohCucvc3');
         // $balance = TrxHelper::getTransactionByAddress('TLAQ156uPKsUtztjfi13DzaiSxLnYuQABJ', true, true, 10, false);
-        dd($balance);
+        // dd($balance);
         // require_once('vendor/autoload.php');
 
         try {

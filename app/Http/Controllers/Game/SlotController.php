@@ -23,7 +23,7 @@ class SlotController extends Controller
      */
     public function index()
     {
-        return view('game.slot.main',[
+        return view('game.slot.main1',[
 
         ]);
     }

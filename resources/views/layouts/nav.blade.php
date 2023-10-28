@@ -40,5 +40,9 @@
         <li>
             <a class="side-menu__item" href="/slot"><i class="side-menu__icon fa fa-gamepad"></i><span class="side-menu__label">Slot</span></a>
         </li>
+        <li><h3></h3></li>
+        <li>
+            <a class="side-menu__item" href="/game"><i class="side-menu__icon fa fa-gamepad"></i><span class="side-menu__label">Game</span></a>
+        </li>
 </aside>
 <!--/APP-SIDEBAR-->
