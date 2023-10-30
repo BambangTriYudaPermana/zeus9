@@ -32,6 +32,19 @@ class AddressController extends Controller
         // dd($balance);
         // require_once('vendor/autoload.php');
 
+        $randomNumber = rand(1, 7);
+        dump($randomNumber);
+        // Define the win chance (5%)
+        $winChance = 5;
+
+        // Check if the random number is within the win chance range (1 to 5)
+        if ($randomNumber <= $winChance) {
+            echo "Congratulations! You won!";
+        } else {
+            echo "Sorry, you lost. Try again.";
+        }
+        dd();
+
         try {
             $client = new \GuzzleHttp\Client();
             

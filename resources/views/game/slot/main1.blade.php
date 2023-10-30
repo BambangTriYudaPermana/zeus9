@@ -69,6 +69,72 @@
                                             </tr>
                                         </td>
                                     </table>
+                                    <table class="table-bordered w-100">
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Bronze_Coin.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center">0.05</td>
+                                            <td class="text-center">0.2</td>
+
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Silver_Coin.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center">0.08</td>
+                                            <td class="text-center">0.32</td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Gold_Coin.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center">0.1</td>
+                                            <td class="text-center">0.4</td>
+
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Buck_Cents.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center">0.18</td>
+                                            <td class="text-center">0.72</td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Cash_Dollar.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center">0.25</td>
+                                            <td class="text-center">1</td>
+
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Bitcoin.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center">1</td>
+                                            <td class="text-center">3</td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">2 Symbol</th>
+                                            <th class="text-center">3 Symbol</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/TRX.png')}}" alt="" srcset="" width="30px"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">Free Spin 10x</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             {{-- main --}}
@@ -213,7 +279,7 @@
             login = true;
             id = firebase.auth().currentUser.uid;
             userName = user.displayName
-            console.log(userName)
+            // console.log(userName)
             updateWins()
             }
             else{
@@ -251,7 +317,7 @@
             var numeberSlot2 = numChanges+2*7+randomInt(1,7)
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
 
-            // console.log(numeberSlot1, numeberSlot2, numeberSlot3);
+            // console.log(numChanges, numeberSlot1, numeberSlot2, numeberSlot3);
             var i1 = 0;
             var i2 = 0;
             var i3 = 0;
@@ -264,44 +330,56 @@
             slot2 = setInterval(spin2, 50);
             slot3 = setInterval(spin3, 50);
             function spin1(){
+                slotTile = document.getElementById("slot1");
+
                 i1++;
                 if (i1>=numeberSlot1){
                     coin[0].play()
                     clearInterval(slot1);
                     return null;
                 }
-                slotTile = document.getElementById("slot1");
                 if (slotTile.className=="b7"){
-                    slotTile.className = "a0";
+                    slotTile.className = "b0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
                 // console.log("b"+(parseInt(slotTile.className.substring(1))+1));
             }
             function spin2(){
+                slotTile1 = document.getElementById("slot1");
+                slotTile = document.getElementById("slot2");
+
                 i2++;
                 if (i2>=numeberSlot2){
                     coin[1].play()
                     clearInterval(slot2);
+                    if (slotTile.className == "b1" && slotTile1.className == "b1") {
+                        change()
+                    }
                     return null;
                 }
-                slotTile = document.getElementById("slot2");
                 if (slotTile.className=="b7"){
-                    slotTile.className = "a0";
+                    slotTile.className = "b0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
                 // console.log("b"+(parseInt(slotTile.className.substring(1))+1));
             }
             function spin3(){
+                slotTile1 = document.getElementById("slot1");
+                slotTile2 = document.getElementById("slot2");
+                slotTile = document.getElementById("slot3");
+
                 i3++;
                 if (i3>=numeberSlot3){
                     coin[2].play()
                     clearInterval(slot3);
+                    if (slotTile.className == "b1" && slotTile1.className == "b1" && slotTile.className == "b1") {
+                        change()
+                    }
                     testWin();
                     return null;
                 }
-                slotTile = document.getElementById("slot3");
                 if (slotTile.className=="b7"){
-                    slotTile.className = "a0";
+                    slotTile.className = "b0";
                 }
                 sound++;
                 if (sound==spin.length){
@@ -310,6 +388,29 @@
                 spin[sound].play();
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
                 // console.log("b"+(parseInt(slotTile.className.substring(1))+1));
+            }
+
+            function change() {
+                slot1 = document.getElementById("slot1");
+                slot2 = document.getElementById("slot2");
+                slot3 = document.getElementById("slot3");
+
+                var is_true = 0;
+                var randomNumber = Math.random();
+                // Calculate winning condition with 5% probability (0.05)
+                if (slot1.className == "b1" && slot2.className == "b1") {
+                    if (randomNumber <= 0.05) {
+                        is_true = 1;
+                    } else {
+                        slot2.className = "b"+(parseInt(slot2.className.substring(1))+1)
+                    }
+                }else if (slot1.className == "b1" && slot2.className == "b1" && slot3.className == "b1"){
+                    if (randomNumber <= 0.02) {
+                        is_true = 1;
+                    } else {
+                        slot3.className = "b"+(parseInt(slot3.className.substring(1))+1)
+                    }
+                }
             }
         }
 
@@ -320,10 +421,10 @@
 
             if  (
                     (
-                        (slot1 == slot2 && slot2 == slot3) ||
-                        (slot1 == slot2) ||
-                        (slot1 == slot3) ||
-                        (slot2 == slot3)
+                        ( slot1 == slot2 && slot2 == slot3 ) ||
+                        ( slot1 == slot2 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') ) ||
+                        ( slot1 == slot3 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') ) ||
+                        ( slot2 == slot3 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') )
                     )
                 )   {
                 if ( (slot1 == slot2 && slot2 == slot3) ){
@@ -422,7 +523,7 @@
         }
 
         function addWin(box1, box2, box3){
-            console.log(box1, box2, box3);
+            // console.log(box1, box2, box3);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
