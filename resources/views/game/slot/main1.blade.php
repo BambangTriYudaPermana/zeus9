@@ -427,8 +427,10 @@
                         ( slot2 == slot3 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') )
                     )
                 )   {
-                if ( (slot1 == slot2 && slot2 == slot3) ){
+                if ( (slot1 == "b7" && slot2 == "b7" && slot3 == "b7") ){
                     text.innerHTML = "JACKPOT!";
+                } else if ((slot1 == slot2 && slot2 == slot3)) {
+                    text.innerHTML = "BIG WIN!";
                 }else{
                     text.innerHTML = "YOU WIN!";
                 }
