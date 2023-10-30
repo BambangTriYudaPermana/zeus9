@@ -129,7 +129,7 @@
 
 
 		<!-- SIDE-MENU JS-->
-		<script src="{{asset('assets/plugins/sidemenu/sidemenu.js')}}"></script>
+		<script src="{{asset('assets/plugins/sidemenu/sidemenu1.js')}}"></script>
 
 		<!-- SIDEBAR JS -->
 		<script src="{{asset('assets/plugins/sidebar/sidebar.js')}}"></script>

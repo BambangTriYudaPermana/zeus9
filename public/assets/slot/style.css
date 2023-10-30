@@ -408,15 +408,12 @@ section#options{
 	background-image: url("src/tiles/new/Bronze_Coin.png");
 }
 .b5{
-	background-image: url("src/tiles/new/Platinum_Coin.png");
-}
-.b6{
 	background-image: url("src/tiles/new/Silver_Coin.png");
 }
-.b7{
+.b6{
 	background-image: url("src/tiles/new/Gold_Coin.png");
 }
-.b8{
+.b7{
 	background-image: url("src/tiles/new/TRX.png");
 }
 .b9{

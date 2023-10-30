@@ -65,7 +65,7 @@
                                                 </div>
                                             </tr> --}}
                                             <tr>
-                                                <h5 class="text-center">1x Spin = 0.2 Trx</h5>
+                                                <h5 class="text-center">1x Spin = 0.3 Trx</h5>
                                             </tr>
                                         </td>
                                     </table>
@@ -237,7 +237,7 @@
         function doSlot(role_spin = 1){
             max_spin = role_spin;
             // console.log(max_spin);
-            balance(0.2); 
+            balance(0.3); 
             $('.button-play').prop('disabled', true);
 
             if(blinkId != 0){
@@ -246,7 +246,7 @@
             confe.classList.remove("active")
             if (doing){return null;}
             doing = true;
-            var numChanges = randomInt(1,7)*7
+            var numChanges = randomInt(1,4)*7
             var numeberSlot1 = numChanges+randomInt(1,7)
             var numeberSlot2 = numChanges+2*7+randomInt(1,7)
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
@@ -271,7 +271,7 @@
                     return null;
                 }
                 slotTile = document.getElementById("slot1");
-                if (slotTile.className=="b8"){
+                if (slotTile.className=="b7"){
                     slotTile.className = "a0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
@@ -285,7 +285,7 @@
                     return null;
                 }
                 slotTile = document.getElementById("slot2");
-                if (slotTile.className=="b8"){
+                if (slotTile.className=="b7"){
                     slotTile.className = "a0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
@@ -300,7 +300,7 @@
                     return null;
                 }
                 slotTile = document.getElementById("slot3");
-                if (slotTile.className=="b8"){
+                if (slotTile.className=="b7"){
                     slotTile.className = "a0";
                 }
                 sound++;
@@ -328,11 +328,15 @@
                 )   {
                 if ( (slot1 == slot2 && slot2 == slot3) ){
                     text.innerHTML = "JACKPOT!";
-                    // addWin(500)
                 }else{
                     text.innerHTML = "YOU WIN!";
-                    // addWin(100)
                 }
+
+                var box1 = parseInt(slot1.substring(1));
+                var box2 = parseInt(slot2.substring(1));
+                var box3 = parseInt(slot3.substring(1));
+                addWin(box1, box2, box3);
+
                 status.style.background = "#3e962aa9";
                 // document.getElementById("body").style.background="#162511";
                 confeti()
@@ -417,7 +421,24 @@
             // update balance win
         }
 
-        function addWin(addScore){
+        function addWin(box1, box2, box3){
+            console.log(box1, box2, box3);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/playSW",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    box1: box1,
+                    box2: box2,
+                    box3: box3,
+                },
+                success: function (response) {
+                    $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                }
+            });
             // if (login == true){
                 // firebase.database().ref('Users/' + id + '/data').set({score:score+addScore, wins:wins+1});
                 // firebase.database().ref('scores/' + userName + '-' + id).set({score: score+addScore});

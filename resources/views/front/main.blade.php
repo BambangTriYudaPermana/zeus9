@@ -20,6 +20,9 @@
 #slider .ui-slider-handle {
     background:red;
 }
+#coin-flip{
+    background-image: url("{{asset('asset/images/game/Crazy-Coin-Flip.png')}}");
+}
 </style>
 <!--app-content open-->
 <div class="app-content">
@@ -147,6 +150,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6 col-xl-3">
+                <a href="/slot" class="thumbnail border-0 p-0">
+                    <img src="{{asset('assets/images/game/Crazy-Coin-Flip.png')}}" alt="thumb1" class="thumbimg">
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{asset('assets/images/game/Hit-Slot.png')}}" alt="thumb1" class="thumbimg">
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{asset('assets/images/game/Twin-Spin.png')}}" alt="thumb1" class="thumbimg">
+                </a>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{asset('assets/images/game/Coin-Volcano.png')}}" alt="thumb1" class="thumbimg">
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 <!-- CONTAINER END -->

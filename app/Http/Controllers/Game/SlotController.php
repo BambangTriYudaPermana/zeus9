@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\WinSlot;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -65,6 +66,45 @@ class SlotController extends Controller
             'status'=> true,
             'wallet' => $amount_bet,
         ];
+    }
+
+    public function playSW(Request $request)
+    {
+        $box1 = $request->box1;
+        $box2 = $request->box2;
+        $box3 = $request->box3;
+
+        $arr = [$box1, $box2, $box3];
+        $find = array_count_values($arr);
+        $maxValue = max($find);
+        $mostCommonValue = array_search($maxValue, $find);
+        // dd($mostCommonValue);
+
+        $model = WinSlot::where(['code_symbol' => $mostCommonValue])->first();
+        $mod_user = User::findOrFail(Auth::user()->id);
+        if ($model) {
+            if ($maxValue == 2) {
+                $amount_bet = ($mod_user->wallet + $model->dua_symbol);
+                $amount_bet = round($amount_bet, 2);
+
+                $mod_user->update([
+                    'wallet' => $amount_bet
+                ]); 
+            }elseif ($maxValue == 3) {
+                $amount_bet = ($mod_user->wallet + $model->tiga_symbol);
+                $amount_bet = round($amount_bet, 2);
+
+                $mod_user->update([
+                    'wallet' => $amount_bet
+                ]); 
+            }
+        }
+
+        return [
+            'status'=> true,
+            'wallet' => $amount_bet,
+        ];
+
     }
 
     /**
