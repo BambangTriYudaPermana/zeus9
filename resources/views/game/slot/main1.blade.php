@@ -213,19 +213,33 @@
 <!-- To Uglify: https://skalman.github.io/UglifyJS-online/ -->
 {{-- <script src="{{asset('assets/slot/auth.js')}}"></script> --}}
     <script>
+        var balance = '{{Auth::user()->wallet}}';
+        var bet = 0;
         $(document).ready(function () {
+            if (balance <= 0) {
+                $('.button-play').prop('disabled', true);
+            }
+            
             $("#spin-minus").click(function(){
                 var form_spin = parseInt($('#form_spin').val());
                 if (form_spin == 1) {
+                    bet = 0.3;
                     $('#form_spin').val(1);
                 }else{
+                    bet -= 0.3;
                     $('#form_spin').val(form_spin-1);
                 }
+                $('#spin-plus').prop('disabled', false);
             });
 
             $("#spin-plus").click(function(){
                 var form_spin = parseInt($('#form_spin').val());
-                $('#form_spin').val(form_spin+1);
+                if (bet >= (balance-0.3) ) {
+                    $('#spin-plus').prop('disabled', true);
+                }else{
+                    bet += 0.3;
+                    $('#form_spin').val(form_spin+1);
+                }
             });
         });
         var max_spin = 0;
