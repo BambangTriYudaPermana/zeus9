@@ -310,7 +310,7 @@
             doSlot(form_spin-1)
         }
 
-        global_var.free_spin = {{Auth::user()->bonus_slot->free_spin}};
+        global_var.free_spin = {{$is_free_spin ? Auth::user()->bonus_slot->free_spin : 0}};
         function doSlot(role_spin = 1){
             max_spin = role_spin;
             var is_free_spin = '{{$is_free_spin}}';
