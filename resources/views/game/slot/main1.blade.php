@@ -53,18 +53,14 @@
                             {{-- side --}}
                             <div class="col-md-3">
                                 <div>
-                                    <table>
+                                    <table class="w-100">
                                         <td>
                                             <tr>
                                                 <h3 class="stats-title">Rules <i class="fa fa-info-circle"></i></h3>
                                             </tr>
-                                            {{-- <tr>
-                                                <div class="stats-group">
-                                                    <h3 id="score">Score: 0</h3>
-                                                    <h3 id="wins">Wins: 0</h3>
-                                                </div>
-                                            </tr> --}}
                                             <tr>
+                                                {{-- <td><h3>Free Spin : <span id="ttl_free_spin">{{Auth::user()->bonus_slot->free_spin}}</span></h3></td> --}}
+                                                {{-- <td><h5 class="text-center">1x Spin = 0.3 Trx</h5></td> --}}
                                                 <h5 class="text-center">1x Spin = 0.3 Trx</h5>
                                             </tr>
                                         </td>
@@ -138,11 +134,15 @@
                                 </div>
                             </div>
                             {{-- main --}}
+                            @php
+                                $is_free_spin = isset(Auth::user()->bonus_slot->free_spin) && Auth::user()->bonus_slot->free_spin > 0 ? true : false;
+                                $text_spin = $is_free_spin ? 'FREE SPIN' : 'WELCOME!';
+                            @endphp
                             <div class="col-md-5">
                                 <main style="margin-left: 0; width: 100%">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <section id="status"><h3 id="text">WELCOME!</h3></section>
+                                            <section id="status"><h3 id="text">{{$text_spin}}</h3></section>
                                         </div>
                                     </div>
                                     {{-- <section id="Slots">
@@ -177,22 +177,42 @@
                                     <div class="row mt-5">
                                         <div class="col-md-4"></div>
                                         <div class="col-md-4">
-                                            <input type="number" class="form-control" placeholder="Amount" id="form_spin" required disabled value="1" style="text-align: center;">
+                                            <input type="number" class="form-control" placeholder="Amount" id="form_spin" required disabled value="{{isset(Auth::user()->bonus_slot->free_spin) && Auth::user()->bonus_slot->free_spin != 0 ? Auth::user()->bonus_slot->free_spin : 1}}" style="text-align: center;">
                                         </div>
                                         <div class="col-md-4"></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3"></div>
                                         <div class="col-md-6 d-flex justify-content-center">
-                                            <button class="btn btn-danger" style="height: 40px; margin-top: 40px; margin-right: 10px;" id="spin-minus"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-danger" style="height: 40px; margin-top: 40px; margin-right: 10px;" id="spin-minus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-minus"></i></button>
                                             <button onclick="Spin()" id="Gira" class="button-play">SPIN</button>
                                             {{-- <section onclick="doSlot()" id="Gira">SPIN</section> --}}
-                                            <button class="btn btn-success" style="height: 40px; margin-top: 40px; margin-left: 10px;" id="spin-plus"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-success" style="height: 40px; margin-top: 40px; margin-left: 10px;" id="spin-plus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-plus"></i></button>
                                         </div>
                                         <div class="col-md-3"></div>
                                     </div>
                                     <canvas id="my-canvas"></canvas>
                                 </main>
+                            </div>
+                            <div class="col-md-4">
+                                {{-- <table class="table table-bordered w-100" id="his_play">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Game</th>
+                                            <th>Payout</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Oct 31, 16:00:00 PM</td>
+                                            <td><img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" class="m-0"> 0.3</td>
+                                            <td>JACKPOT!</td>
+                                            <td><img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" class="m-0"> 0.08</td>
+                                        </tr>
+                                    </tbody>
+                                </table> --}}
                             </div>
                         </div>
                     </div>
@@ -205,9 +225,6 @@
 @endsection
 
 @section('js')
-<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 <script src="{{asset('assets/slot/confetti.js')}}"></script>
 {{-- <script src="{{asset('assets/slot/main.js')}}"></script>  --}}
 <!-- To Uglify: https://skalman.github.io/UglifyJS-online/ -->
@@ -239,7 +256,7 @@
             $("#spin-plus").click(function(){
                 var form_spin = parseInt($('#form_spin').val());
                 bet += 0.3;
-                console.log(bet)
+                // console.log(bet)
                 if (bet >= (global_var.balance-0.3) ) {
                     $('#spin-plus').prop('disabled', true);
                     $('#form_spin').val(form_spin+1);
@@ -276,38 +293,11 @@
         let confe = document.querySelector("#my-canvas");
         var wins_element = document.getElementById("wins")
         var score_element = document.getElementById("score")
-        var userName = document.getElementById("userName").textContent
         var blinkId = 0;
         var blink = false
         var score = 0
         var wins = 0
         var id = 0
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDrx_IMLOUSSRAKHSh3nT7HABzjPtv0bI4",
-            authDomain: "slot-game-8aed2.firebaseapp.com",
-            projectId: "slot-game-8aed2",
-            storageBucket: "slot-game-8aed2.appspot.com",
-            messagingSenderId: "1003739740685",
-            appId: "1:1003739740685:web:26755aeb50afdce1cc3344"
-        };
-        
-        firebase.initializeApp(firebaseConfig);
-
-        firebase.auth().onAuthStateChanged(user=>{
-            if(user){
-            login = true;
-            id = firebase.auth().currentUser.uid;
-            userName = user.displayName
-            // console.log(userName)
-            updateWins()
-            }
-            else{
-            login = true;
-            score_element.innerHTML = "Score: 0"
-            wins_element.innerHTML = "Wins: 0"
-            }
-        })
 
         window.addEventListener("keydown", (evento) => {
             if (evento.code == "Space") {
@@ -320,10 +310,18 @@
             doSlot(form_spin-1)
         }
 
+        global_var.free_spin = {{Auth::user()->bonus_slot->free_spin}};
         function doSlot(role_spin = 1){
             max_spin = role_spin;
-            // console.log(max_spin);
-            balance(0.3); 
+            var is_free_spin = '{{$is_free_spin}}';
+            if (!is_free_spin) {
+                balance(0.3);     
+            }else{
+                global_var.free_spin -= 1; 
+                Sfree_spin(global_var.free_spin, 'minus_free_spin')
+            }
+            // console.log(global_var.free_spin);
+            
             $('.button-play').prop('disabled', true);
 
             if(blinkId != 0){
@@ -362,7 +360,6 @@
                     slotTile.className = "b0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
-                // console.log("b"+(parseInt(slotTile.className.substring(1))+1));
             }
             function spin2(){
                 slotTile1 = document.getElementById("slot1");
@@ -381,7 +378,6 @@
                     slotTile.className = "b0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
-                // console.log("b"+(parseInt(slotTile.className.substring(1))+1));
             }
             function spin3(){
                 slotTile1 = document.getElementById("slot1");
@@ -392,7 +388,7 @@
                 if (i3>=numeberSlot3){
                     coin[2].play()
                     clearInterval(slot3);
-                    if (slotTile.className == "b1" && slotTile1.className == "b1" && slotTile.className == "b1") {
+                    if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
                         change()
                     }
                     testWin();
@@ -407,7 +403,6 @@
                 }
                 spin[sound].play();
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
-                // console.log("b"+(parseInt(slotTile.className.substring(1))+1));
             }
 
             function change() {
@@ -424,13 +419,15 @@
                     } else {
                         slot2.className = "b"+(parseInt(slot2.className.substring(1))+1)
                     }
-                }else if (slot1.className == "b1" && slot2.className == "b1" && slot3.className == "b1"){
+                }else if (slot1.className || "b1" && slot2.className || "b1" && slot3.className || "b1"){
                     if (randomNumber <= 0.02) {
                         is_true = 1;
                     } else {
                         slot3.className = "b"+(parseInt(slot3.className.substring(1))+1)
                     }
                 }
+
+                return true;
             }
         }
 
@@ -442,13 +439,14 @@
             if  (
                     (
                         ( slot1 == slot2 && slot2 == slot3 ) ||
-                        ( slot1 == slot2 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') ) ||
-                        ( slot1 == slot3 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') ) ||
-                        ( slot2 == slot3 && (slot1 != 'b7' && slot2 != 'b7' && slot3 != 'b7') )
+                        ( slot1 == slot2 && (slot1 != 'b7' && slot2 != 'b7') ) ||
+                        ( slot1 == slot3 && (slot1 != 'b7' && slot3 != 'b7') ) ||
+                        ( slot2 == slot3 && (slot2 != 'b7' && slot3 != 'b7') )
                     )
                 )   {
                 if ( (slot1 == "b7" && slot2 == "b7" && slot3 == "b7") ){
-                    text.innerHTML = "JACKPOT!";
+                    text.innerHTML = "FREE SPIN 10x!";
+                    Sfree_spin(10, 'add_free_spin')
                 } else if ((slot1 == slot2 && slot2 == slot3)) {
                     text.innerHTML = "BIG WIN!";
                 }else{
@@ -609,8 +607,14 @@
             if (max_spin == 0) {
                 $('.button-play').prop('disabled', false);
             }else{
+                $('#form_spin').val(max_spin)
                 max_spin = max_spin-1;
                 doSlot(max_spin);
+            }
+
+            if (global_var.free_spin == 0) {
+                $('#spin-minus').prop('disabled', false);
+                $('#spin-plus').prop('disabled', false);
             }
         }
         
@@ -632,6 +636,25 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                }
+            });
+        }
+
+        function Sfree_spin(free, type)
+        {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/SfreeSpin",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    free: free,
+                    type: type
+                },
+                success: function (response) {
+                    // $('#wallet-user-general').html(numberWithCommas(response.wallet));
                 }
             });
         }

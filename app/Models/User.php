@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(MAddress::class, 'id', 'id_address');
     }
+
+    public function bonus_slot(): HasOne
+    {
+        return $this->hasOne(Bonus::class, 'id_user', 'id')->where(['game' => 'slot', 'status' => 1]);
+    }
 }

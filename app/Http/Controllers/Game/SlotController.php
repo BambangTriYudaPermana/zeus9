@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\WinSlot;
+use App\Models\Bonus;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -105,6 +106,35 @@ class SlotController extends Controller
             'wallet' => $amount_bet,
         ];
 
+    }
+
+    public function freeSpin(Request $request)
+    {
+        // dd($request);
+        $model = Bonus::where(['id_user' => Auth::user()->id, 'game' => 'slot'])->first();
+        if ($request->type == 'minus_free_spin') {
+            $model->update([
+                'free_spin'=> $request->free
+            ]);
+        }else if ($request->type == 'add_free_spin') {
+            if (!$model) {
+                $model = Bonus::create([
+                    'id_user' => Auth::user()->id,
+                    'game' => 'slot',
+                    'free_spin' => 10,
+                    'status' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }else{
+                $model->update([
+                    'free_spin'=> 10
+                ]); 
+            }
+        }
+
+        return [
+            'status' => true
+        ];
     }
 
     /**

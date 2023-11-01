@@ -43,3 +43,4 @@ Route::post('/play-tb/', 'App\Http\Controllers\Game\TrenballController@PlayTrenB
 Route::resource('/slot', 'App\Http\Controllers\Game\SlotController');
 Route::post('/playS/', 'App\Http\Controllers\Game\SlotController@playS');
 Route::post('/playSW/', 'App\Http\Controllers\Game\SlotController@playSW');
+Route::post('/SfreeSpin/', 'App\Http\Controllers\Game\SlotController@freeSpin');
