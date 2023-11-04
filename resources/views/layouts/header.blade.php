@@ -5,11 +5,13 @@
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
             <a class="header-brand1 d-flex d-md-none" href="index.html">
                 @if (Auth::user())
-                <a class="header-brand-img desktop-logo" style="width: 80%; margin-top: 12px; margin-left: 20px;">
+                <a class="header-brand-img desktop-logo modal-effect" style="width: 80%; margin-top: 12px; margin-left: 20px; color:white" data-bs-effect="effect-scale" data-bs-toggle="modal" href="#modaldemo8">
                     {{-- Your Balance :  --}}
                     {{-- <i class="fa fa-dollar"></i>  --}}
                     <img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" class="m-0">
                     <span id="wallet-user-general">{{Auth::user()->wallet}}</span>
+                    {{-- <i class="fa fa-google-wallet"></i> --}}
+                    <i class="icon icon-wallet" data-bs-toggle="tooltip"></i>
                 </a>
                 @endif
                 {{-- <img src="{{asset('assets/images/brand/logo.png')}}" class="header-brand-img desktop-logo" alt="logo">
@@ -43,7 +45,8 @@
                         <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
                         <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
                     </a>
-                </div><!-- Theme-Layout -->
+                </div>
+                <!-- Theme-Layout -->
                 <div class="dropdown d-none d-md-flex">
                     <a class="nav-link icon full-screen-link nav-link-bg">
                         <i class="fe fe-minimize fullscreen-button"></i>
@@ -167,7 +170,7 @@
                 <div class="dropdown d-none d-md-flex profile-1">
                     <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
                         <span>
-                            <img src="{{asset('assets/images/users/avatar-5.jpg')}}" alt="profile-user" class="avatar  profile-user brround cover-image">
+                            <img src="{{asset('assets/images/users/avatar-1.png')}}" alt="profile-user" class="avatar  profile-user brround cover-image">
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -178,10 +181,10 @@
                             </div>
                         </div>
                         <div class="dropdown-divider m-0"></div>
-                        <a class="dropdown-item" href="profile.html">
+                        <a class="dropdown-item" href="{{ route('profile.index') }}">
                             <i class="dropdown-icon fe fe-user"></i> Profile
                         </a>
-                        <a class="dropdown-item" href="email.html">
+                        {{-- <a class="dropdown-item" href="email.html">
                             <i class="dropdown-icon fe fe-mail"></i> Inbox
                             <span class="badge bg-primary float-end">3</span>
                         </a>
@@ -190,7 +193,7 @@
                         </a>
                         <a class="dropdown-item" href="faq.html">
                             <i class="dropdown-icon fe fe-alert-triangle"></i> Need help??
-                        </a>
+                        </a> --}}
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="dropdown-icon fe fe-alert-circle"></i> Sign out

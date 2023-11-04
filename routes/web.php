@@ -24,6 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('/', 'App\Http\Controllers\Transaction\DashboardController');
 
+Route::resource('/profile', 'App\Http\Controllers\ProfileController');
+
 Route::post('/get_payout/', 'App\Http\Controllers\Transaction\PayoutController@getPayout');
 
 Route::resource('/transaction', 'App\Http\Controllers\Transaction\TransactionController');

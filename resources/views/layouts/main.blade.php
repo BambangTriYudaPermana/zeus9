@@ -38,6 +38,7 @@
 
 		<!--- FONT-ICONS CSS -->
 		<link href="{{asset('assets/css/icons.css')}}" rel="stylesheet"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
 
 		<!-- SIDEBAR CSS -->
 		<link href="{{asset('assets/plugins/sidebar/sidebar.css')}}" rel="stylesheet">
@@ -58,6 +59,9 @@
 
 		<!--SWEET ALERT CSS-->
 		<link href="{{asset('assets/plugins/sweet-alert/sweetalert2.min.css')}}" rel="stylesheet" />
+
+		<!-- TABS STYLES -->
+		<link href="{{asset('assets/plugins/tabs/tabs.css')}}" rel="stylesheet" />
 
 		<!-- DATA TABLE CSS -->
 		<link href="{{asset('assets/plugins/datatable/css/dataTables.bootstrap5.css')}}" rel="stylesheet" />
@@ -81,6 +85,7 @@
 			<div class="page-main">
 				@include('layouts.nav')
 				@include('layouts.header')
+				@include('layouts.topup.topup')
 				
 				@yield('content')
 
@@ -152,6 +157,10 @@
 		<script src="{{asset('assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js')}}"></script>
 		<script src="{{asset('assets/js/rangeslider.js')}}"></script>
 
+		<!--- TABS JS -->
+		<script src="{{asset('assets/plugins/tabs/jquery.multipurpose_tabcontent.js')}}"></script>
+		<script src="{{asset('assets/plugins/tabs/tab-content.js')}}"></script>
+
 		<!-- SWEET-ALERT JS -->
 		<script src="{{asset('assets/plugins/sweet-alert/sweetalert2.all.min.js')}}"></script>
 
@@ -174,6 +183,7 @@
 
 		@yield('js')
 
+		@include('layouts.topup.js-topup')
 		<script>
 			$(document).ready(function () {
 				$('.money').mask("#,##0", {reverse: true});
@@ -186,6 +196,13 @@
 						evt.preventDefault();
 					}
 				});
+
+				$('#modaldemo8').on('hidden.bs.modal', function () {
+					$('#address_topup').hide();
+				})
+
+				$("#tab-content-first").removeAttr('class');
+				$('#tab-content-first').addClass('tab_content active');
 			});
 		</script>
 	</body>

@@ -13,8 +13,11 @@
     <ul class="side-menu">
         <li><h3>Main</h3></li>
         <li class="slide">
-            <a class="side-menu__item"  data-bs-toggle="slide" href="/"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
+            <a class="side-menu__item"  data-bs-toggle="slide" href="/"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Home</span></a>
         </li>
+        <?php
+            if (Auth::user() && Auth::user()->role->role == 'admin') {
+        ?>
         <li><h3>Management</h3></li>
         <li>
             <a class="side-menu__item" href="/transaction"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">List Topup</span></a>
@@ -22,6 +25,7 @@
         <li>
             <a class="side-menu__item" href="/address"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Address</span></a>
         </li>
+        <?php } ?>
         {{-- <li class="slide">
             <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Maps</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">

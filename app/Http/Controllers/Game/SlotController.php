@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\WinSlot;
 use App\Models\Bonus;
+use App\Models\HisPlay;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +63,12 @@ class SlotController extends Controller
         $mod_user->update([
             'wallet' => $amount_bet
         ]); 
+
+        HisPlay::create([
+            'id_user' => Auth::user()->id,
+            'bet' => $request->amount_bet,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
 
         return [
             'status'=> true,

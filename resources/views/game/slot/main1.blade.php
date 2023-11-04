@@ -1,26 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-<style>
-.slider-container {
-    /* margin: 50px; */
-    text-align: center;
-}
 
-#slider {
-    width: 100%;
-}
-
-#slider-value {
-    display: block;
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-#slider .ui-slider-handle {
-    background:red;
-}
-</style>
 <link rel="stylesheet" type="text/css" href="{{asset('assets/slot/style.css')}}" media="screen"/>
 <!--app-content open-->
 <div class="app-content">
@@ -35,7 +16,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Jackpot Slot</li>
                 </ol>
             </div>
-            @include('layouts.header-side')
+            {{-- @include('layouts.header-side') --}}
         </div>
         <!-- PAGE-HEADER END -->
         {{-- <div class="row">
@@ -43,7 +24,6 @@
                 <img src="{{asset('assets/images/logo/logo1.jpg')}}" alt="" srcset="">
             </div>
         </div> --}}
-        @include('layouts.topup.topup')
         <!-- ROW-1 -->
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -56,7 +36,7 @@
                                     <table class="w-100">
                                         <td>
                                             <tr>
-                                                <h3 class="stats-title">Rules <i class="fa fa-info-circle"></i></h3>
+                                                <h3 class="stats-title" data-bs-effect="effect-scale" data-bs-toggle="modal" href="#Info_Symbol">Rules <i class="fa fa-info-circle"></i></h3>
                                             </tr>
                                             <tr>
                                                 {{-- <td><h3>Free Spin : <span id="ttl_free_spin">{{Auth::user()->bonus_slot->free_spin}}</span></h3></td> --}}
@@ -64,72 +44,6 @@
                                                 <h5 class="text-center">1x Spin = 0.3 Trx</h5>
                                             </tr>
                                         </td>
-                                    </table>
-                                    <table class="table-bordered w-100">
-                                        <tr>
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Bronze_Coin.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center">0.05</td>
-                                            <td class="text-center">0.2</td>
-
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Silver_Coin.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center">0.08</td>
-                                            <td class="text-center">0.32</td>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Gold_Coin.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center">0.1</td>
-                                            <td class="text-center">0.4</td>
-
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Buck_Cents.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center">0.18</td>
-                                            <td class="text-center">0.72</td>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Cash_Dollar.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center">0.25</td>
-                                            <td class="text-center">1</td>
-
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/Bitcoin.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-center">3</td>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th class="text-center">2 Symbol</th>
-                                            <th class="text-center">3 Symbol</th>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"><img src="{{asset('assets/slot/src/tiles/new/TRX.png')}}" alt="" srcset="" width="30px"></td>
-                                            <td class="text-center"></td>
-                                            <td class="text-center">Free Spin 10x</td>
-                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -222,6 +136,121 @@
     </div>
 </div>
 <!-- CONTAINER END -->
+
+<div class="modal fade"  id="Info_Symbol">
+    <div class="modal-dialog modal-dialog-centered modal-lg text-center" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Information</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" ><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/Bronze_Coin.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>0.05</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>0.2</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/Silver_Coin.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>0.08</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>0.32</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/Gold_Coin.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>0.1</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>0.4</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/Buck_Cents.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>0.18</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>0.72</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/Cash_Dollar.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>0.25</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>0.1</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/Bitcoin.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>3</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/TRX.png')}}" alt="" srcset="" width="100%">
+                        <br>
+                        <table style="width: 100%; text-align: left;">
+                            <tr>
+                                <td>2 Symbol : </td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>3 Symbol : </td>
+                                <td>FREE SPIN 10x</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -660,5 +689,3 @@
         }
     </script>
 @endsection
-
-@include('layouts.topup.js-topup')

@@ -14,9 +14,9 @@ class TrxHelper{
 
     public static function callTron()
     {
-        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.shasta.trongrid.io');
-        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.shasta.trongrid.io');
-        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.shasta.trongrid.io');
+        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
 
         try {
             $tron = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
@@ -101,7 +101,7 @@ class TrxHelper{
 
     public static function getTransactionByAddress($address, $only_confirmed = 1, $only_to = null, $limit = null, $add_to_table)
     {
-        $url = 'https://api.shasta.trongrid.io/v1/accounts/'.$address.'/transactions';
+        $url = 'https://api.trongrid.io/v1/accounts/'.$address.'/transactions';
         if ($only_confirmed) {
             $url .= '?only_confirmed=true';
         }
