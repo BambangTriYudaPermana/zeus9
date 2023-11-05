@@ -55,9 +55,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 text-center">
-                                <img src="https://cdn-icons-png.flaticon.com/128/5406/5406791.png" alt="" width="150px">
+                                {{-- <img src="https://cdn-icons-png.flaticon.com/128/5406/5406791.png" alt="" width="150px">
                                 <br>
-                                <a class="btn btn-warning mt-5">Newbie</a>
+                                <a class="btn btn-warning mt-5">Newbie</a> --}}
                             </div>
                             <div class="col-8">
                                 <div class="main-profile-contact-list float-md-end d-lg-flex">

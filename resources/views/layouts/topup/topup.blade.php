@@ -66,8 +66,13 @@
                                 </div>
                             </div>
                             <div class="tab-pane " id="tab6">
-                                <p> default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like</p>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et</p>
+                                <div class="form-group">
+                                    <label class="form-label">Amount to Withdraw</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="">
+                                        <span class="input-group-text btn btn-primary">Max</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

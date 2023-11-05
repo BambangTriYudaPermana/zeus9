@@ -157,15 +157,17 @@
         }
 
         function PlayAnimation(WinNumber, statusWin, balance) {
+            var rocket = new Audio("{{asset('assets/sounds/rocket.mp3')}}");
+            rocket.play();
             $('#resWin').css({
                 "color" : "#ebf8fe"
             });
             $('#resWin').html(WinNumber+'x');
             $("#rocketGif").show(); 
             $("#resWin").hide();
-            $("#rocketGif").attr("src", "{{asset('assets/images/game/rocket2.gif')}}");
+            $("#rocketGif").attr("src", "{{asset('assets/images/game/rocket4.gif')}}");
             // $("#resWin").show(9000).fadeIn();
-            $("#resWin").show(9000).fadeIn(0, function() {
+            $("#resWin").show(2500).fadeIn(0, function() {
                 $('.button-play').prop('disabled', false);
                 if (statusWin) {
                     $('#resWin').css({
