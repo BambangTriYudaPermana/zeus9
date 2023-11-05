@@ -8,16 +8,16 @@
 }
 
 .text-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* background-color: rgba(0, 0, 0, 0.7);  */
-  color: red;
-  padding: 20px; /* Padding around the text */
-  text-align: center;
-  font-weight: bold;
-font-size: 100pt;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: rgba(0, 0, 0, 0.7);  */
+    color: #ebf8fe;
+    padding: 20px; /* Padding around the text */
+    text-align: center;
+    font-weight: bold;
+    font-size: 100pt;
 }
 
 .text-overlay p {
@@ -149,21 +149,39 @@ font-size: 100pt;
                     type: btn
                 },
                 success: function (response) {
-                    PlayAnimation(response.win_number);
+                    PlayAnimation(response.win_number, response.status, response.balance);
                     // trenball(data_index, response.data_number, response.win_number, response.balance, response.status);
                 }
             });
             return  (Math.random() * (max - min) + min).toFixed(2);
         }
 
-        function PlayAnimation(WinNumber) {
+        function PlayAnimation(WinNumber, statusWin, balance) {
+            $('#resWin').css({
+                "color" : "#ebf8fe"
+            });
             $('#resWin').html(WinNumber+'x');
             $("#rocketGif").show(); 
             $("#resWin").hide();
             $("#rocketGif").attr("src", "{{asset('assets/images/game/rocket2.gif')}}");
             // $("#resWin").show(9000).fadeIn();
-            $("#resWin").show(9000).fadeIn(5000, function() {
+            $("#resWin").show(9000).fadeIn(0, function() {
                 $('.button-play').prop('disabled', false);
+                if (statusWin) {
+                    $('#resWin').css({
+                        "color" : "green"
+                    });   
+                    $('#wallet-user-general').html(numberWithCommas(balance));
+                    var win = new Audio("{{asset('assets/slot/src/sounds/win.mp3')}}");
+                    win.play();
+                }else{
+                    $('#resWin').css({
+                        "color" : "red"
+                    });
+                    $('#wallet-user-general').html(numberWithCommas(balance));
+                    var lose = new Audio("{{asset('assets/slot/src/sounds/lose.mp3')}}");
+                    lose.play();
+                }
             });
             $("#resWin").hide();
         }
