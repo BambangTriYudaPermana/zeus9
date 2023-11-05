@@ -35,7 +35,7 @@
     }
 
     function max_balance(){
-        if (Auth::user()) {
+        if ({{Auth::user()}}) {
             $('#balance').val({{Auth::user()->wallet}});    
         }else{
             $('#balance').val();
