@@ -33,4 +33,8 @@
     function copy_address(address) {
         navigator.clipboard.writeText(address);
     }
+
+    function max_balance(){
+        $('#balance').val({{Auth::user()->wallet}});
+    }
 </script>

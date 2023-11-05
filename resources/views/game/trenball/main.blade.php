@@ -31,10 +31,10 @@
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">TrennBall</h1>
+                <h1 class="page-title">Rocket Launch</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">TrennBall</li>
+                    <li class="breadcrumb-item active" aria-current="page">Rocket Launch</li>
                 </ol>
             </div>
             {{-- @include('layouts.header-side') --}}

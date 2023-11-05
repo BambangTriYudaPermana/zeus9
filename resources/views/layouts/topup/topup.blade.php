@@ -65,14 +65,51 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane " id="tab6">
-                                <div class="form-group">
-                                    <label class="form-label">Amount to Withdraw</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="">
-                                        <span class="input-group-text btn btn-primary">Max</span>
+                                <div class="col-md-12 mb-12 mt-2">
+                                    <label for="topup_saldo" style="float: left;">Currentcy</label>
+                                    <br>
+                                    <div class="input-icon">
+                                        <img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" style="float: right; margin-top: 10px">
+                                        <input type="text" class="form-control w-90" placeholder="Amount in TRX" required disabled value="TRX">
                                     </div>
                                 </div>
+
+                                <div class="col-md-12 mb-12">
+                                    <label for="topup_email" style="float: left;">Network</label>
+                                    <div class="input-icon">
+                                        <input type="text" class="form-control" placeholder="Network" required disabled value="TRX20">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-12">
+                                    <label class="form-label" style="float: left;">Amount to Withdraw</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="" id="balance">
+                                        <span class="input-group-text btn btn-primary" onclick="max_balance()">Max</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12 mb-12 mt-2">
+                                    <ul style="text-align: left">
+                                        <li>Available Balance : <b>{{Auth::user()->wallet}}</b></li>
+                                        <li>Minimum Withdraw : <b>5.0000000</b></li>
+                                        <li>Network Fee : <b>5.0000000</b></li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="col-md-12 mb-12">
+                                    <label class="form-label">Your Destination Address</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mt-2">
+                                    <button class="btn btn-primary" style="float: right;">Request Withdraw</button>
+                                </div>
+                                <br><br>
                             </div>
                         </div>
                     </div>
