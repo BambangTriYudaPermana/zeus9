@@ -2,23 +2,26 @@
 
 @section('content')
 <style>
-.slider-container {
-    /* margin: 50px; */
-    text-align: center;
+.image-container {
+  position: relative;
+  max-width: 100%;
 }
 
-#slider {
-    width: 100%;
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: rgba(0, 0, 0, 0.7);  */
+  color: red;
+  padding: 20px; /* Padding around the text */
+  text-align: center;
+  font-weight: bold;
+font-size: 100pt;
 }
 
-#slider-value {
-    display: block;
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-#slider .ui-slider-handle {
-    background:red;
+.text-overlay p {
+  margin: 0;
 }
 </style>
 <!--app-content open-->
@@ -34,7 +37,7 @@
                     <li class="breadcrumb-item active" aria-current="page">TrennBall</li>
                 </ol>
             </div>
-            @include('layouts.header-side')
+            {{-- @include('layouts.header-side') --}}
         </div>
         <!-- PAGE-HEADER END -->
         {{-- <div class="row">
@@ -42,24 +45,34 @@
                 <img src="{{asset('assets/images/logo/logo1.jpg')}}" alt="" srcset="">
             </div>
         </div> --}}
-        @include('layouts.topup.topup')
+        {{-- @include('layouts.topup.topup') --}}
         <!-- ROW-1 -->
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-12">
-                                {{-- <div id="chart-container" style="width: 600px; height: 400px;"></div> --}}
                                 <div class="text-center">
                                     <span id="number-counter" style="font-size: 17pt;">0</span>x 
-                                    {{-- <span id="res_game">WIN!</span> --}}
                                     <span class="ml-10" id="balance-color">
                                         <i class="fa fa-check-circle-o me-2" aria-hidden="true" style="display: none" id="icon-win"> <b class="result_game"></b></i>
                                         <i class="fa fa-frown-o me-2" aria-hidden="true" style="display: none" id="icon-lose"> <b class="result_game"></b></i>
                                     </span>
                                 </div>
                                 <div id="chart_trenball" style="width: 100% !important; min-width: 100%; height:400px;"></div>
+                            </div>
+                        </div> --}}
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" id="image-container">
+                                <img src="{{asset('assets/images/pngs/bg-trenball.png')}}" alt="Gambar GIF" width="100%" height="550px" id="rocketGif" style="border-radius: 10%;">
+                                <div class="text-overlay">
+                                    <p id="resWin" style="display: none;">10.91x</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                {{-- <button id="playButton">Play GIF</button> --}}
                             </div>
                         </div>
                         {{-- <br> --}}
@@ -103,6 +116,16 @@
         var global_var = [];
 
         $(document).ready(function () {
+            // var gif = $("#rocketGif");
+
+            // $("#playButton").click(function(){
+            //     $("#rocketGif").show(); 
+            //     $("#resWin").hide();
+            //     // $('#resWin').show();
+            //     $("#rocketGif").attr("src", "{{asset('assets/images/game/rocket2.gif')}}");
+            //     $("#resWin").show(9000).fadeIn();
+            //     $("#resWin").hide();
+            // });
             
         });
         function numberWithCommas(x) {
@@ -126,10 +149,23 @@
                     type: btn
                 },
                 success: function (response) {
-                    trenball(data_index, response.data_number, response.win_number, response.balance, response.status);
+                    PlayAnimation(response.win_number);
+                    // trenball(data_index, response.data_number, response.win_number, response.balance, response.status);
                 }
             });
             return  (Math.random() * (max - min) + min).toFixed(2);
+        }
+
+        function PlayAnimation(WinNumber) {
+            $('#resWin').html(WinNumber+'x');
+            $("#rocketGif").show(); 
+            $("#resWin").hide();
+            $("#rocketGif").attr("src", "{{asset('assets/images/game/rocket2.gif')}}");
+            // $("#resWin").show(9000).fadeIn();
+            $("#resWin").show(9000).fadeIn(5000, function() {
+                $('.button-play').prop('disabled', false);
+            });
+            $("#resWin").hide();
         }
 
         function tren_red() {
@@ -260,4 +296,4 @@
     </script>
 @endsection
 
-@include('layouts.topup.js-topup')
+{{-- @include('layouts.topup.js-topup') --}}

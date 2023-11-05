@@ -75,7 +75,7 @@
                 </a>
             </div>
             <div class="col-md-6 col-xl-3">
-                <a href="#" class="thumbnail">
+                <a href="/trenball" class="thumbnail">
                     <img src="{{asset('assets/images/game/Hit-Slot.png')}}" alt="thumb1" class="thumbimg">
                 </a>
             </div>
