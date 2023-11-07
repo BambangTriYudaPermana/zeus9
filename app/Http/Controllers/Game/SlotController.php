@@ -133,11 +133,37 @@ class SlotController extends Controller
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
             }else{
+                $ttl_free = ($model->free_spin + 10);
                 $model->update([
-                    'free_spin'=> 10
+                    'free_spin'=> $ttl_free
                 ]); 
             }
+        }else if ($request->type == 'buy_free_spin') {
+            if (!$model) {
+                $model = Bonus::create([
+                    'id_user' => Auth::user()->id,
+                    'game' => 'slot',
+                    'free_spin' => 10,
+                    'status' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+            }else{
+                $ttl_free = ($model->free_spin + 10);
+                $model->update([
+                    'free_spin'=> $ttl_free
+                ]); 
+            }
+
+            $mod_user = User::findOrFail(Auth::user()->id);
+            $amount_bet = ($mod_user->wallet - 30);
+            $amount_bet = round($amount_bet, 2);
+
+            $mod_user->update([
+                'wallet' => $amount_bet
+            ]); 
+
         }
+
 
         return [
             'status' => true

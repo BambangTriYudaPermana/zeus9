@@ -3,6 +3,30 @@
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/slot/style.css')}}" media="screen"/>
+<style>
+    .buy-free-spin {
+        padding: 15px 25px;
+        font-size: 24px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        color: #fff;
+        background-color: #04AA6D;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+
+    .buy-free-spin:hover {
+        background-color: #3e8e41
+    }
+
+    .buy-free-spin:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+</style>
 <!--app-content open-->
 <div class="app-content">
     <div class="side-app">
@@ -42,6 +66,7 @@
                                                 {{-- <td><h3>Free Spin : <span id="ttl_free_spin">{{Auth::user()->bonus_slot->free_spin}}</span></h3></td> --}}
                                                 {{-- <td><h5 class="text-center">1x Spin = 0.3 Trx</h5></td> --}}
                                                 <h5 class="text-center">1x Spin = 0.3 Trx</h5>
+                                                <button class="buy-free-spin" onclick="buy_free_spin()">Buy 10x Free Spin</button>
                                             </tr>
                                         </td>
                                     </table>
@@ -259,10 +284,16 @@
 <!-- To Uglify: https://skalman.github.io/UglifyJS-online/ -->
 {{-- <script src="{{asset('assets/slot/auth.js')}}"></script> --}}
     <script>
-        var bet = 0.3;
+        var bet = 0;
         var global_var = [];
         $(document).ready(function () {
             global_var.balance = '{{Auth::user()->wallet}}';
+            
+
+            var form_spin = parseInt($('#form_spin').val());
+
+            bet = form_spin * 0.3;
+
             if (balance <= 0) {
                 // console.log(balance)
                 $('.button-play').prop('disabled', true);
@@ -343,7 +374,7 @@
         function doSlot(role_spin = 1){
             max_spin = role_spin;
             var is_free_spin = '{{$is_free_spin}}';
-            if (!is_free_spin) {
+            if (global_var.free_spin == 0) {
                 balance(0.3);     
             }else{
                 global_var.free_spin -= 1; 
@@ -420,6 +451,9 @@
                     if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
                         change()
                     }
+                    if (global_var.free_spin != 0) {
+                        changeFreeSpin()
+                    }
                     testWin();
                     return null;
                 }
@@ -448,7 +482,7 @@
                     } else {
                         slot2.className = "b"+(parseInt(slot2.className.substring(1))+1)
                     }
-                }else if (slot1.className || "b1" && slot2.className || "b1" && slot3.className || "b1"){
+                }else if (slot1.className == "b1" && slot2.className == "b1" && slot3.className == "b1"){
                     if (randomNumber <= 0.02) {
                         is_true = 1;
                     } else {
@@ -458,6 +492,85 @@
 
                 return true;
             }
+
+            function changeFreeSpin() {
+                slot1 = document.getElementById("slot1");
+                slot2 = document.getElementById("slot2");
+                slot3 = document.getElementById("slot3");
+
+                var is_true = 0;
+                var randomNumber = Math.random();
+                // Calculate winning condition with 5% probability (0.05)
+                // if (
+                //     (slot1.className == "b4" && slot2.className == "b4") || 
+                //     (slot1.className == "b4" && slot3.className == "b4") ||
+                //     (slot2.className == "b4" && slot3.className == "b4")
+                //    ) {
+                if (slot1.className == "b4" || slot2.className == "b4" || slot3.className == "b4"){
+                    if (slot1.className == "b4" && slot2.className == "b4" && slot3.className == "b4") {
+                        if (randomNumber <= 0.5) {
+                            is_true = 1;
+                        } else {
+                            slot3.className = "b"+(parseInt(slot2.className.substring(1))+1);
+                        }   
+                    }else if (slot1.className == "b4" && slot2.className != "b4") {
+                        slot3.className = "b4";
+                    }else if (slot1.className != "b4" && slot2.className == "b4") {
+                        slot3.className = "b4";
+                    }
+                }else if (slot1.className == "b5" || slot2.className == "b5" || slot3.className == "b5"){
+                    if (slot1.className == "b5" && slot2.className == "b5" && slot3.className == "b5") {
+                        if (randomNumber <= 0.4) {
+                            is_true = 1;
+                        } else {
+                            slot3.className = "b"+(parseInt(slot2.className.substring(1))+1);
+                        }   
+                    }else if (slot1.className == "b5" && slot2.className != "b5") {
+                        slot3.className = "b5";
+                    }else if (slot1.className != "b5" && slot2.className == "b5") {
+                        slot3.className = "b5";
+                    }
+                }else if (slot1.className == "b6" || slot2.className == "b6" || slot3.className == "b6"){
+                    if (slot1.className == "b6" && slot2.className == "b6" && slot3.className == "b6") {
+                        if (randomNumber <= 0.3) {
+                            is_true = 1;
+                        } else {
+                            slot3.className = "b"+(parseInt(slot2.className.substring(1))+1);
+                        }   
+                    }else if (slot1.className == "b6" && slot2.className != "b6") {
+                        slot3.className = "b6";
+                    }else if (slot1.className != "b6" && slot2.className == "b6") {
+                        slot3.className = "b6";
+                    }
+                }else if (slot1.className == "b2" || slot2.className == "b2" || slot3.className == "b2"){
+                    if (slot1.className == "b2" && slot2.className == "b2" && slot3.className == "b2") {
+                        if (randomNumber <= 0.2) {
+                            is_true = 1;
+                        } else {
+                            slot3.className = "b"+(parseInt(slot2.className.substring(1))+1);
+                        }   
+                    }else if (slot1.className == "b2" && slot2.className != "b2") {
+                        slot3.className = "b2";
+                    }else if (slot1.className != "b2" && slot2.className == "b2") {
+                        slot3.className = "b2";
+                    }
+                }else if (slot1.className == "b3" || slot2.className == "b3" || slot3.className == "b3"){
+                    if (slot1.className == "b3" && slot2.className == "b3" && slot3.className == "b3") {
+                        if (randomNumber <= 0.1) {
+                            is_true = 1;
+                        } else {
+                            slot3.className = "b"+(parseInt(slot2.className.substring(1))+1);
+                        }   
+                    }else if (slot1.className == "b3" && slot2.className != "b3") {
+                        slot3.className = "b3";
+                    }else if (slot1.className != "b3" && slot2.className == "b3") {
+                        slot3.className = "b3";
+                    }
+                }
+
+                return true;
+            }
+
         }
 
         function testWin(){
@@ -686,6 +799,50 @@
                     // $('#wallet-user-general').html(numberWithCommas(response.wallet));
                 }
             });
+        }
+
+        function buy_free_spin() {
+            var wallet = {{Auth::user()->wallet}};
+            if (wallet < 30) {
+                Swal.fire({
+                    title: "Failed",
+                    text: "You Don't have balance, Please TopUp first!!",
+                    type: "danger"
+                });
+            }else{
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "/SfreeSpin",
+                            method: 'POST',
+                            dataType: 'json',
+                            data: {
+                                free: 10,
+                                type: "buy_free_spin"
+                            },
+                            success: function (response) {
+                                Swal.fire({
+                                    title: "Success",
+                                    text: "Success! You Get 10x Free Spin!",
+                                    icon: "success"
+                                }).then(function() {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         }
     </script>
 @endsection
