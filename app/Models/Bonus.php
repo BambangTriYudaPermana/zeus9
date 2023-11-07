@@ -15,6 +15,7 @@ class Bonus extends Model
 
     protected $fillable = [
         'id_user',
+        'game',
         'free_spin',
         'status',
         'created_at'
