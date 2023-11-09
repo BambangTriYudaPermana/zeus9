@@ -113,19 +113,19 @@ class SlotController extends Controller
 
         if ($multiplier != '') {
             if ($multiplier == 9) {
-                $amount_bet = ($amount_bet * 2);    
+                $amount_bet = round(($amount_bet * 2),2);    
             }
             if ($multiplier == 10) {
-                $amount_bet = ($amount_bet * 3);    
+                $amount_bet = round(($amount_bet * 3),2);    
             }
             if ($multiplier == 11) {
-                $amount_bet = ($amount_bet * 4);    
+                $amount_bet = round(($amount_bet * 4),2);    
             }
             if ($multiplier == 12) {
-                $amount_bet = ($amount_bet * 5);    
+                $amount_bet = round(($amount_bet * 5),2);    
             }
             if ($multiplier == 13) {
-                $amount_bet = ($amount_bet * 10);    
+                $amount_bet = round(($amount_bet * 10),2);    
             }
             // dd($multiplier);
         }
