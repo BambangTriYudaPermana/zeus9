@@ -384,14 +384,19 @@
         function Spin(){
             var form_spin = parseInt($('#form_spin').val());
             var wallet = '{{Auth::user()->wallet}}';
-            if (wallet < 0.3) {
-                Swal.fire({
-                    title: "Failed",
-                    text: "You Don't have balance, Please TopUp first!!",
-                    type: "danger"
-                });
-            }else{
+            var is_free_spin = '{{$is_free_spin}}';
+            if (is_free_spin) {
                 doSlot(form_spin-1)
+            }else{
+                if (wallet < 0.3) {
+                    Swal.fire({
+                        title: "Failed",
+                        text: "You Don't have balance, Please TopUp first!!",
+                        type: "danger"
+                    });
+                }else{
+                    doSlot(form_spin-1)
+                }   
             }
         }
 
