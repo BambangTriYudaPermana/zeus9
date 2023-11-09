@@ -81,6 +81,9 @@ class SlotController extends Controller
         $box1 = $request->box1;
         $box2 = $request->box2;
         $box3 = $request->box3;
+        $multiplier = $request->multiplier_win;
+        
+        // dd($request);
 
         $arr = [$box1, $box2, $box3];
         $find = array_count_values($arr);
@@ -95,18 +98,41 @@ class SlotController extends Controller
                 $amount_bet = ($mod_user->wallet + $model->dua_symbol);
                 $amount_bet = round($amount_bet, 2);
 
-                $mod_user->update([
-                    'wallet' => $amount_bet
-                ]); 
+                // $mod_user->update([
+                //     'wallet' => $amount_bet
+                // ]); 
             }elseif ($maxValue == 3) {
                 $amount_bet = ($mod_user->wallet + $model->tiga_symbol);
                 $amount_bet = round($amount_bet, 2);
 
-                $mod_user->update([
-                    'wallet' => $amount_bet
-                ]); 
+                // $mod_user->update([
+                //     'wallet' => $amount_bet
+                // ]); 
             }
         }
+
+        if ($multiplier != '') {
+            if ($multiplier == 9) {
+                $amount_bet = ($amount_bet * 2);    
+            }
+            if ($multiplier == 10) {
+                $amount_bet = ($amount_bet * 3);    
+            }
+            if ($multiplier == 11) {
+                $amount_bet = ($amount_bet * 4);    
+            }
+            if ($multiplier == 12) {
+                $amount_bet = ($amount_bet * 5);    
+            }
+            if ($multiplier == 13) {
+                $amount_bet = ($amount_bet * 10);    
+            }
+            // dd($multiplier);
+        }
+
+        $mod_user->update([
+            'wallet' => $amount_bet
+        ]); 
 
         return [
             'status'=> true,
@@ -122,6 +148,12 @@ class SlotController extends Controller
         if ($request->type == 'minus_free_spin') {
             $model->update([
                 'free_spin'=> $request->free
+            ]);
+
+            HisPlay::create([
+                'id_user' => Auth::user()->id,
+                'bet' => 0.3,
+                'created_at' => date('Y-m-d H:i:s'),
             ]);
         }else if ($request->type == 'add_free_spin') {
             if (!$model) {

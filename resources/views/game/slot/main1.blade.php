@@ -26,6 +26,14 @@
         box-shadow: 0 5px #666;
         transform: translateY(4px);
     }
+    #multiplier {
+        display: block; 
+        margin-left: auto; 
+        margin-right: auto; 
+        background-repeat: no-repeat;
+        height: 160px; 
+        margin-bottom: 20px;
+    }
 </style>
 <!--app-content open-->
 <div class="app-content">
@@ -83,6 +91,14 @@
                                         <div class="col-md-12">
                                             <section id="status"><h3 id="text">{{$text_spin}}</h3></section>
                                         </div>
+                                    </div>
+                                    <div class="row" style="{{$is_free_spin ? '' : 'display:none;'}}">
+                                        <div class="col-4"></div>
+                                        <div class="col-md-4">
+                                            <div id="multiplier" class="b9"></div>
+                                            {{-- <img src="{{asset('assets/slot/src/tiles/new/x2.png')}}" alt="" srcset="" > --}}
+                                        </div>
+                                        <div class="col-4"></div>
                                     </div>
                                     {{-- <section id="Slots">
                                         <div id="slot1" class="a1"></div>
@@ -367,7 +383,16 @@
 
         function Spin(){
             var form_spin = parseInt($('#form_spin').val());
-            doSlot(form_spin-1)
+            var wallet = '{{Auth::user()->wallet}}';
+            if (wallet < 0.3) {
+                Swal.fire({
+                    title: "Failed",
+                    text: "You Don't have balance, Please TopUp first!!",
+                    type: "danger"
+                });
+            }else{
+                doSlot(form_spin-1)
+            }
         }
 
         global_var.free_spin = {{$is_free_spin ? Auth::user()->bonus_slot->free_spin : 0}};
@@ -394,6 +419,7 @@
             var numeberSlot1 = numChanges+randomInt(1,7)
             var numeberSlot2 = numChanges+2*7+randomInt(1,7)
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
+            var numeberSlot4 = numChanges+6*7+randomInt(1,7)
 
             // console.log(numChanges, numeberSlot1, numeberSlot2, numeberSlot3);
             var i1 = 0;
@@ -404,9 +430,12 @@
             text.innerHTML = "SPINNING..."
             status.style.background = "#606060"
             // document.getElementById("body").style.background="#0f0f0f";
+            
             slot1 = setInterval(spin1, 50);
             slot2 = setInterval(spin2, 50);
             slot3 = setInterval(spin3, 50);
+            multiplier = setInterval(multiplier, 30);
+            
             function spin1(){
                 slotTile = document.getElementById("slot1");
 
@@ -466,6 +495,74 @@
                 }
                 spin[sound].play();
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
+            }
+
+            var i4 = 0;
+            function multiplier() {
+                slotTile = document.getElementById("multiplier");
+
+                i4++;
+                if (i4 >= numeberSlot4) {
+                    coin[0].play();
+                    clearInterval(multiplier);
+                    return null;
+                }
+                var className = slotTile.className;
+                var regex = /b([9]|1[0-3])/; 
+                if (regex.test(className)) {
+                    var currentNumber = parseInt(slotTile.className.substring(1));
+                    if (currentNumber < 13) {
+                        slotTile.className = "b" + (currentNumber + 1);
+                        if (slotTile.className == "b13") {
+                            changeMultiplier()           
+                        }
+                    } else {
+                        slotTile.className = "b9";
+                    }
+                } else {
+                    slotTile.className = "b9";
+                }
+            }
+
+            function changeMultiplier() {
+                multiplier = document.getElementById("multiplier");
+
+                var is_true = 0;
+                var randomNumber = Math.random();
+
+                if (multiplier.className == "b9") {
+                    if (randomNumber <= 0.45) {
+                        is_true = 1;
+                    } else {
+                        multiplier.className = "b9"
+                    }
+                }else if (multiplier.className == "b10"){
+                    if (randomNumber <= 0.25) {
+                        is_true = 1;
+                    } else {
+                        multiplier.className = "b9"
+                    }
+                }else if (multiplier.className == "b11"){
+                    if (randomNumber <= 0.15) {
+                        is_true = 1;
+                    } else {
+                        multiplier.className = "b9"
+                    }
+                }else if (multiplier.className == "b12"){
+                    if (randomNumber <= 0.1) {
+                        is_true = 1;
+                    } else {
+                        multiplier.className = "b9"
+                    }
+                }else if (multiplier.className == "b13"){
+                    if (randomNumber <= 0.05) {
+                        is_true = 1;
+                    } else {
+                        multiplier.className = "b9"
+                    }
+                }
+
+                return true;
             }
 
             function change() {
@@ -686,6 +783,16 @@
 
         function addWin(box1, box2, box3){
             // console.log(box1, box2, box3);
+            var is_free_spin = '{{$is_free_spin}}';
+            if (is_free_spin) {
+                var multiplier = document.getElementById("multiplier").className;    
+                var multiplier_win = parseInt(multiplier.substring(1));
+            }else{
+                var multiplier = '';
+                var multiplier_win = '';
+            }
+            
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -697,6 +804,7 @@
                     box1: box1,
                     box2: box2,
                     box3: box3,
+                    multiplier_win: multiplier_win,
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));

@@ -93,7 +93,7 @@
                                         <input id="otp" type="text" class="input100 form-control @error('otp') is-invalid @enderror" name="otp" required autocomplete="current-otp" placeholder="OTP" >
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
-											<i class="zmdi zmdi-lock" aria-hidden="true"></i>
+											<i class="zmdi zmdi-key" aria-hidden="true"></i>
 										</span>
 									</div>
 									<div class="text-end pt-1">
