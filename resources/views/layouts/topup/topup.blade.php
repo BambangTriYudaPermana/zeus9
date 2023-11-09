@@ -121,6 +121,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" value="{{Auth::user()->wallet}}" id="wallet-user">
 <?php 
     }
 ?>

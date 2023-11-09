@@ -92,7 +92,7 @@
                                             <section id="status"><h3 id="text">{{$text_spin}}</h3></section>
                                         </div>
                                     </div>
-                                    <div class="row" style="{{$is_free_spin ? '' : 'display:none;'}}">
+                                    <div class="row" id="multiplier-real" style="{{$is_free_spin ? '' : 'display:none;'}}">
                                         <div class="col-4"></div>
                                         <div class="col-md-4">
                                             <div id="multiplier" class="b9"></div>
@@ -385,6 +385,7 @@
             var form_spin = parseInt($('#form_spin').val());
             var wallet = '{{Auth::user()->wallet}}';
             var is_free_spin = '{{$is_free_spin}}';
+            // var is_free_spin = parseInt('Auth::user()->bonus_slot->free_spin');
             if (is_free_spin) {
                 doSlot(form_spin-1)
             }else{
@@ -789,6 +790,7 @@
         function addWin(box1, box2, box3){
             // console.log(box1, box2, box3);
             var is_free_spin = '{{$is_free_spin}}';
+            // var is_free_spin = 'Auth::user()->bonus_slot->free_spin';
             if (is_free_spin) {
                 var multiplier = document.getElementById("multiplier").className;    
                 var multiplier_win = parseInt(multiplier.substring(1));
@@ -813,6 +815,13 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                    if (response.free_spin == 0) {
+                        $('#multiplier-real').hide();
+                        is_free_spin = false;
+                    }else{
+                        $('#multiplier-real').show();
+                        is_free_spin = true;
+                    }
                 }
             });
             // if (login == true){
@@ -891,6 +900,13 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                    if (response.free_spin == 0) {
+                        $('#multiplier-real').hide();
+                        is_free_spin = false;
+                    }else{
+                        $('#multiplier-real').show();
+                        is_free_spin = true;
+                    }
                 }
             });
         }
@@ -910,6 +926,13 @@
                 },
                 success: function (response) {
                     // $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                    if (response.free_spin == 0) {
+                        $('#multiplier-real').hide();
+                        is_free_spin = false;
+                    }else{
+                        $('#multiplier-real').show();
+                        is_free_spin = true;
+                    }
                 }
             });
         }

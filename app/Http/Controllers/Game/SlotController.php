@@ -73,6 +73,7 @@ class SlotController extends Controller
         return [
             'status'=> true,
             'wallet' => $amount_bet,
+            'free_spin' => Auth::user()->bonus_slot->free_spin,
         ];
     }
 
@@ -111,7 +112,7 @@ class SlotController extends Controller
             }
         }
 
-        if ($multiplier != '') {
+        if ($multiplier != '' && Auth::user()->bonus_slot->free_spin > 0) {
             if ($multiplier == 9) {
                 $amount_bet = round(($amount_bet * 2),2);    
             }
@@ -137,6 +138,7 @@ class SlotController extends Controller
         return [
             'status'=> true,
             'wallet' => $amount_bet,
+            'free_spin' => Auth::user()->bonus_slot->free_spin,
         ];
 
     }
@@ -198,7 +200,8 @@ class SlotController extends Controller
 
 
         return [
-            'status' => true
+            'status' => true,
+            'free_spin' => Auth::user()->bonus_slot->free_spin,
         ];
     }
 
