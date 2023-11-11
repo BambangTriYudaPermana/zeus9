@@ -15,6 +15,7 @@ class HisPlay extends Model
 
     protected $fillable = [
         'id_user',
+        'game',
         'bet',
         'win_amount',
         'result',

@@ -21,7 +21,7 @@
 {{-- Footer --}}
 <x-slot:footer>
 <x-mail::footer>
-© TrxGames.Online. @lang('All rights reserved.')
+© {{ date('Y') }} "TrxGames.Online". @lang('All rights reserved.')
 </x-mail::footer>
 </x-slot:footer>
 </x-mail::layout>

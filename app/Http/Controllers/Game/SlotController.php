@@ -62,18 +62,13 @@ class SlotController extends Controller
 
         $mod_user->update([
             'wallet' => $amount_bet
-        ]); 
-
-        HisPlay::create([
-            'id_user' => Auth::user()->id,
-            'bet' => $request->amount_bet,
-            'created_at' => date('Y-m-d H:i:s'),
         ]);
 
+        $ttl_free_spin = isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0;
         return [
             'status'=> true,
             'wallet' => $amount_bet,
-            'free_spin' => Auth::user()->bonus_slot->free_spin,
+            'ttl_free_spin' => $ttl_free_spin,
         ];
     }
 
@@ -94,10 +89,12 @@ class SlotController extends Controller
 
         $model = WinSlot::where(['code_symbol' => $mostCommonValue])->first();
         $mod_user = User::findOrFail(Auth::user()->id);
+        $win_amount = 0;
         if ($model) {
             if ($maxValue == 2) {
                 $amount_bet = ($mod_user->wallet + $model->dua_symbol);
                 $amount_bet = round($amount_bet, 2);
+                $win_amount = $model->dua_symbol;
 
                 // $mod_user->update([
                 //     'wallet' => $amount_bet
@@ -105,6 +102,7 @@ class SlotController extends Controller
             }elseif ($maxValue == 3) {
                 $amount_bet = ($mod_user->wallet + $model->tiga_symbol);
                 $amount_bet = round($amount_bet, 2);
+                $win_amount = $model->tiga_symbol;
 
                 // $mod_user->update([
                 //     'wallet' => $amount_bet
@@ -135,10 +133,12 @@ class SlotController extends Controller
             'wallet' => $amount_bet
         ]); 
 
+        $ttl_free_spin = isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0;
         return [
             'status'=> true,
+            'win_amount' => $win_amount,
             'wallet' => $amount_bet,
-            'free_spin' => Auth::user()->bonus_slot->free_spin,
+            'ttl_free_spin' => $ttl_free_spin,
         ];
 
     }
@@ -152,11 +152,6 @@ class SlotController extends Controller
                 'free_spin'=> $request->free
             ]);
 
-            HisPlay::create([
-                'id_user' => Auth::user()->id,
-                'bet' => 0.3,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
         }else if ($request->type == 'add_free_spin') {
             if (!$model) {
                 $model = Bonus::create([
@@ -199,9 +194,25 @@ class SlotController extends Controller
         }
 
 
+        $ttl_free_spin = isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0;
         return [
             'status' => true,
-            'free_spin' => Auth::user()->bonus_slot->free_spin,
+            'ttl_free_spin' => $ttl_free_spin,
+        ];
+    }
+
+    public function HisPlay(Request $request){
+        HisPlay::create([
+            'id_user' => Auth::user()->id,
+            'game' => $request->game,
+            'bet' => $request->bet,
+            'win_amount' => $request->win_amount,
+            'result' => $request->result,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return [
+            'status' => true,
         ];
     }
 

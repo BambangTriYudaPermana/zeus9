@@ -68,6 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        dd($data);
         // create address for transaction
         $data_add = TrxHelper::createAddress();
         // dd($data_add);
@@ -87,6 +88,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'id_role' => 1,
             'id_address' => $id_address,
+            'reveral_code' => $data['reveral_code']
         ]);
     }
 }

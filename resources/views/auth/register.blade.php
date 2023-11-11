@@ -117,6 +117,13 @@
 											<i class="zmdi zmdi-lock" aria-hidden="true"></i>
 										</span>
 									</div>
+									<div class="wrap-input100 validate-input">
+										<input class="input100" type="text" name="reveral_code" placeholder="Reveral Code" id="reveral_code" min="4" max="4" value="{{ isset($_GET['reveral']) && $_GET['reveral'] != '' ? $_GET['reveral'] : '' }}">
+										<span class="focus-input100"></span>
+										<span class="symbol-input100">
+											<i class="zmdi zmdi-money-box" aria-hidden="true"></i>
+										</span>
+									</div>
 									<label class="custom-control custom-checkbox mt-4">
 										<input type="checkbox" class="custom-control-input" checked>
 										<span class="custom-control-label">Agree the <a href="">terms and policy</a></span>

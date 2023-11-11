@@ -10,6 +10,8 @@
 		<meta name="author" content="Spruko Technologies Private Limited">
 		<meta name="keywords" content="admin, dashboard, dashboard ui, admin dashboard template, admin panel dashboard, admin panel html, admin panel html template, admin panel template, admin ui templates, administrative templates, best admin dashboard, best admin templates, bootstrap 4 admin template, bootstrap admin dashboard, bootstrap admin panel, html css admin templates, html5 admin template, premium bootstrap templates, responsive admin template, template admin bootstrap 4, themeforest html">
 
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 		<!-- FAVICON -->
 		<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/logo/favicon.ico')}}" />
 
@@ -96,9 +98,15 @@
 											<i class="zmdi zmdi-key" aria-hidden="true"></i>
 										</span>
 									</div>
+									<span class="text-success" id="text-otp"></span>
 									<div class="text-end pt-1">
-                                        <p class="mb-0" style="float: left;"><a href="forgot-password.html" class="text-primary ms-1">Send OTP</a></p>
-										<p class="mb-0"><a href="forgot-password.html" class="text-primary ms-1">Forgot Password?</a></p>
+										<p class="mb-0" style="float: left;"><a onclick="sendOTP()" class="text-primary ms-1">Send OTP</a></p>
+										@if (Route::has('password.request'))
+											<p class="mb-0"><a href="{{ route('password.request') }}" class="text-primary ms-1">Forgot Password?</a></p>
+											{{-- <a class="btn btn-link" href="{{ route('password.request') }}">
+												{{ __('Forgot Your Password?') }}
+											</a> --}}
+										@endif
 									</div>
 									<div class="container-login100-form-btn">
                                         <button type="submit" class="login100-form-btn btn-primary">
@@ -154,6 +162,38 @@
 
 		<!-- CUSTOM JS-->
 		<script src="{{asset('assets/js/custom.js')}}"></script>
+
+		<script>
+			$(document).ready(function () {
+				
+			});
+
+			function sendOTP() {
+				var email = $('#email').val();
+
+				$.ajax({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					url: "/send-otp",
+					method: 'POST',
+					dataType: 'json',
+					data: {
+						email: email
+					},
+					success: function (response) {
+						// console.log(response.message);
+						if (response.status) {
+							// $('#text-otp').show();
+							$('#text-otp').html(response.message);
+						}else{
+							// $('#text-otp').hide();
+							$('#text-otp').html(response.message);
+						}
+					}
+				});
+			}
+		</script>
 
 	</body>
 </html>

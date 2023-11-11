@@ -4,33 +4,59 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\HisPlay;
+use Mail;
+use App\Mail\OtpMail;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
-class ProfileController extends Controller
+class SendEmailController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function SendOtp(Request $request)
     {
-        $get_bet = HisPlay::selectRaw('sum(bet) as bet')->where(['id_user' => Auth::user()->id])->first();
-        $get_play = HisPlay::selectRaw('count(id) as play')->where(['id_user' => Auth::user()->id])->first();
-        $get_history = HisPlay::where(['id_user' => Auth::user()->id])->orderBy('created_at', 'desc')->get();
-        // dd($get_bet['bet']);
-        return view('front.profile',[
-            'bet' => $get_bet['bet'],
-            'play' => $get_play['play'],
-            'history' => $get_history
-        ]);
+        $get_user = User::where("email", $request->email)->first();
+        if ($get_user) {
+            $seed = str_split('0123456789');
+            shuffle($seed);
+            $rand = '';
+            foreach (array_rand($seed, 6) as $k) $rand .= $seed[$k];
+
+            $otp = $rand;
+
+            // dd($get_user);
+            $get_user->update([
+                'otp'=> $otp
+            ]);
+
+            $mailData = [
+                'otp' => $otp
+            ];
+            $email = $request->email;
+
+            // dd('masuk');
+            Mail::to($email)->send(new OtpMail($mailData));
+            
+            return [
+                'status' => true,
+                'message' => 'OTP has been send to your email',
+            ];
+
+            // dd("Email is sent successfully.");    
+        }else{
+            return [
+                'status' => false,
+                'message' => 'Email Not Found',
+            ];
+        }
+        
+    }
+     public function index()
+    {
+        
     }
 
     /**

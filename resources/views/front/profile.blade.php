@@ -5,6 +5,12 @@
     .float-md-end {
         float: left !important;
     }
+    .win{
+        color: green;
+    }
+    .lose{
+        color: red;
+    }
 </style>
 <!--app-content open-->
 <div class="app-content">
@@ -102,6 +108,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 mt-2">
+                                <table id="table-history" class="table table-striped nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Bet</th>
+                                            <th class="text-center">Result Game</th>
+                                            <th class="text-center">Win Amount</th>
+                                            <th class="text-center">Play At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($history as $item)
+                                        <tr>
+                                            <td class="text-center">{{$item['bet']}}</td>
+                                            <td class="text-center {{$item['result'] == 'win' ? 'win' : 'lose'}}">{{$item['result']}}</td>
+                                            <td class="text-center">{{$item['win_amount']}}</td>
+                                            <td class="text-center">{{$item['created_at']}}</td>
+                                        </tr>    
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         
                     </div>
@@ -120,8 +148,10 @@
         var global_var = [];
 
         $(document).ready(function () {
-            
-
+            $('#table-history').DataTable();
+            // new DataTable('#table-history', {
+            //     responsive: true
+            // });
         });
 
         function slide_game() {

@@ -20,20 +20,19 @@
         ?>
         <li><h3>Management</h3></li>
         <li>
-            <a class="side-menu__item" href="/transaction"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">List Topup</span></a>
+            <a class="side-menu__item" href="{{route('transaction.index')}}"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">List Topup</span></a>
         </li>
-        <li>
+        {{-- <li>
             <a class="side-menu__item" href="/address"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Address</span></a>
+        </li> --}}
+        <li class="slide">
+            <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Address</span><i class="angle fa fa-angle-right"></i></a>
+            <ul class="slide-menu">
+                <li><a href="{{route('address.index')}}" class="slide-item">Master Address</a></li>
+                <li><a href="{{route('collect.index')}}" class="slide-item">Collect Address</a></li>
+            </ul>
         </li>
         <?php } ?>
-        {{-- <li class="slide">
-            <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Maps</span><i class="angle fa fa-angle-right"></i></a>
-            <ul class="slide-menu">
-                <li><a href="maps1.html" class="slide-item">Leaflet Maps</a></li>
-                <li><a href="maps2.html" class="slide-item">Mapel Maps</a></li>
-                <li><a href="maps.html" class="slide-item">Vector Maps</a></li>
-            </ul>
-        </li> --}}
         {{-- <li><h3>Game</h3></li>
         <li>
             <a class="side-menu__item" href="/slide"><i class="side-menu__icon fa fa-sliders"></i><span class="side-menu__label">Slider</span></a>

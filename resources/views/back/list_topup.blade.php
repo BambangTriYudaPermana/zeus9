@@ -57,9 +57,9 @@
                                             <td>{{$item['status']}}</td>
                                             <td>{{$item['created_at']}}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-success" title="ACC" onclick="topup('acc', {{$item['id']}})"><i class="fa fa-check"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="Reject" onclick="topup('reject', {{$item['id']}})"><i class="fa fa-times"></i></button>
-                                                <button class="btn btn-sm btn-warning" title="Sync" onclick="topup('sync', {{$item['id']}})"><i class="fa fa-refresh"></i></button>
+                                                <button class="btn btn-sm btn-success" title="ACC" onclick="transaction('acc', {{$item['id']}})"><i class="fa fa-check"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="Reject" onclick="transaction('reject', {{$item['id']}})"><i class="fa fa-times"></i></button>
+                                                <button class="btn btn-sm btn-warning" title="Sync" onclick="transaction('sync', {{$item['id']}})"><i class="fa fa-refresh"></i></button>
                                             </td>
                                         </tr>
                                         <?php $no++?>
@@ -82,7 +82,7 @@
             $('#basic-datatable').DataTable();
         });
 
-        function topup(status, id_transaction) {
+        function transaction(status, id_transaction) {
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',

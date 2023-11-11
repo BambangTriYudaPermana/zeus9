@@ -26,14 +26,21 @@
         box-shadow: 0 5px #666;
         transform: translateY(4px);
     }
-    #multiplier {
+    /* #multiplier {
         display: block; 
         margin-left: auto; 
         margin-right: auto; 
         background-repeat: no-repeat;
         height: 160px; 
         margin-bottom: 20px;
-    }
+    } */
+    /* #multiplier-real {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+
+    
 </style>
 <!--app-content open-->
 <div class="app-content">
@@ -74,7 +81,7 @@
                                                 {{-- <td><h3>Free Spin : <span id="ttl_free_spin">{{Auth::user()->bonus_slot->free_spin}}</span></h3></td> --}}
                                                 {{-- <td><h5 class="text-center">1x Spin = 0.3 Trx</h5></td> --}}
                                                 <h5 class="text-center">1x Spin = 0.3 Trx</h5>
-                                                <button class="buy-free-spin" onclick="buy_free_spin()">Buy 10x Free Spin</button>
+                                                <button class="buy-free-spin w-100" onclick="buy_free_spin()">Buy 10x Free Spin</button>
                                             </tr>
                                         </td>
                                     </table>
@@ -93,12 +100,11 @@
                                         </div>
                                     </div>
                                     <div class="row" id="multiplier-real" style="{{$is_free_spin ? '' : 'display:none;'}}">
-                                        <div class="col-4"></div>
-                                        <div class="col-md-4">
+                                        {{-- <div class="col-4"></div> --}}
+                                        <div class="col-md-12">
                                             <div id="multiplier" class="b9"></div>
-                                            {{-- <img src="{{asset('assets/slot/src/tiles/new/x2.png')}}" alt="" srcset="" > --}}
                                         </div>
-                                        <div class="col-4"></div>
+                                        {{-- <div class="col-4"></div> --}}
                                     </div>
                                     {{-- <section id="Slots">
                                         <div id="slot1" class="a1"></div>
@@ -303,9 +309,15 @@
         var bet = 0;
         var global_var = [];
         $(document).ready(function () {
-            global_var.balance = '{{Auth::user()->wallet}}';
+            global_var.balance = parseInt('{{Auth::user()->wallet}}');
+            global_var.ttl_free_spin = parseInt('{{isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0}}');
             
-
+            if (global_var.ttl_free_spin > 0) {
+                global_var.is_free_spin = true;
+            }else{
+                global_var.is_free_spin = false;
+            }
+        
             var form_spin = parseInt($('#form_spin').val());
 
             bet = form_spin * 0.3;
@@ -359,6 +371,7 @@
         var coin = [
             new Audio(url_coinMp3),
             new Audio(url_coinMp3),
+            new Audio(url_coinMp3),
             new Audio(url_coinMp3)
         ]
         var win = new Audio("{{asset('assets/slot/src/sounds/win.mp3')}}");
@@ -401,15 +414,15 @@
             }
         }
 
-        global_var.free_spin = {{$is_free_spin ? Auth::user()->bonus_slot->free_spin : 0}};
+        // global_var.free_spin = {{$is_free_spin ? Auth::user()->bonus_slot->free_spin : 0}};
         function doSlot(role_spin = 1){
             max_spin = role_spin;
-            var is_free_spin = '{{$is_free_spin}}';
-            if (global_var.free_spin == 0) {
+            
+            if (global_var.ttl_free_spin == 0) {
                 balance(0.3);     
             }else{
-                global_var.free_spin -= 1; 
-                Sfree_spin(global_var.free_spin, 'minus_free_spin')
+                global_var.ttl_free_spin -= 1; 
+                Sfree_spin(global_var.ttl_free_spin, 'minus_free_spin')
             }
             // console.log(global_var.free_spin);
             
@@ -486,7 +499,8 @@
                     if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
                         change()
                     }
-                    if (global_var.free_spin != 0) {
+                    if (global_var.ttl_free_spin != 0) {
+                        // console.log(global_var.ttl_free_spin);
                         changeFreeSpin()
                     }
                     testWin();
@@ -509,7 +523,7 @@
 
                 i4++;
                 if (i4 >= numeberSlot4) {
-                    coin[0].play();
+                    // coin[3].play();
                     clearInterval(multiplier);
                     return null;
                 }
@@ -712,6 +726,7 @@
                 text.innerHTML = "YOU LOSE!"
                 status.style.background = "#962a2aa9"
                 // document.getElementById("body").style.background="#251111";
+                HisPlay("slot", 0.3, 0, "lose")
                 lose.play();
             }
             doing = false;
@@ -789,9 +804,8 @@
 
         function addWin(box1, box2, box3){
             // console.log(box1, box2, box3);
-            var is_free_spin = '{{$is_free_spin}}';
-            // var is_free_spin = 'Auth::user()->bonus_slot->free_spin';
-            if (is_free_spin) {
+
+            if (global_var.is_free_spin) {
                 var multiplier = document.getElementById("multiplier").className;    
                 var multiplier_win = parseInt(multiplier.substring(1));
             }else{
@@ -799,7 +813,6 @@
                 var multiplier_win = '';
             }
             
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -815,13 +828,16 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
-                    if (response.free_spin == 0) {
+
+                    if (response.ttl_free_spin == 0) {
                         $('#multiplier-real').hide();
-                        is_free_spin = false;
+                        global_var.is_free_spin = false;
                     }else{
                         $('#multiplier-real').show();
-                        is_free_spin = true;
+                        global_var.is_free_spin = true;
                     }
+
+                    HisPlay("slot", 0.3, response.win_amount, "win")
                 }
             });
             // if (login == true){
@@ -876,7 +892,7 @@
                 doSlot(max_spin);
             }
 
-            if (global_var.free_spin == 0) {
+            if (global_var.ttl_free_spin == 0) {
                 $('#spin-minus').prop('disabled', false);
                 $('#spin-plus').prop('disabled', false);
             }
@@ -900,12 +916,12 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
-                    if (response.free_spin == 0) {
+                    if (response.ttl_free_spin == 0) {
                         $('#multiplier-real').hide();
-                        is_free_spin = false;
+                        global_var.is_free_spin = false;
                     }else{
                         $('#multiplier-real').show();
-                        is_free_spin = true;
+                        global_var.is_free_spin = true;
                     }
                 }
             });
@@ -926,20 +942,19 @@
                 },
                 success: function (response) {
                     // $('#wallet-user-general').html(numberWithCommas(response.wallet));
-                    if (response.free_spin == 0) {
+                    if (response.ttl_free_spin == 0) {
                         $('#multiplier-real').hide();
-                        is_free_spin = false;
+                        global_var.is_free_spin = false;
                     }else{
                         $('#multiplier-real').show();
-                        is_free_spin = true;
+                        global_var.is_free_spin = true;
                     }
                 }
             });
         }
 
         function buy_free_spin() {
-            var wallet = {{Auth::user()->wallet}};
-            if (wallet < 30) {
+            if (global_var.balance < 30) {
                 Swal.fire({
                     title: "Failed",
                     text: "You Don't have balance, Please TopUp first!!",
@@ -979,6 +994,26 @@
                     }
                 });
             }
+        }
+
+        function HisPlay(game, bet, win_amount, result) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/HisPlay",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    game: game,
+                    bet: bet,
+                    win_amount: win_amount,
+                    result: result
+                },
+                success: function (response) {
+                    
+                }
+            });
         }
     </script>
 @endsection

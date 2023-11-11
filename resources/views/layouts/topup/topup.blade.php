@@ -45,7 +45,7 @@
                                         <label for="topup_saldo" style="float: left;">Amount</label>
                                         <br>
                                         <div class="input-icon">
-                                            <img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" style="float: right; margin-top: 10px">
+                                            <img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="40px" height="35px" style="float: right; margin-top: 10px">
                                             <input type="number" class="form-control w-90" placeholder="Amount in TRX" id="topup_saldo" required name="saldo">
                                             <span>Minimum Deposit : <b>5.0000000000</b> TRX</span>
                                         </div>
@@ -71,7 +71,7 @@
                                     <label for="topup_saldo" style="float: left;">Currentcy</label>
                                     <br>
                                     <div class="input-icon">
-                                        <img src="{{asset('assets/images/logo/trx2.png')}}" alt="" srcset="" width="40px" height="35px" style="float: right; margin-top: 10px">
+                                        <img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="40px" height="35px" style="float: right; margin-top: 10px">
                                         <input type="text" class="form-control w-90" placeholder="Amount in TRX" required disabled value="TRX">
                                     </div>
                                 </div>

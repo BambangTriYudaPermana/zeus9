@@ -27,7 +27,8 @@ class User extends Authenticatable
         'wallet',
         'ttl_win',
         'id_role',
-        'id_address'
+        'id_address',
+        'reveral_code'
     ];
 
     /**
