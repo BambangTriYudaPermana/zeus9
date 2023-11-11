@@ -187,6 +187,7 @@
                 }
             });
             $("#resWin").hide();
+            $('#form_amount').prop('disabled', false);
         }
 
         function tren_red() {
