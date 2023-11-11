@@ -68,7 +68,7 @@
 
                             <div class="tab-pane " id="tab6">
                                 <div class="col-md-12 mb-12 mt-2">
-                                    <label for="topup_saldo" style="float: left;">Currentcy</label>
+                                    <label for="topup_saldo" style="float: left;">Currency</label>
                                     <br>
                                     <div class="input-icon">
                                         <img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="40px" height="35px" style="float: right; margin-top: 10px">
@@ -95,7 +95,7 @@
                                     <ul style="text-align: left">
                                         <li>Available Balance : <b>{{Auth::user()->wallet}}</b></li>
                                         <li>Minimum Withdraw : <b>5.0000000</b></li>
-                                        <li>Network Fee : <b>5.0000000</b></li>
+                                        <li>Network Fee : <b>1.0000000</b></li>
                                     </ul>
                                 </div>
                                 <hr>

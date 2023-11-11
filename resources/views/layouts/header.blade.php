@@ -11,7 +11,7 @@
                     <img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="30px" height="30px" class="m-0">
                     <span id="wallet-user-general">{{Auth::user()->wallet}}</span>
                     {{-- <i class="fa fa-google-wallet"></i> --}}
-                    <i class="icon icon-wallet" data-bs-toggle="tooltip"></i>
+                    {{-- <i class="icon icon-wallet" data-bs-toggle="tooltip"></i> --}}
                 </a>
                 @endif
                 {{-- <img src="{{asset('assets/images/brand/logo.png')}}" class="header-brand-img desktop-logo" alt="logo">
@@ -177,7 +177,7 @@
                         <div class="drop-heading">
                             <div class="text-center">
                                 <h5 class="text-dark mb-0">{{Auth::user() ? Auth::user()->name : 'Name'}}</h5>
-                                <small class="text-muted">Your Balance : <i class="fe fe-dollar-sign"></i> {{Auth::user() ? Auth::user()->wallet : 'Wallet'}}</small>
+                                <small class="text-muted">Your Balance : {{Auth::user() ? Auth::user()->wallet : 'Wallet'}}</small>&nbsp;<img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0">
                             </div>
                         </div>
                         <div class="dropdown-divider m-0"></div>
@@ -369,7 +369,7 @@
                     <div class="drop-heading">
                         <div class="text-center">
                             <h5 class="text-dark mb-0">{{Auth::user() ? Auth::user()->name : 'Name'}}</h5>
-                            <small class="text-muted">Your Balance : <i class="fe fe-dollar-sign"></i> {{Auth::user() ? Auth::user()->wallet : 'Wallet'}}</small>
+                            <small class="text-muted">Your Balance : {{Auth::user() ? Auth::user()->wallet : 'Wallet'}}</small>&nbsp;<img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0">
                         </div>
                     </div>
                     <div class="dropdown-divider m-0"></div>

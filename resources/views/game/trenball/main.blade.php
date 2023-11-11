@@ -82,7 +82,8 @@
                                     <label for="form-amount">Amount</label>
                                     <div class="input-icon">
                                         <span class="input-icon-addon">
-                                            <i class="fa fa-dollar"></i>
+                                            {{-- <i class="fa fa-dollar"></i> --}}
+                                            <img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0">
                                         </span>
                                         <input type="text" class="form-control form_decimal" placeholder="Amount" id="form_amount" required>
                                     </div>
