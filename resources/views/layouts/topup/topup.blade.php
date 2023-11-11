@@ -79,7 +79,7 @@
                                 <div class="col-md-12 mb-12">
                                     <label for="topup_email" style="float: left;">Network</label>
                                     <div class="input-icon">
-                                        <input type="text" class="form-control" placeholder="Network" required disabled value="TRX20">
+                                        <input type="text" class="form-control" placeholder="Network" required disabled value="TRC20">
                                     </div>
                                 </div>
 

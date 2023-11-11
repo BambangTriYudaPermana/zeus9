@@ -81,7 +81,7 @@
                                                 {{-- <td><h3>Free Spin : <span id="ttl_free_spin">{{Auth::user()->bonus_slot->free_spin}}</span></h3></td> --}}
                                                 {{-- <td><h5 class="text-center">1x Spin = 0.3 Trx</h5></td> --}}
                                                 <h5 class="text-center">1x Spin = 0.3 Trx</h5>
-                                                <button class="buy-free-spin w-100" onclick="buy_free_spin()">Buy 10x Free Spin</button>
+                                                <button class="buy-free-spin w-100" onclick="buy_free_spin()">Buy Scatter (30 TRX)</button>
                                             </tr>
                                         </td>
                                     </table>
