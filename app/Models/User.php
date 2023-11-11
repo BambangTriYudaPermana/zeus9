@@ -30,6 +30,7 @@ class User extends Authenticatable
         'id_address',
         'referral_code',
         'my_referral_code',
+        'is_win'
     ];
 
     /**

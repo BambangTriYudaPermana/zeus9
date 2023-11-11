@@ -92,16 +92,16 @@ class SlotController extends Controller
         $win_amount = 0;
         if ($model) {
             if ($maxValue == 2) {
-                $amount_bet = ($mod_user->wallet + $model->dua_symbol);
-                $amount_bet = round($amount_bet, 2);
+                // $amount_bet = ($mod_user->wallet + $model->dua_symbol);
+                // $amount_bet = round($amount_bet, 2);
                 $win_amount = $model->dua_symbol;
 
                 // $mod_user->update([
                 //     'wallet' => $amount_bet
                 // ]); 
             }elseif ($maxValue == 3) {
-                $amount_bet = ($mod_user->wallet + $model->tiga_symbol);
-                $amount_bet = round($amount_bet, 2);
+                // $amount_bet = ($mod_user->wallet + $model->tiga_symbol);
+                // $amount_bet = round($amount_bet, 2);
                 $win_amount = $model->tiga_symbol;
 
                 // $mod_user->update([
@@ -110,23 +110,27 @@ class SlotController extends Controller
             }
         }
 
+        $win_ttl = 0;
         if ($multiplier != '' && Auth::user()->bonus_slot->free_spin > 0) {
             if ($multiplier == 9) {
-                $amount_bet = round(($amount_bet * 2),2);    
+                $win_ttl = round(($win_amount * 2),2);    
             }
             if ($multiplier == 10) {
-                $amount_bet = round(($amount_bet * 3),2);    
+                $win_ttl = round(($win_amount * 3),2);    
             }
             if ($multiplier == 11) {
-                $amount_bet = round(($amount_bet * 4),2);    
+                $win_ttl = round(($win_amount * 4),2);    
             }
             if ($multiplier == 12) {
-                $amount_bet = round(($amount_bet * 5),2);    
+                $win_ttl = round(($win_amount * 5),2);    
             }
             if ($multiplier == 13) {
-                $amount_bet = round(($amount_bet * 10),2);    
+                $win_ttl = round(($win_amount * 10),2);    
             }
             // dd($multiplier);
+            $amount_bet = ($mod_user->wallet + $win_ttl);
+        }else{
+            $amount_bet = ($mod_user->wallet + $win_amount);
         }
 
         $mod_user->update([
@@ -136,6 +140,7 @@ class SlotController extends Controller
         $ttl_free_spin = isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0;
         return [
             'status'=> true,
+            'multi' => $multiplier,
             'win_amount' => $win_amount,
             'wallet' => $amount_bet,
             'ttl_free_spin' => $ttl_free_spin,

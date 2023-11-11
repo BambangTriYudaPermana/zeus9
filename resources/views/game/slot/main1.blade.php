@@ -311,6 +311,7 @@
         $(document).ready(function () {
             global_var.balance = parseInt('{{Auth::user()->wallet}}');
             global_var.ttl_free_spin = parseInt('{{isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0}}');
+            global_var.is_win = parseInt('{{isset(Auth::user()->is_win) ? Auth::user()->is_win : 0}}');
             
             if (global_var.ttl_free_spin > 0) {
                 global_var.is_free_spin = true;
@@ -462,6 +463,9 @@
                 if (i1>=numeberSlot1){
                     coin[0].play()
                     clearInterval(slot1);
+                    if (global_var.is_win == '1') {
+                        slotTile.className = "b1";        
+                    }
                     return null;
                 }
                 if (slotTile.className=="b7"){
@@ -479,6 +483,9 @@
                     clearInterval(slot2);
                     if (slotTile.className == "b1" && slotTile1.className == "b1") {
                         change()
+                    }
+                    if (global_var.is_win == '1') {
+                        slotTile.className = "b1";        
                     }
                     return null;
                 }
@@ -502,6 +509,11 @@
                     if (global_var.ttl_free_spin != 0) {
                         // console.log(global_var.ttl_free_spin);
                         changeFreeSpin()
+                    }
+                    if (global_var.is_win == '1') {
+                        slotTile1.className = "b1";   
+                        slotTile2.className = "b1";   
+                        slotTile.className = "b1";        
                     }
                     testWin();
                     return null;
