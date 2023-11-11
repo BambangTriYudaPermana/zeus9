@@ -133,6 +133,7 @@ class SlotController extends Controller
             $amount_bet = ($mod_user->wallet + $win_amount);
         }
 
+        $amount_bet = round($amount_bet, 2);
         $mod_user->update([
             'wallet' => $amount_bet
         ]); 

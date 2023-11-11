@@ -978,7 +978,6 @@
             console.log(global_var.form_spin);
             if (global_var.form_spin === 1 || global_var.form_spin === '1') {
                 $('.button-play').prop('disabled', false);
-                clearInterval(slot3);
             }else{
                 // console.log('masuk anjing');
                 global_var.form_spin = global_var.form_spin-1;
