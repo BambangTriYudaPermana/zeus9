@@ -68,7 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd($data);
+        // dd($data);
         // create address for transaction
         $data_add = TrxHelper::createAddress();
         // dd($data_add);
@@ -81,6 +81,14 @@ class RegisterController extends Controller
             'created_date' => date('Y-m-d H:i:s')
         ]);
         $id_address = $create_address->id;
+
+        $seed = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                 .'0123456789');
+        shuffle($seed);
+        $rand = '';
+        foreach (array_rand($seed, 6) as $k) $rand .= $seed[$k];
+
+        $my_referral_code = $rand;
         
         return User::create([
             'name' => $data['name'],
@@ -88,7 +96,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'id_role' => 1,
             'id_address' => $id_address,
-            'reveral_code' => $data['reveral_code']
+            'referral_code' => $data['referral_code'],
+            'my_referral_code' => $my_referral_code
         ]);
     }
 }

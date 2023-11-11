@@ -118,7 +118,7 @@
 										</span>
 									</div>
 									<div class="wrap-input100 validate-input">
-										<input class="input100" type="text" name="reveral_code" placeholder="Reveral Code" id="reveral_code" min="4" max="4" value="{{ isset($_GET['reveral']) && $_GET['reveral'] != '' ? $_GET['reveral'] : '' }}">
+										<input class="input100" type="text" name="referral_code" placeholder="Referral Code" id="referral_code" min="4" max="4" value="{{ isset($_GET['referral']) && $_GET['referral'] != '' ? $_GET['referral'] : '' }}">
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 											<i class="zmdi zmdi-money-box" aria-hidden="true"></i>

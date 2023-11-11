@@ -28,7 +28,8 @@ class User extends Authenticatable
         'ttl_win',
         'id_role',
         'id_address',
-        'reveral_code'
+        'referral_code',
+        'my_referral_code',
     ];
 
     /**

@@ -49,6 +49,7 @@
                         <img class="" src="{{asset('assets/images/users/avatar-1.png')}}" alt="img">
                         <h3 class="mt-5">{{Auth::user()->name}}</h3>
                         <h4>{{Auth::user()->email}}</h4>
+                        <h3>Referral Code : {{Auth::user()->my_referral_code}} <button class="btn btn-primary" title="Copy Link Referral" onclick="copy_referral_link('{{Auth::user()->my_referral_code}}')"><i class="fa fa-clipboard"></i></button></h3>
                         <h6>Member Since: {{Auth::user()->created_at}}</h6>
                     </div>
                 </div>
@@ -160,6 +161,12 @@
 
         function trenball() {
             window.location.href = "{{URL::to('trenball')}}";
+        }
+
+        function copy_referral_link(referral) {
+            var link = "{{url('')}}"+"/register?referral="+referral;
+            // console.log(link);
+            navigator.clipboard.writeText(link);
         }
     </script>
 @endsection
