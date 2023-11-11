@@ -402,7 +402,7 @@
                     if (wallet < 0.3) {
                         Swal.fire({
                             title: "Failed",
-                            text: "You Don't have balance, Please TopUp first!!",
+                            text: "You don't have enough balance, please add more balance to buy this feature.",
                             type: "error"
                         });
                     }else{
@@ -904,7 +904,7 @@
             if (global_var.balance < 30) {
                 Swal.fire({
                     title: "Failed",
-                    text: "You Don't have balance, Please TopUp first!!",
+                    text: "You don't have enough balance, please add more balance to buy this feature.",
                     type: "danger"
                 });
             }else{
