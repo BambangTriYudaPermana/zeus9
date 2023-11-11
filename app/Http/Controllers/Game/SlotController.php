@@ -153,8 +153,9 @@ class SlotController extends Controller
         // dd($request);
         $model = Bonus::where(['id_user' => Auth::user()->id, 'game' => 'slot'])->first();
         if ($request->type == 'minus_free_spin') {
+            $free_spin = $model->free_spin-1;
             $model->update([
-                'free_spin'=> $request->free
+                'free_spin'=> $free_spin
             ]);
 
         }else if ($request->type == 'add_free_spin') {
@@ -216,8 +217,10 @@ class SlotController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
 
+        $ttl_free_spin = isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0;
         return [
             'status' => true,
+            'ttl_free_spin' => $ttl_free_spin,
         ];
     }
 

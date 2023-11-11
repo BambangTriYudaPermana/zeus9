@@ -124,17 +124,6 @@
                                             </div>
                                         </div>
                                     </section>
-                                    {{-- <div class="row mt-5">
-                                        <div class="col-md-12 mb-3">
-                                            <button class="btn btn-danger w-100 button-play" id="tren_red" onclick="doSlot(0)">Spin 1x</button>
-                                        </div>
-                                        <div class="col-md-12 mb-3">
-                                            <button class="btn btn-success w-100 button-play" id="tren_grenn" onclick="doSlot(4)">Spin 5x</button>
-                                        </div>
-                                        <div class="col-md-12 mb-3">
-                                            <button class="btn btn-warning w-100 button-play" id="tren_moon" onclick="doSlot(9)">Spin 10x</button>
-                                        </div>
-                                    </div> --}}
                                     <div class="row mt-5">
                                         <div class="col-md-4"></div>
                                         <div class="col-md-4">
@@ -145,10 +134,10 @@
                                     <div class="row">
                                         <div class="col-md-3"></div>
                                         <div class="col-md-6 d-flex justify-content-center">
-                                            <button class="btn btn-danger" style="height: 40px; margin-top: 40px; margin-right: 10px;" id="spin-minus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-danger button-play" style="height: 40px; margin-top: 40px; margin-right: 10px;" id="spin-minus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-minus"></i></button>
                                             <button onclick="Spin()" id="Gira" class="button-play">SPIN</button>
                                             {{-- <section onclick="doSlot()" id="Gira">SPIN</section> --}}
-                                            <button class="btn btn-success" style="height: 40px; margin-top: 40px; margin-left: 10px;" id="spin-plus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-success button-play" style="height: 40px; margin-top: 40px; margin-left: 10px;" id="spin-plus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-plus"></i></button>
                                         </div>
                                         <div class="col-md-3"></div>
                                     </div>
@@ -391,38 +380,49 @@
 
         window.addEventListener("keydown", (evento) => {
             if (evento.code == "Space") {
-            doSlot()
+            doSlot(1,0,0,0)
             }
         });
 
         function Spin(){
             var form_spin = parseInt($('#form_spin').val());
+            // console.log(form_spin);
             var wallet = '{{Auth::user()->wallet}}';
             var is_free_spin = '{{$is_free_spin}}';
             // var is_free_spin = parseInt('Auth::user()->bonus_slot->free_spin');
-            if (is_free_spin) {
-                doSlot(form_spin-1)
+            if (form_spin < 0) {
+                Swal.fire({
+                    text: "Min Spin 1x",
+                    type: "warning"
+                });
             }else{
-                if (wallet < 0.3) {
-                    Swal.fire({
-                        title: "Failed",
-                        text: "You Don't have balance, Please TopUp first!!",
-                        type: "danger"
-                    });
+                if (is_free_spin) {
+                    doSlot(form_spin)
                 }else{
-                    doSlot(form_spin-1)
-                }   
+                    if (wallet < 0.3) {
+                        Swal.fire({
+                            title: "Failed",
+                            text: "You Don't have balance, Please TopUp first!!",
+                            type: "error"
+                        });
+                    }else{
+                        doSlot(form_spin)
+                    }   
+                }
             }
         }
 
-        // global_var.free_spin = {{$is_free_spin ? Auth::user()->bonus_slot->free_spin : 0}};
-        function doSlot(role_spin = 1){
-            max_spin = role_spin;
+        
+        
+        function doSlot(role_spin = 1, i1 = 0, i2 = 0, i3 = 0){
+            global_var.form_spin = role_spin;
+            $('#form_spin').val(role_spin);
             
             if (global_var.ttl_free_spin == 0) {
                 balance(0.3);     
+                // console.log('masuk anjing');
             }else{
-                global_var.ttl_free_spin -= 1; 
+                // global_var.ttl_free_spin -= 1; 
                 Sfree_spin(global_var.ttl_free_spin, 'minus_free_spin')
             }
             // console.log(global_var.free_spin);
@@ -440,11 +440,12 @@
             var numeberSlot2 = numChanges+2*7+randomInt(1,7)
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
             var numeberSlot4 = numChanges+6*7+randomInt(1,7)
-
-            // console.log(numChanges, numeberSlot1, numeberSlot2, numeberSlot3);
+            
             var i1 = 0;
             var i2 = 0;
             var i3 = 0;
+            // console.log(i3);
+
             var sound = 0
             text.style = "visibility: visible"
             text.innerHTML = "SPINNING..."
@@ -499,15 +500,16 @@
                 slotTile2 = document.getElementById("slot2");
                 slotTile = document.getElementById("slot3");
 
+                // console.log(i3);
                 i3++;
                 if (i3>=numeberSlot3){
+                    // console.log(i3, 'anjing', numeberSlot3)
                     coin[2].play()
                     clearInterval(slot3);
                     if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
                         change()
                     }
                     if (global_var.ttl_free_spin != 0) {
-                        // console.log(global_var.ttl_free_spin);
                         changeFreeSpin()
                     }
                     if (global_var.is_win == '1') {
@@ -516,7 +518,7 @@
                         slotTile.className = "b1";        
                     }
                     testWin();
-                    return null;
+                    return;
                 }
                 if (slotTile.className=="b7"){
                     slotTile.className = "b0";
@@ -593,8 +595,6 @@
                         multiplier.className = "b9"
                     }
                 }
-
-                return true;
             }
 
             function change() {
@@ -619,7 +619,6 @@
                     }
                 }
 
-                return true;
             }
 
             function changeFreeSpin() {
@@ -696,8 +695,6 @@
                         slot3.className = "b3";
                     }
                 }
-
-                return true;
             }
 
         }
@@ -744,7 +741,7 @@
             doing = false;
 
             // checkPlay();
-            setTimeout(checkPlay, 3500)
+            
         }
 
         function main()
@@ -787,78 +784,6 @@
             return Math.floor((Math.random() * (max-min+1)) + min);
         }
 
-        function updateWins(){	
-            // if (login == true){
-            //     firebase.database().ref('Users/' + id + '/data/wins').once('value',(snap)=>{
-            //         if (snap.val() != null){
-            //             wins =parseInt(snap.val())
-            //             wins_element.innerHTML = "Wins: " + wins.toString()
-            //         }
-            //         else{
-            //             wins = 0
-            //             firebase.database().ref('Users/' + id + '/data').set({score:0, wins:0});
-            //         }
-            //     });
-            //     firebase.database().ref('Users/' + id + '/data/score').once('value',(snap)=>{
-            //         if (snap.val() != null){
-            //             score =parseInt(snap.val())
-            //             score_element.innerHTML = "Score: " + score.toString()
-            //         }else{
-            //             score = 0
-            //             firebase.database().ref('Users/' + id + '/data').set({score:0, wins:0});
-            //             firebase.database().ref('scores/' + userName + '-' + id).set({score: 0});
-            //         }
-                    
-            //     });
-            // }
-            // update balance win
-        }
-
-        function addWin(box1, box2, box3){
-            // console.log(box1, box2, box3);
-
-            if (global_var.is_free_spin) {
-                var multiplier = document.getElementById("multiplier").className;    
-                var multiplier_win = parseInt(multiplier.substring(1));
-            }else{
-                var multiplier = '';
-                var multiplier_win = '';
-            }
-            
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "/playSW",
-                method: 'POST',
-                dataType: 'json',
-                data: {
-                    box1: box1,
-                    box2: box2,
-                    box3: box3,
-                    multiplier_win: multiplier_win,
-                },
-                success: function (response) {
-                    $('#wallet-user-general').html(numberWithCommas(response.wallet));
-
-                    if (response.ttl_free_spin == 0) {
-                        $('#multiplier-real').hide();
-                        global_var.is_free_spin = false;
-                    }else{
-                        $('#multiplier-real').show();
-                        global_var.is_free_spin = true;
-                    }
-
-                    HisPlay("slot", 0.3, response.win_amount, "win")
-                }
-            });
-            // if (login == true){
-                // firebase.database().ref('Users/' + id + '/data').set({score:score+addScore, wins:wins+1});
-                // firebase.database().ref('scores/' + userName + '-' + id).set({score: score+addScore});
-                updateWins()
-            // }
-        }
-
         function confeti(){
             var confettiSettings = { target: 'my-canvas' };
             var confetti = new ConfettiGenerator(confettiSettings);
@@ -893,22 +818,6 @@
                 }
             });
         }
-
-        function checkPlay()
-        {
-            if (max_spin == 0) {
-                $('.button-play').prop('disabled', false);
-            }else{
-                $('#form_spin').val(max_spin)
-                max_spin = max_spin-1;
-                doSlot(max_spin);
-            }
-
-            if (global_var.ttl_free_spin == 0) {
-                $('#spin-minus').prop('disabled', false);
-                $('#spin-plus').prop('disabled', false);
-            }
-        }
         
         function numberWithCommas(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -928,13 +837,13 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
-                    if (response.ttl_free_spin == 0) {
-                        $('#multiplier-real').hide();
-                        global_var.is_free_spin = false;
-                    }else{
-                        $('#multiplier-real').show();
-                        global_var.is_free_spin = true;
-                    }
+                    // if (response.ttl_free_spin == 0) {
+                    //     $('#multiplier-real').hide();
+                    //     global_var.is_free_spin = false;
+                    // }else{
+                    //     $('#multiplier-real').show();
+                    //     global_var.is_free_spin = true;
+                    // }
                 }
             });
         }
@@ -954,13 +863,39 @@
                 },
                 success: function (response) {
                     // $('#wallet-user-general').html(numberWithCommas(response.wallet));
-                    if (response.ttl_free_spin == 0) {
-                        $('#multiplier-real').hide();
-                        global_var.is_free_spin = false;
-                    }else{
-                        $('#multiplier-real').show();
-                        global_var.is_free_spin = true;
-                    }
+                    global_var.ttl_free_spin = response.ttl_free_spin;
+                }
+            });
+        }
+
+        function addWin(box1, box2, box3){
+            // console.log(box1, box2, box3);
+
+            if (global_var.is_free_spin) {
+                var multiplier = document.getElementById("multiplier").className;    
+                var multiplier_win = parseInt(multiplier.substring(1));
+            }else{
+                var multiplier = '';
+                var multiplier_win = '';
+            }
+            
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/playSW",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    box1: box1,
+                    box2: box2,
+                    box3: box3,
+                    multiplier_win: multiplier_win,
+                },
+                success: function (response) {
+                    $('#wallet-user-general').html(numberWithCommas(response.wallet));
+
+                    HisPlay("slot", 0.3, response.win_amount, "win")
                 }
             });
         }
@@ -1023,9 +958,38 @@
                     result: result
                 },
                 success: function (response) {
-                    
+                    // console.log(global_var.form_spin);
+                    if (response.ttl_free_spin == 0) {
+                        $('#multiplier-real').hide();
+                        global_var.is_free_spin = false;
+                    }else{
+                        $('#multiplier-real').show();
+                        global_var.is_free_spin = true;
+                    }
+                    setTimeout(checkPlay, 3500)
                 }
             });
+        }
+
+        function checkPlay()
+        {
+            var form_spin = parseInt($('#form_spin').val());
+            // console.log(form_spin);
+            console.log(global_var.form_spin);
+            if (global_var.form_spin === 1 || global_var.form_spin === '1') {
+                $('.button-play').prop('disabled', false);
+                clearInterval(slot3);
+            }else{
+                // console.log('masuk anjing');
+                global_var.form_spin = global_var.form_spin-1;
+                doSlot(global_var.form_spin,0,0,0);
+                // setTimeout(checkPlay, 3500)
+            }
+
+            if (global_var.ttl_free_spin == 0) {
+                $('#spin-minus').prop('disabled', false);
+                $('#spin-plus').prop('disabled', false);
+            }
         }
     </script>
 @endsection
