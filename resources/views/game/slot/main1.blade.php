@@ -360,6 +360,7 @@
             var i1 = 0;
             var i2 = 0;
             var i3 = 0;
+
             var numChanges = randomInt(1,4)*7
             var numeberSlot1 = numChanges+randomInt(1,7)
             var numeberSlot2 = numChanges+2*7+randomInt(1,7)
@@ -372,18 +373,18 @@
             status.style.background = "#606060"
             // document.getElementById("body").style.background="#0f0f0f";
             
-            slot1 = setInterval(spin1, 50);
-            slot2 = setInterval(spin2, 50);
-            slot3 = setInterval(spin3, 50);
-            multiplier = setInterval(multiplier, 30);
+            SpinSlot1 = setInterval(spin1, 50);
+            SpinSlot2 = setInterval(spin2, 50);
+            SpinSlot3 = setInterval(spin3, 50);
+            SpinMultiplier = setInterval(multiplier, 30);
             
             function spin1(){
                 i1++;
                 if (i1>=numeberSlot1){
                     coin[0].play()
-                    clearInterval(slot1);
+                    clearInterval(SpinSlot1);
                     slotTile = document.getElementById("slot1");
-                    
+
                     if (global_var.is_win == '1') {
                         slotTile.className = "b1";        
                     }
@@ -399,7 +400,7 @@
                 i2++;
                 if (i2>=numeberSlot2){
                     coin[1].play()
-                    clearInterval(slot2);
+                    clearInterval(SpinSlot2);
                     slotTile1 = document.getElementById("slot1");
                     slotTile2 = document.getElementById("slot2");
 
@@ -421,8 +422,9 @@
             function spin3(){
                 i3++;
                 if (i3>=numeberSlot3){
+                    var next = false;
                     coin[2].play()
-                    clearInterval(slot3);
+                    clearInterval(SpinSlot3);
                     slotTile1 = document.getElementById("slot1");
                     slotTile2 = document.getElementById("slot2");
                     slotTile3 = document.getElementById("slot3");
@@ -431,16 +433,23 @@
                         slotTile1.className = "b1";   
                         slotTile2.className = "b1";   
                         slotTile3.className = "b1";
+
+                        next = true;
                     }else{
                         if (global_var.ttl_free_spin != 0) {
-                            changeFreeSpin();
+                            next = changeFreeSpin();
                         }else{
                             if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile3.className == "b1") {
-                                change();
+                                next = change();
+                            }else{
+                                next = true;
                             }
                         }
                     }
-                    testWin();
+                    if (next) {
+                        testWin();    
+                    }
+                    
                     return null;
                 }
                 slotTile = document.getElementById("slot3");
@@ -462,7 +471,7 @@
                 i4++;
                 if (i4 >= numeberSlot4) {
                     // coin[3].play();
-                    clearInterval(multiplier);
+                    clearInterval(SpinMultiplier);
                     return null;
                 }
                 var className = slotTile.className;
@@ -519,8 +528,6 @@
                         multiplier.className = "b9"
                     }
                 }
-
-                return true;
             }
 
             function change() {
@@ -544,6 +551,8 @@
                         slot3.className = "b"+(parseInt(slot3.className.substring(1))+1)
                     }
                 }
+
+                return true;
             }
 
             function changeFreeSpin() {
@@ -615,6 +624,8 @@
                         slot3.className = "b3";
                     }
                 }
+
+                return true;
             }
 
         }
