@@ -301,7 +301,7 @@
             global_var.balance = parseFloat('{{Auth::user()->wallet}}');
             global_var.ttl_free_spin = parseInt('{{isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0}}');
             global_var.is_win = parseInt('{{isset(Auth::user()->is_win) ? Auth::user()->is_win : 0}}');
-            global_var.is_continue = true;
+            global_var.is_continue = false;
             
             if (global_var.ttl_free_spin > 0) {
                 global_var.is_free_spin = true;
@@ -386,6 +386,7 @@
         });
 
         function Spin(){
+            global_var.is_continue = true;
             var form_spin = parseFloat($('#form_spin').val());
             // console.log(global_var.balance);
             var wallet = '{{Auth::user()->wallet}}';
@@ -442,7 +443,6 @@
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
             var numeberSlot4 = numChanges+6*7+randomInt(1,7)
             
-            global_var.is_continue = true;
             var i1 = 0;
             var i2 = 0;
             var i3 = 0;
@@ -507,28 +507,24 @@
                     // console.log(i3, 'anjing', numeberSlot3)
                     coin[2].play()
                     clearInterval(slot3);
-                    var next = false;
+                    
                     i3 = 0;
                     if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
                         change();
-                        next = true;
                     }
                     if (global_var.ttl_free_spin != 0) {
                         changeFreeSpin();
-                        next = true;
                     }
                     if (global_var.is_win == '1') {
                         slotTile1.className = "b1";   
                         slotTile2.className = "b1";   
                         slotTile.className = "b1";        
-
-                        next = true;
-                    }else{
-                        next = true;
                     }
 
-                    if (next) {
+                    if (global_var.is_continue) {
                         testWin();    
+                    }else{
+                        clearInterval(slot3);
                     }
                     
                     return;
@@ -996,7 +992,7 @@
         {
             var form_spin = parseInt($('#form_spin').val());
             // console.log(form_spin);
-            // console.log(global_var.form_spin);
+            console.log(global_var.form_spin);
             if (global_var.form_spin === 1 || global_var.form_spin === '1') {
                 $('.button-play').prop('disabled', false);
                 global_var.is_continue = false;
