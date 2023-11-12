@@ -378,38 +378,41 @@
             multiplier = setInterval(multiplier, 30);
             
             function spin1(){
-                slotTile = document.getElementById("slot1");
-
                 i1++;
                 if (i1>=numeberSlot1){
                     coin[0].play()
                     clearInterval(slot1);
+                    slotTile = document.getElementById("slot1");
+                    
                     if (global_var.is_win == '1') {
                         slotTile.className = "b1";        
                     }
                     return null;
                 }
+                slotTile = document.getElementById("slot1");
                 if (slotTile.className=="b7"){
                     slotTile.className = "b0";
                 }
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
             }
             function spin2(){
-                slotTile1 = document.getElementById("slot1");
-                slotTile = document.getElementById("slot2");
-
                 i2++;
                 if (i2>=numeberSlot2){
                     coin[1].play()
                     clearInterval(slot2);
-                    if (slotTile.className == "b1" && slotTile1.className == "b1") {
-                        change()
-                    }
+                    slotTile1 = document.getElementById("slot1");
+                    slotTile2 = document.getElementById("slot2");
+
                     if (global_var.is_win == '1') {
                         slotTile.className = "b1";        
+                    }else{
+                        if (slotTile1.className == "b1" && slotTile2.className == "b1") {
+                            change()
+                        }
                     }
                     return null;
                 }
+                slotTile = document.getElementById("slot2");
                 if (slotTile.className=="b7"){
                     slotTile.className = "b0";
                 }
