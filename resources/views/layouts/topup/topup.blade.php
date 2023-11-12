@@ -86,14 +86,14 @@
                                 <div class="col-md-12 mb-12">
                                     <label class="form-label" style="float: left;">Amount to Withdraw</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="" id="balance">
+                                        <input type="number" class="form-control" placeholder="" id="wd_balance">
                                         <span class="input-group-text btn btn-primary" onclick="max_balance()">Max</span>
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-12 mb-12 mt-2">
                                     <ul style="text-align: left">
-                                        <li>Available Balance : <b>{{Auth::user()->wallet}}</b></li>
+                                        <li>Available Balance : <b>{{isset(Auth::user()->wallet) ? Auth::user()->wallet : 0}}</b></li>
                                         <li>Minimum Withdraw : <b>5.0000000</b></li>
                                         <li>Network Fee : <b>1.0000000</b></li>
                                     </ul>
@@ -102,7 +102,7 @@
                                 <div class="col-md-12 mb-12">
                                     <label class="form-label">Your Destination Address</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" class="form-control" placeholder="" id="address_destination">
                                     </div>
                                 </div>
 
