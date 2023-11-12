@@ -511,14 +511,17 @@
                     i3 = 0;
                     if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
                         change();
+                        clearInterval(slot3);
                     }
                     if (global_var.ttl_free_spin != 0) {
                         changeFreeSpin();
+                        clearInterval(slot3);
                     }
                     if (global_var.is_win == '1') {
                         slotTile1.className = "b1";   
                         slotTile2.className = "b1";   
                         slotTile.className = "b1";        
+                        clearInterval(slot3);
                     }
 
                     if (global_var.is_continue) {
@@ -641,12 +644,7 @@
 
                 var is_true = 0;
                 var randomNumber = Math.random();
-                // Calculate winning condition with 5% probability (0.05)
-                // if (
-                //     (slot1.className == "b4" && slot2.className == "b4") || 
-                //     (slot1.className == "b4" && slot3.className == "b4") ||
-                //     (slot2.className == "b4" && slot3.className == "b4")
-                //    ) {
+                
                 if (slot1.className == "b4" || slot2.className == "b4" || slot3.className == "b4"){
                     if (slot1.className == "b4" && slot2.className == "b4" && slot3.className == "b4") {
                         if (randomNumber <= 0.5) {
