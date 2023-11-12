@@ -75,7 +75,7 @@
 										Registration
 									</span>
 									<div class="wrap-input100 validate-input" data-bs-validate = "Valid email is required: ex@abc.xyz">
-										<input class="input100 @error('name') is-invalid @enderror" type="text" name="name" placeholder="Your Name" value="{{ old('name') }}" autocomplete="name" autofocus required>
+										<input class="input100 @error('name') is-invalid @enderror" type="text" name="name" placeholder="Username" value="{{ old('name') }}" autocomplete="name" autofocus required>
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 											<i class="mdi mdi-account" aria-hidden="true"></i>

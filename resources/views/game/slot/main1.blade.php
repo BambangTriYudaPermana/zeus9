@@ -216,7 +216,7 @@
         var bet = 0;
         var global_var = [];
         $(document).ready(function () {
-            global_var.balance = parseFloat('{{Auth::user()->wallet}}');
+            global_var.balance = parseFloat('{{isset(Auth::user()->wallet) ? Auth::user()->wallet : 0}}');
             global_var.ttl_free_spin = parseInt('{{isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0}}');
             global_var.is_win = parseInt('{{isset(Auth::user()->is_win) ? Auth::user()->is_win : 0}}');
             global_var.is_continue = false;
@@ -317,6 +317,7 @@
                     type: "warning"
                 });
             }else{
+                console.log(global_var.balance);
                 if (is_free_spin) {
                     doSlot(form_spin)
                 }else{
