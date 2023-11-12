@@ -74,6 +74,10 @@ section#Slots{
 	background-color: #961522;
     cursor: pointer;
 } */
+.disable_spin{
+	background-color: #740813 !important;
+}
+
 section#options{
 	margin-top: 20px;
 	padding-top: 5px;

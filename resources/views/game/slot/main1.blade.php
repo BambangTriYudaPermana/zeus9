@@ -80,8 +80,8 @@
                                             <tr>
                                                 {{-- <td><h3>Free Spin : <span id="ttl_free_spin">{{Auth::user()->bonus_slot->free_spin}}</span></h3></td> --}}
                                                 {{-- <td><h5 class="text-center">1x Spin = 0.3 Trx</h5></td> --}}
-                                                <h5 class="text-center">1x Spin = 0.3 Trx</h5>
-                                                <button class="buy-free-spin w-100" onclick="buy_free_spin()">Buy Scatter (30 TRX)</button>
+                                                <h5 class="text-center">1x Spin = 0.5 Trx</h5>
+                                                <button class="buy-free-spin w-100" onclick="buy_free_spin()">Buy Scatter (30 TRX)</button>
                                             </tr>
                                         </td>
                                     </table>
@@ -134,10 +134,10 @@
                                     <div class="row">
                                         <div class="col-md-3"></div>
                                         <div class="col-md-6 d-flex justify-content-center">
-                                            <button class="btn btn-danger button-play" style="height: 40px; margin-top: 40px; margin-right: 10px;" id="spin-minus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-minus"></i></button>
+                                            {{-- <button class="btn btn-danger button-play" style="height: 40px; margin-top: 40px; margin-right: 10px;" id="spin-minus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-minus"></i></button> --}}
                                             <button onclick="Spin()" id="Gira" class="button-play">SPIN</button>
                                             {{-- <section onclick="doSlot()" id="Gira">SPIN</section> --}}
-                                            <button class="btn btn-success button-play" style="height: 40px; margin-top: 40px; margin-left: 10px;" id="spin-plus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-plus"></i></button>
+                                            {{-- <button class="btn btn-success button-play" style="height: 40px; margin-top: 40px; margin-left: 10px;" id="spin-plus" {{ $is_free_spin ? 'disabled' : '' }}><i class="fa fa-plus"></i></button> --}}
                                         </div>
                                         <div class="col-md-3"></div>
                                     </div>
@@ -181,104 +181,22 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/Bronze_Coin.png')}}" alt="" srcset="" width="100%">
+                    @foreach ($data_symbol as $item)
+                    <div class="col-sm-3 col-6 text-center">
+                        <img src="{{asset('assets/slot/src/tiles/new/'.$item['img_name'].'')}}" alt="" srcset="" width="100%">
                         <br>
                         <table style="width: 100%; text-align: left;">
                             <tr>
                                 <td>2 Symbol : </td>
-                                <td>0.05</td>
+                                <td>{{$item['dua_symbol']}}</td>
                             </tr>
                             <tr>
                                 <td>3 Symbol : </td>
-                                <td>0.2</td>
+                                <td>{{$item['free_spin'] != 0 ? $item['free_spin']."x Free Spin!" : $item['tiga_symbol']}}</td>
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/Silver_Coin.png')}}" alt="" srcset="" width="100%">
-                        <br>
-                        <table style="width: 100%; text-align: left;">
-                            <tr>
-                                <td>2 Symbol : </td>
-                                <td>0.08</td>
-                            </tr>
-                            <tr>
-                                <td>3 Symbol : </td>
-                                <td>0.32</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/Gold_Coin.png')}}" alt="" srcset="" width="100%">
-                        <br>
-                        <table style="width: 100%; text-align: left;">
-                            <tr>
-                                <td>2 Symbol : </td>
-                                <td>0.1</td>
-                            </tr>
-                            <tr>
-                                <td>3 Symbol : </td>
-                                <td>0.4</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/Buck_Cents.png')}}" alt="" srcset="" width="100%">
-                        <br>
-                        <table style="width: 100%; text-align: left;">
-                            <tr>
-                                <td>2 Symbol : </td>
-                                <td>0.18</td>
-                            </tr>
-                            <tr>
-                                <td>3 Symbol : </td>
-                                <td>0.72</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/Cash_Dollar.png')}}" alt="" srcset="" width="100%">
-                        <br>
-                        <table style="width: 100%; text-align: left;">
-                            <tr>
-                                <td>2 Symbol : </td>
-                                <td>0.25</td>
-                            </tr>
-                            <tr>
-                                <td>3 Symbol : </td>
-                                <td>0.1</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/Bitcoin.png')}}" alt="" srcset="" width="100%">
-                        <br>
-                        <table style="width: 100%; text-align: left;">
-                            <tr>
-                                <td>2 Symbol : </td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>3 Symbol : </td>
-                                <td>3</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-3 col-sm-6 text-center">
-                        <img src="{{asset('assets/slot/src/tiles/new/TRX.png')}}" alt="" srcset="" width="100%">
-                        <br>
-                        <table style="width: 100%; text-align: left;">
-                            <tr>
-                                <td>2 Symbol : </td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>3 Symbol : </td>
-                                <td>FREE SPIN 10x</td>
-                            </tr>
-                        </table>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="modal-footer">
@@ -311,7 +229,7 @@
         
             var form_spin = parseInt($('#form_spin').val());
 
-            bet = form_spin * 0.3;
+            bet = form_spin * 0.5;
 
             if (balance <= 0) {
                 // console.log(balance)
@@ -321,11 +239,11 @@
             $("#spin-minus").click(function(){
                 var form_spin = parseInt($('#form_spin').val());
                 if (form_spin == 1) {
-                    bet = 0.3;
+                    bet = 0.5;
                     // console.log(bet)
                     $('#form_spin').val(1);
                 }else{
-                    bet -= 0.3;
+                    bet -= 0.5;
                     // console.log(bet)
                     $('#form_spin').val(form_spin-1);
                 }
@@ -334,9 +252,9 @@
 
             $("#spin-plus").click(function(){
                 var form_spin = parseInt($('#form_spin').val());
-                bet += 0.3;
+                bet += 0.5;
                 // console.log(bet)
-                if (bet >= (global_var.balance-0.3) ) {
+                if (bet >= (global_var.balance-0.5) ) {
                     $('#spin-plus').prop('disabled', true);
                     $('#form_spin').val(form_spin+1);
                 }else{
@@ -381,7 +299,8 @@
 
         window.addEventListener("keydown", (evento) => {
             if (evento.code == "Space") {
-            doSlot(1,0,0,0)
+            // doSlot(1,0,0,0)
+            Spin()
             }
         });
 
@@ -401,7 +320,7 @@
                 if (is_free_spin) {
                     doSlot(form_spin)
                 }else{
-                    if (global_var.balance < 0.3) {
+                    if (global_var.balance < 0.5) {
                         Swal.fire({
                             text: "You don't have enough balance, please add more balance to play this game.",
                             icon: "warning"
@@ -416,12 +335,12 @@
         
         
         function doSlot(role_spin = 1, i1 = 0, i2 = 0, i3 = 0){
-            
+            $('#Gira').addClass("disable_spin");
             global_var.form_spin = role_spin;
-            $('#form_spin').val(role_spin);
+            // $('#form_spin').val(role_spin);
             
             if (global_var.ttl_free_spin == 0) {
-                balance(0.3);     
+                balance(0.5);     
                 // console.log('masuk anjing');
             }else{
                 // global_var.ttl_free_spin -= 1; 
@@ -437,15 +356,15 @@
             confe.classList.remove("active")
             if (doing){return null;}
             doing = true;
+
+            var i1 = 0;
+            var i2 = 0;
+            var i3 = 0;
             var numChanges = randomInt(1,4)*7
             var numeberSlot1 = numChanges+randomInt(1,7)
             var numeberSlot2 = numChanges+2*7+randomInt(1,7)
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
             var numeberSlot4 = numChanges+6*7+randomInt(1,7)
-            
-            var i1 = 0;
-            var i2 = 0;
-            var i3 = 0;
 
             var sound = 0
             text.style = "visibility: visible"
@@ -497,41 +416,28 @@
                 slotTile.className = "b"+(parseInt(slotTile.className.substring(1))+1)
             }
             function spin3(){
-                slotTile1 = document.getElementById("slot1");
-                slotTile2 = document.getElementById("slot2");
-                slotTile = document.getElementById("slot3");
-
-                // console.log(i3);
                 i3++;
                 if (i3>=numeberSlot3){
-                    // console.log(i3, 'anjing', numeberSlot3)
                     coin[2].play()
                     clearInterval(slot3);
-                    
-                    i3 = 0;
-                    if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
+                    slotTile1 = document.getElementById("slot1");
+                    slotTile2 = document.getElementById("slot2");
+                    slotTile3 = document.getElementById("slot3");
+                    if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile3.className == "b1") {
                         change();
-                        clearInterval(slot3);
                     }
                     if (global_var.ttl_free_spin != 0) {
                         changeFreeSpin();
-                        clearInterval(slot3);
                     }
                     if (global_var.is_win == '1') {
                         slotTile1.className = "b1";   
                         slotTile2.className = "b1";   
-                        slotTile.className = "b1";        
-                        clearInterval(slot3);
+                        slotTile3.className = "b1";
                     }
-
-                    if (global_var.is_continue) {
-                        testWin();    
-                    }else{
-                        clearInterval(slot3);
-                    }
-                    
-                    return;
+                    testWin();
+                    return null;
                 }
+                slotTile = document.getElementById("slot3");
                 if (slotTile.className=="b7"){
                     slotTile.className = "b0";
                 }
@@ -909,7 +815,7 @@
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
                     global_var.balance = response.balance;
 
-                    HisPlay("slot", 0.3, response.win_amount, "win")
+                    HisPlay("slot", 0.5, response.win_amount, "win")
                 }
             });
         }
@@ -998,9 +904,12 @@
                 // console.log('masuk anjing');
                 global_var.form_spin = global_var.form_spin-1;
                 global_var.is_continue = true;
-                doSlot(global_var.form_spin,0,0,0);
+                $('#form_spin').val(global_var.form_spin);
+                $('.button-play').prop('disabled', false);
+                // doSlot(global_var.form_spin,0,0,0);
                 // setTimeout(checkPlay, 3500)
             }
+            $('#Gira').removeClass("disable_spin");
 
             if (global_var.ttl_free_spin == 0) {
                 $('#spin-minus').prop('disabled', false);

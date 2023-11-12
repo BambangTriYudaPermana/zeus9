@@ -15,6 +15,7 @@ class WinSlot extends Model
 
     protected $fillable = [
         'symbol',
+        'img_name',
         'code_symbol',
         'dua_symbol',
         'tiga_symbol',

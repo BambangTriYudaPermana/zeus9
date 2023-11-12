@@ -26,8 +26,9 @@ class SlotController extends Controller
      */
     public function index()
     {
+        $data_symbol = WinSlot::get();
         return view('game.slot.main1',[
-
+            'data_symbol' => $data_symbol
         ]);
     }
 
