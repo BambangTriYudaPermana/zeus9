@@ -298,9 +298,10 @@
         var bet = 0;
         var global_var = [];
         $(document).ready(function () {
-            global_var.balance = parseInt('{{Auth::user()->wallet}}');
+            global_var.balance = parseFloat('{{Auth::user()->wallet}}');
             global_var.ttl_free_spin = parseInt('{{isset(Auth::user()->bonus_slot->free_spin) ? Auth::user()->bonus_slot->free_spin : 0}}');
             global_var.is_win = parseInt('{{isset(Auth::user()->is_win) ? Auth::user()->is_win : 0}}');
+            global_var.is_continue = true;
             
             if (global_var.ttl_free_spin > 0) {
                 global_var.is_free_spin = true;
@@ -385,8 +386,8 @@
         });
 
         function Spin(){
-            var form_spin = parseInt($('#form_spin').val());
-            // console.log(form_spin);
+            var form_spin = parseFloat($('#form_spin').val());
+            // console.log(global_var.balance);
             var wallet = '{{Auth::user()->wallet}}';
             var is_free_spin = '{{$is_free_spin}}';
             // var is_free_spin = parseInt('Auth::user()->bonus_slot->free_spin');
@@ -399,11 +400,10 @@
                 if (is_free_spin) {
                     doSlot(form_spin)
                 }else{
-                    if (wallet < 0.3) {
+                    if (global_var.balance < 0.3) {
                         Swal.fire({
-                            title: "Failed",
-                            text: "You don't have enough balance, please add more balance to buy this feature.",
-                            type: "error"
+                            text: "You don't have enough balance, please add more balance to play this game.",
+                            icon: "warning"
                         });
                     }else{
                         doSlot(form_spin)
@@ -415,6 +415,7 @@
         
         
         function doSlot(role_spin = 1, i1 = 0, i2 = 0, i3 = 0){
+            
             global_var.form_spin = role_spin;
             $('#form_spin').val(role_spin);
             
@@ -441,10 +442,10 @@
             var numeberSlot3 = numChanges+4*7+randomInt(1,7)
             var numeberSlot4 = numChanges+6*7+randomInt(1,7)
             
+            global_var.is_continue = true;
             var i1 = 0;
             var i2 = 0;
             var i3 = 0;
-            // console.log(i3);
 
             var sound = 0
             text.style = "visibility: visible"
@@ -506,18 +507,30 @@
                     // console.log(i3, 'anjing', numeberSlot3)
                     coin[2].play()
                     clearInterval(slot3);
+                    var next = false;
+                    i3 = 0;
                     if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile.className == "b1") {
-                        change()
+                        change();
+                        next = true;
                     }
                     if (global_var.ttl_free_spin != 0) {
-                        changeFreeSpin()
+                        changeFreeSpin();
+                        next = true;
                     }
                     if (global_var.is_win == '1') {
                         slotTile1.className = "b1";   
                         slotTile2.className = "b1";   
                         slotTile.className = "b1";        
+
+                        next = true;
+                    }else{
+                        next = true;
                     }
-                    testWin();
+
+                    if (next) {
+                        testWin();    
+                    }
+                    
                     return;
                 }
                 if (slotTile.className=="b7"){
@@ -595,6 +608,8 @@
                         multiplier.className = "b9"
                     }
                 }
+
+                return true;
             }
 
             function change() {
@@ -618,6 +633,8 @@
                         slot3.className = "b"+(parseInt(slot3.className.substring(1))+1)
                     }
                 }
+
+                return true;
 
             }
 
@@ -837,6 +854,7 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                    global_var.balance = response.balance;
                     // if (response.ttl_free_spin == 0) {
                     //     $('#multiplier-real').hide();
                     //     global_var.is_free_spin = false;
@@ -864,6 +882,7 @@
                 success: function (response) {
                     // $('#wallet-user-general').html(numberWithCommas(response.wallet));
                     global_var.ttl_free_spin = response.ttl_free_spin;
+                    global_var.balance = response.balance;
                 }
             });
         }
@@ -894,6 +913,7 @@
                 },
                 success: function (response) {
                     $('#wallet-user-general').html(numberWithCommas(response.wallet));
+                    global_var.balance = response.balance;
 
                     HisPlay("slot", 0.3, response.win_amount, "win")
                 }
@@ -903,9 +923,8 @@
         function buy_free_spin() {
             if (global_var.balance < 30) {
                 Swal.fire({
-                    title: "Failed",
-                    text: "You don't have enough balance, please add more balance to buy this feature.",
-                    type: "danger"
+                    text: "You don't have enough balance, please add more balance to buy this feature.",
+                    icon: "warning"
                 });
             }else{
                 Swal.fire({
@@ -925,7 +944,7 @@
                             method: 'POST',
                             dataType: 'json',
                             data: {
-                                free: 10,
+                                free: 30,
                                 type: "buy_free_spin"
                             },
                             success: function (response) {
@@ -958,6 +977,7 @@
                     result: result
                 },
                 success: function (response) {
+                    global_var.balance = response.balance;
                     // console.log(global_var.form_spin);
                     if (response.ttl_free_spin == 0) {
                         $('#multiplier-real').hide();
@@ -966,7 +986,8 @@
                         $('#multiplier-real').show();
                         global_var.is_free_spin = true;
                     }
-                    setTimeout(checkPlay, 3500)
+                    setTimeout(checkPlay, 4000)
+                    // checkPlay();
                 }
             });
         }
@@ -975,12 +996,14 @@
         {
             var form_spin = parseInt($('#form_spin').val());
             // console.log(form_spin);
-            console.log(global_var.form_spin);
+            // console.log(global_var.form_spin);
             if (global_var.form_spin === 1 || global_var.form_spin === '1') {
                 $('.button-play').prop('disabled', false);
+                global_var.is_continue = false;
             }else{
                 // console.log('masuk anjing');
                 global_var.form_spin = global_var.form_spin-1;
+                global_var.is_continue = true;
                 doSlot(global_var.form_spin,0,0,0);
                 // setTimeout(checkPlay, 3500)
             }

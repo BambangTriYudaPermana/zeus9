@@ -117,16 +117,8 @@
         var global_var = [];
 
         $(document).ready(function () {
-            // var gif = $("#rocketGif");
-
-            // $("#playButton").click(function(){
-            //     $("#rocketGif").show(); 
-            //     $("#resWin").hide();
-            //     // $('#resWin').show();
-            //     $("#rocketGif").attr("src", "{{asset('assets/images/game/rocket2.gif')}}");
-            //     $("#resWin").show(9000).fadeIn();
-            //     $("#resWin").hide();
-            // });
+            global_var.balance = parseInt('{{Auth::user()->wallet}}');
+            
             
         });
         function numberWithCommas(x) {
@@ -191,8 +183,6 @@
         }
 
         function tren_red() {
-            $('.button-play').prop('disabled', true);
-            $('#form_amount').prop('disabled', true);
             $('#icon-win').hide();
             $('#icon-lose').hide();
 
@@ -202,12 +192,13 @@
                 data_index.push(index);
                 // data_res.push(random_number(0, 1.97));
             }   
-            random_number(0, 197, data_index, 'red');
+
+            if (validate()) {
+                random_number(0, 197, data_index, 'red');    
+            }
         }
 
         function tren_grenn() {
-            $('.button-play').prop('disabled', true);
-            $('#form_amount').prop('disabled', true);
             $('#icon-win').hide();
             $('#icon-lose').hide();
 
@@ -218,12 +209,12 @@
                 // data_res.push(random_number(2, 10));
             }   
 
-            random_number(200, 1000, data_index, 'green');
+            if (validate()) {
+                random_number(200, 1000, data_index, 'green');   
+            }
         }
 
         function tren_moon() {
-            $('.button-play').prop('disabled', true);
-            $('#form_amount').prop('disabled', true);
             $('#icon-win').hide();
             $('#icon-lose').hide();
 
@@ -234,86 +225,32 @@
                 // data_res.push(random_number(10, 20));
             }   
 
-            random_number(1000, 2000, data_index, 'moon');
+            if (validate()) {
+                random_number(1000, 2000, data_index, 'moon');    
+            }
         }
 
-        function trenball(data_index, data_res, max_count, balance, status) {
-            // console.log(max_count);
-            var myChart = echarts.init(document.getElementById('chart_trenball'));
-            myChart.clear();
-
-            option = {
-                animationDuration: 5000,
-                xAxis: {
-                    type: 'category',
-                    data: data_index,
-                    show: false
-                },
-                yAxis: {
-                    type: 'value',
-                    show: false
-                },
-                series: [
-                    {
-                        data: data_res,
-                        type: 'line',
-                        // symbol: 'image://https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmFD8F8vOBtFsHcKnJ7tYV5bSMJHkzSkZ5Q1vcBdZiGHgBezD2C9KpSC6KS1adcALkCYI&usqp=CAU',
-                        // symbolSize: 40,
-                        // symbolRepeat: false,
-                        // label: {
-                        //     show: true
-                        // },
-                        smooth: true,
-                        areaStyle: {}
-                    }
-                ]
-            };
-            
-            myChart.setOption(option, true);
-            window.addEventListener('resize',function(){
-                myChart.resize();
-            });
-
-            var duration = 5000; // 5 seconds
-            var start = 0;
-            var end = max_count; // The number you want to count up to
-
-            $({ countNum: start }).animate({ countNum: end }, {
-                duration: duration,
-                easing: 'linear',
-                step: function () {
-                    $('#number-counter').text(Math.floor(this.countNum * 100) / 100);
-                },
-                complete: function () {
-                    if (status) {
-                        var win = new Audio("{{asset('assets/slot/src/sounds/win.mp3')}}");
-                        win.play();
-                        $('.result_game').html("WIN!");
-
-                        $('#balance-color').attr('class', '');
-                        $('#balance-color').addClass('text-success');
-                        $('#icon-win').show();
-                        $('#icon-lose').hide();
-                    }else{
-                        var lose = new Audio("{{asset('assets/slot/src/sounds/lose.mp3')}}");
-                        lose.play();
-                        $('.result_game').html("LOSE!");
-
-                        $('#balance-color').attr('class', '');
-                        $('#balance-color').addClass('text-danger');
-                        $('#icon-win').hide();
-                        $('#icon-lose').show();
-                    }
-                    $('#number-counter').text(end);
-
-                    $('.button-play').prop('disabled', false);
-                    $('#form_amount').prop('disabled', false);
-
-                    $('#wallet-user-general').html(numberWithCommas(balance));
-                    $('#wallet-user').html(numberWithCommas(balance));
-                    $('#wallet-user-1').html(numberWithCommas(balance));
+        function validate() {
+            var amount = parseInt($('#form_amount').val());
+            // console.log(amount);
+            if (amount > global_var.balance) {
+                Swal.fire({
+                    text: "You don't have enough balance, please add more balance to play this game.",
+                    icon: "warning"
+                });
+                return false;
+            }else{
+                if (amount == 0 || amount == '' || isNaN(amount)) {
+                    Swal.fire({
+                        text: "Please add Amount.",
+                        icon: "warning"
+                    }); 
+                }else{
+                    $('.button-play').prop('disabled', true);
+                    $('#form_amount').prop('disabled', true);
+                    return true;
                 }
-            });
+            }
         }
     </script>
 @endsection

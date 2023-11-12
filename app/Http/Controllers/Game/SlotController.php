@@ -69,6 +69,7 @@ class SlotController extends Controller
             'status'=> true,
             'wallet' => $amount_bet,
             'ttl_free_spin' => $ttl_free_spin,
+            'balance' => Auth::user()->wallet,
         ];
     }
 
@@ -145,6 +146,7 @@ class SlotController extends Controller
             'win_amount' => $win_amount,
             'wallet' => $amount_bet,
             'ttl_free_spin' => $ttl_free_spin,
+            'balance' => Auth::user()->wallet,
         ];
 
     }
@@ -205,6 +207,7 @@ class SlotController extends Controller
         return [
             'status' => true,
             'ttl_free_spin' => $ttl_free_spin,
+            'balance' => Auth::user()->wallet,
         ];
     }
 
@@ -222,6 +225,7 @@ class SlotController extends Controller
         return [
             'status' => true,
             'ttl_free_spin' => $ttl_free_spin,
+            'balance' => Auth::user()->wallet,
         ];
     }
 
