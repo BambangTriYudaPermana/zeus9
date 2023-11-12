@@ -231,7 +231,7 @@
         }
 
         function validate() {
-            var amount = parseInt($('#form_amount').val());
+            var amount = parseFloat($('#form_amount').val());
             // console.log(amount);
             if (amount > global_var.balance) {
                 Swal.fire({

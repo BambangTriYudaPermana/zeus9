@@ -111,7 +111,7 @@
                                         @enderror
 									</div>
                                     <div class="wrap-input100 validate-input" data-bs-validate = "Password is required">
-										<input class="input100" type="password" name="password_confirmation" placeholder="Confrim Password" id="password-confirm" autocomplete="new-password">
+										<input class="input100" type="password" name="password_confirmation" placeholder="Confirm Password" id="password-confirm" autocomplete="new-password">
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 											<i class="zmdi zmdi-lock" aria-hidden="true"></i>

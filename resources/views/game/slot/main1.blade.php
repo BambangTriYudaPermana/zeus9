@@ -423,16 +423,19 @@
                     slotTile1 = document.getElementById("slot1");
                     slotTile2 = document.getElementById("slot2");
                     slotTile3 = document.getElementById("slot3");
-                    if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile3.className == "b1") {
-                        change();
-                    }
-                    if (global_var.ttl_free_spin != 0) {
-                        changeFreeSpin();
-                    }
+                    
                     if (global_var.is_win == '1') {
                         slotTile1.className = "b1";   
                         slotTile2.className = "b1";   
                         slotTile3.className = "b1";
+                    }else{
+                        if (global_var.ttl_free_spin != 0) {
+                            changeFreeSpin();
+                        }else{
+                            if (slotTile1.className == "b1" || slotTile2.className == "b1" || slotTile3.className == "b1") {
+                                change();
+                            }
+                        }
                     }
                     testWin();
                     return null;
@@ -538,9 +541,6 @@
                         slot3.className = "b"+(parseInt(slot3.className.substring(1))+1)
                     }
                 }
-
-                return true;
-
             }
 
             function changeFreeSpin() {
