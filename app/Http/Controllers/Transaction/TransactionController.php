@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\HisTopup;
-use App\Models\User;
-use App\Models\MAddress;
-use App\Models\HisTransaction;
+use App\Models\{
+    ActivityTransaction,
+    HisTopup,
+    User,
+    MAddress,
+    HisTransaction
+};
+
+use Illuminate\Support\Facades\Auth;
 
 use TrxHelper; 
 
@@ -23,10 +28,18 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $data = HisTopup::orderBy('created_at', 'DESC')->get();
-        return view('back.list_topup',[
-            'data' => $data
-        ]);
+        // $data = HisTopup::orderBy('created_at', 'DESC')->get();
+        if (Auth::user()->id_role == 1) {   //for user
+            $data = ActivityTransaction::where(['id_user' => Auth::user()->id])->orderBy('created_at', 'DESC')->get();
+            return view('front.transaction',[
+                'data' => $data
+            ]);
+        }else if (Auth::user()->id_role == 2) { //for admin
+            $data = ActivityTransaction::orderBy('created_at', 'DESC')->get();
+            return view('back.list_topup',[
+                'data' => $data
+            ]);
+        }
     }
 
     /**
@@ -43,15 +56,16 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $mod_topup = HisTopup::findOrFail($request->id_transaction);
+        // $mod_topup = HisTopup::findOrFail($request->id_transaction);
+        $mod_topup = ActivityTransaction::findOrFail($request->id_transaction);
         $mod_user = User::findOrFail($mod_topup->id_user);
         if ($request->status == "acc") {
             $mod_user->update([
-                'wallet' => ($mod_user->wallet + $mod_topup->saldo),
+                'wallet' => ($mod_user->wallet + $mod_topup->amount),
             ]);
 
             $mod_topup->update([
-                'status' => "success"
+                'status' => "Success"
             ]);
         }elseif ($request->status == "sync") {
             $get_address = MAddress::findOrFail($mod_user->id_address);
@@ -61,7 +75,7 @@ class TransactionController extends Controller
                 $find = HisTransaction::where(['txID' => $value['txID']])->first();
                 // dd($find);
                 if (!$find) {
-                    if ($mod_topup->saldo == $value['amount']) {
+                    if ($mod_topup->amount == $value['amount']) {
                         $result = [];
                         $result[$key]['contractRet'] = $value['contractRet'];
                         $result[$key]['txID'] = $value['txID'];
@@ -78,7 +92,7 @@ class TransactionController extends Controller
                         ]);     
     
                         $mod_topup->update([
-                            'status' => "success"
+                            'status' => "Success"
                         ]);
 
                         $balance = TrxHelper::getBalance($get_address->address);
@@ -86,12 +100,12 @@ class TransactionController extends Controller
                             'balance_address' => $balance
                         ]);
                     }
-                    // dd($mod_user->wallet, $value['amount'] ,$mod_topup->saldo);
+                    // dd($mod_user->wallet, $value['amount'] ,$mod_topup->amount);
                 }else{
                     // dd('gass');
-                    if ($mod_topup->saldo == $value['amount']) {
+                    if ($mod_topup->amount == $value['amount']) {
                         $mod_topup->update([
-                            'status' => "not found"
+                            'status' => "Not Found"
                         ]);
                     }
                 }
@@ -99,7 +113,7 @@ class TransactionController extends Controller
 
         }elseif ($request->status == "reject") {
             $mod_topup->update([
-                'status' => "reject"
+                'status' => "Reject"
             ]);
         }
 

@@ -38,6 +38,7 @@ Route::post('/get_payout/', 'App\Http\Controllers\Transaction\PayoutController@g
 Route::resource('/transaction', 'App\Http\Controllers\Transaction\TransactionController');
 Route::post('/sum_amout/', 'App\Http\Controllers\Transaction\AmountController@sum_amount');
 Route::post('/topup/', 'App\Http\Controllers\Transaction\AmountController@topup');
+Route::post('/withdraw', 'App\Http\Controllers\Transaction\AmountController@withdraw');
 
 // management
 Route::resource('/address', 'App\Http\Controllers\Management\AddressController');

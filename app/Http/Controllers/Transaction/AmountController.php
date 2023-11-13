@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\MPayout;
-use App\Models\User;
-use App\Models\HisTopup;
+use App\Models\{
+    ActivityTransaction,
+    MPayout,
+    User,
+    HisTopup
+};
 
 use Illuminate\Support\Facades\Auth;
 
@@ -114,9 +117,31 @@ class AmountController extends Controller
     public function topup(Request $request)
     {
         // dd($request);
-        $model = HisTopup::create([
+        // $model = HisTopup::create([
+        //     'id_user' => Auth::user()->id,
+        //     'saldo' => $request->saldo,
+        //     'status' => "Pending",
+        //     'created_at' => date('Y-m-d H:i:s')
+        // ]);
+        $model = ActivityTransaction::create([
             'id_user' => Auth::user()->id,
-            'saldo' => $request->saldo,
+            'type' => "Deposit",
+            'amount' => $request->amount,
+            'status' => "Pending",
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return true;
+    }
+
+    public function withdraw(Request $request)
+    {
+        // dd($request);
+        $model = ActivityTransaction::create([
+            'id_user' => Auth::user()->id,
+            'type' => "Withdrawal",
+            'amount' => $request->amount,
+            'address_destination' => $request->address_destination,
             'status' => "Pending",
             'created_at' => date('Y-m-d H:i:s')
         ]);

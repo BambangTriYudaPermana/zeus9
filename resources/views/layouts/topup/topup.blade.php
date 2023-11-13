@@ -107,7 +107,7 @@
                                 </div>
 
                                 <div class="col-md-12 mt-2">
-                                    <button class="btn btn-primary" style="float: right;">Request Withdraw</button>
+                                    <button class="btn btn-primary" style="float: right;" onclick="withdraw()">Request Withdraw</button>
                                 </div>
                                 <br><br>
                             </div>

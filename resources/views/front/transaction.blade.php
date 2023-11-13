@@ -18,30 +18,25 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Transaction</h3>
+                        <h3 class="card-title">History Transaction</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
                                 <thead>
                                     <tr>
-                                        <th class="wd-15p border-bottom-0 text-center">No</th>
-                                        <th class="wd-15p border-bottom-0 text-center">Email User</th>
-                                        <th class="wd-15p border-bottom-0 text-center">Type</th>
-                                        <th class="wd-20p border-bottom-0 text-center">Amount</th>
+                                        <th class="wd-10p border-bottom-0 text-center">Type</th>
+                                        <th class="wd-15p border-bottom-0 text-center">Amount</th>
                                         <th class="wd-15p border-bottom-0 text-center">Status</th>
-                                        <th class="wd-10p border-bottom-0 text-center">Date Request</th>
-                                        <th class="wd-25p border-bottom-0 text-center">Action</th>
+                                        <th class="wd-10p border-bottom-0 text-center">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $no = 1?>
                                     @foreach ($data as $item )
                                         <tr>
-                                            <td>{{$no}}</td>
-                                            <td>{{$item->user->email}}</td>
-                                            <td>{{$item->type}}</td>
-                                            <td><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{number_format($item['amount'])}} TRX</td>
+                                            <td class="text-center">{{$item['type']}}</td>
+                                            <td class="text-center"><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{number_format($item['amount'])}} TRX</td>
                                             <td class="text-center">
                                                 @if ($item['status'] == "Pending")
                                                     <span style="color: yellow"><i class="fa fa-refresh"></i> {{$item['status']}}</span>
@@ -54,11 +49,6 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">{{date('Y-M-d H:i:s', strtotime($item['created_at']))}}</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-sm btn-success" title="ACC" onclick="transaction('acc', {{$item['id']}})"><i class="fa fa-check"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="Reject" onclick="transaction('reject', {{$item['id']}})"><i class="fa fa-times"></i></button>
-                                                <button class="btn btn-sm btn-warning" title="Sync" onclick="transaction('sync', {{$item['id']}})"><i class="fa fa-refresh"></i></button>
-                                            </td>
                                         </tr>
                                         <?php $no++?>
                                     @endforeach
@@ -79,40 +69,5 @@
         $(document).ready(function () {
             $('#basic-datatable').DataTable();
         });
-
-        function transaction(status, id_transaction) {
-            Swal.fire({
-                title: 'Are you sure?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "/transaction",
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            status: status,
-                            id_transaction: id_transaction
-                        },
-                        success: function (response) {
-                            Swal.fire(
-                                'success!',
-                                'Success',
-                                'success'
-                            );
-
-                            location.reload();
-                        }
-                    });
-                }
-            });
-        }
     </script>
 @endsection

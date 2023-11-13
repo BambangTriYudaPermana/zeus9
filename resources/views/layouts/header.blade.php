@@ -184,6 +184,9 @@
                         <a class="dropdown-item" href="{{ route('profile.index') }}">
                             <i class="dropdown-icon fe fe-user"></i> Profile
                         </a>
+                        <a class="dropdown-item" href="{{ route('transaction.index') }}">
+                            <i class="dropdown-icon fa fa-money"></i> Transaction
+                        </a>
                         {{-- <a class="dropdown-item" href="email.html">
                             <i class="dropdown-icon fe fe-mail"></i> Inbox
                             <span class="badge bg-primary float-end">3</span>
@@ -375,6 +378,9 @@
                     <div class="dropdown-divider m-0"></div>
                     <a class="dropdown-item" href="{{ route('profile.index') }}">
                         <i class="dropdown-icon fe fe-user"></i> Profile
+                    </a>
+                    <a class="dropdown-item" href="{{ route('transaction.index') }}">
+                        <i class="dropdown-icon fa fa-money"></i> Transaction
                     </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
