@@ -137,6 +137,13 @@ class AmountController extends Controller
     public function withdraw(Request $request)
     {
         // dd($request);
+        $mod_user = User::findOrFail(Auth::user()->id);
+        $balance = $mod_user->wallet;
+        
+        $mod_user->update([
+            'wallet' => ($balance - $request->amount)
+        ]);
+        
         $model = ActivityTransaction::create([
             'id_user' => Auth::user()->id,
             'type' => "Withdrawal",

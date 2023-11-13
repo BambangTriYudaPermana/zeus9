@@ -30,6 +30,7 @@
                                         <th class="wd-15p border-bottom-0 text-center">Type</th>
                                         <th class="wd-20p border-bottom-0 text-center">Amount</th>
                                         <th class="wd-15p border-bottom-0 text-center">Status</th>
+                                        <th class="wd-15p border-bottom-0 text-center">Address Destination</th>
                                         <th class="wd-10p border-bottom-0 text-center">Date Request</th>
                                         <th class="wd-25p border-bottom-0 text-center">Action</th>
                                     </tr>
@@ -53,11 +54,17 @@
                                                     <span style="color: red"><i class="fa fa-close"></i> {{$item['status']}}</span>
                                                 @endif
                                             </td>
+                                            <td>{{$item->address_destination}}</td>
                                             <td class="text-center">{{date('Y-M-d H:i:s', strtotime($item['created_at']))}}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-success" title="ACC" onclick="transaction('acc', {{$item['id']}})"><i class="fa fa-check"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="Reject" onclick="transaction('reject', {{$item['id']}})"><i class="fa fa-times"></i></button>
-                                                <button class="btn btn-sm btn-warning" title="Sync" onclick="transaction('sync', {{$item['id']}})"><i class="fa fa-refresh"></i></button>
+                                                @if ($item['type'] == "Deposit")
+                                                    <button class="btn btn-sm btn-success" title="ACC" onclick="transaction('acc', {{$item['id']}}, 'topup')"><i class="fa fa-check"></i></button>
+                                                    <button class="btn btn-sm btn-danger" title="Reject" onclick="transaction('reject', {{$item['id']}}, 'topup')"><i class="fa fa-times"></i></button>
+                                                    <button class="btn btn-sm btn-warning" title="Sync" onclick="transaction('sync', {{$item['id']}}, 'topup')"><i class="fa fa-refresh"></i></button>
+                                                @else
+                                                    <button class="btn btn-sm btn-success" title="ACC" onclick="transaction('acc', {{$item['id']}}, 'withdrawal')"><i class="fa fa-check"></i></button>
+                                                    <button class="btn btn-sm btn-danger" title="Reject" onclick="transaction('reject', {{$item['id']}}, 'withdrawal')"><i class="fa fa-times"></i></button>
+                                                @endif
                                             </td>
                                         </tr>
                                         <?php $no++?>
@@ -80,7 +87,7 @@
             $('#basic-datatable').DataTable();
         });
 
-        function transaction(status, id_transaction) {
+        function transaction(status, id_transaction, type) {
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -99,7 +106,8 @@
                         dataType: 'json',
                         data: {
                             status: status,
-                            id_transaction: id_transaction
+                            id_transaction: id_transaction,
+                            type: type
                         },
                         success: function (response) {
                             Swal.fire(

@@ -59,63 +59,80 @@ class TransactionController extends Controller
         // $mod_topup = HisTopup::findOrFail($request->id_transaction);
         $mod_topup = ActivityTransaction::findOrFail($request->id_transaction);
         $mod_user = User::findOrFail($mod_topup->id_user);
-        if ($request->status == "acc") {
-            $mod_user->update([
-                'wallet' => ($mod_user->wallet + $mod_topup->amount),
-            ]);
-
-            $mod_topup->update([
-                'status' => "Success"
-            ]);
-        }elseif ($request->status == "sync") {
-            $get_address = MAddress::findOrFail($mod_user->id_address);
-            $get_data = TrxHelper::getTransactionByAddress($get_address->address, true, true, 10, false);
-            // dd($get_data);
-            foreach ($get_data as $key => $value) {
-                $find = HisTransaction::where(['txID' => $value['txID']])->first();
-                // dd($find);
-                if (!$find) {
-                    if ($mod_topup->amount == $value['amount']) {
-                        $result = [];
-                        $result[$key]['contractRet'] = $value['contractRet'];
-                        $result[$key]['txID'] = $value['txID'];
-                        $result[$key]['get_amount'] = $value['get_amount'];
-                        $result[$key]['owner_address_hex'] = $value['owner_address_hex'];
-                        $result[$key]['to_address_hex'] = $value['to_address_hex'];
-                        $result[$key]['amount'] = $value['amount'];
-                        $result[$key]['timestamp'] = $value['timestamp'];
-                        $result[$key]['date_timestamp'] =$value['date_timestamp'];
-                        
-                        $addtransaction = TrxHelper::addHisTransaction($result);
-                        $mod_user->update([
-                            'wallet' => ($mod_user->wallet + $value['amount']),
-                        ]);     
+        if ($request->type == "withdrawal") {
+            if ($request->status == "acc") {
+                $mod_topup->update([
+                    'status' => "Success"
+                ]);
+            } else if ($request->status == "reject") {
+                $balance = $mod_user->wallet; 
+                $mod_user->update([
+                    "wallet" => ($balance + $mod_topup->amount)
+                ]);
+                $mod_topup->update([
+                    'status' => "Reject"
+                ]);
+            }
+        }else{
+            if ($request->status == "acc") {
+                $mod_user->update([
+                    'wallet' => ($mod_user->wallet + $mod_topup->amount),
+                ]);
     
-                        $mod_topup->update([
-                            'status' => "Success"
-                        ]);
-
-                        $balance = TrxHelper::getBalance($get_address->address);
-                        $get_address->update([
-                            'balance_address' => $balance
-                        ]);
-                    }
-                    // dd($mod_user->wallet, $value['amount'] ,$mod_topup->amount);
-                }else{
-                    // dd('gass');
-                    if ($mod_topup->amount == $value['amount']) {
-                        $mod_topup->update([
-                            'status' => "Not Found"
-                        ]);
+                $mod_topup->update([
+                    'status' => "Success"
+                ]);
+            }elseif ($request->status == "sync") {
+                $get_address = MAddress::findOrFail($mod_user->id_address);
+                $get_data = TrxHelper::getTransactionByAddress($get_address->address, true, true, 10, false);
+                // dd($get_data);
+                foreach ($get_data as $key => $value) {
+                    $find = HisTransaction::where(['txID' => $value['txID']])->first();
+                    // dd($find);
+                    if (!$find) {
+                        if ($mod_topup->amount == $value['amount']) {
+                            $result = [];
+                            $result[$key]['contractRet'] = $value['contractRet'];
+                            $result[$key]['txID'] = $value['txID'];
+                            $result[$key]['get_amount'] = $value['get_amount'];
+                            $result[$key]['owner_address_hex'] = $value['owner_address_hex'];
+                            $result[$key]['to_address_hex'] = $value['to_address_hex'];
+                            $result[$key]['amount'] = $value['amount'];
+                            $result[$key]['timestamp'] = $value['timestamp'];
+                            $result[$key]['date_timestamp'] =$value['date_timestamp'];
+                            
+                            $addtransaction = TrxHelper::addHisTransaction($result);
+                            $mod_user->update([
+                                'wallet' => ($mod_user->wallet + $value['amount']),
+                            ]);     
+        
+                            $mod_topup->update([
+                                'status' => "Success"
+                            ]);
+    
+                            $balance = TrxHelper::getBalance($get_address->address);
+                            $get_address->update([
+                                'balance_address' => $balance
+                            ]);
+                        }
+                        // dd($mod_user->wallet, $value['amount'] ,$mod_topup->amount);
+                    }else{
+                        // dd('gass');
+                        if ($mod_topup->amount == $value['amount']) {
+                            $mod_topup->update([
+                                'status' => "Not Found"
+                            ]);
+                        }
                     }
                 }
+    
+            }elseif ($request->status == "reject") {
+                $mod_topup->update([
+                    'status' => "Reject"
+                ]);
             }
-
-        }elseif ($request->status == "reject") {
-            $mod_topup->update([
-                'status' => "Reject"
-            ]);
         }
+        
 
         return true;
     }

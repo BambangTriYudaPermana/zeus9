@@ -19,7 +19,8 @@
                     method: 'POST',
                     dataType: 'json',
                     data: {
-                        amount: amount
+                        amount: amount,
+                        type: "topup"
                     },
                     success: function (response) {
                         // $('#modaldemo8').modal('toggle');
@@ -67,7 +68,8 @@
                         dataType: 'json',
                         data: {
                             amount: amount,
-                            address_destination: address_destination
+                            address_destination: address_destination,
+                            type: "withdrawal"
                         },
                         success: function (response) {
                             Swal.fire({
