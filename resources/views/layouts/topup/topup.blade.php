@@ -122,6 +122,7 @@
     </div>
 </div>
 <input type="hidden" value="{{Auth::user()->wallet}}" id="wallet-user">
+<input type="hidden" value="{{isset(Auth::user()->totalBets->total_bet) ? Auth::user()->totalBets->total_bet : 0}}" id="total-wagger">
 <?php 
     }
 ?>

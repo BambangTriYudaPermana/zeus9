@@ -149,7 +149,10 @@
         var global_var = [];
 
         $(document).ready(function () {
-            $('#table-history').DataTable();
+            $('#table-history').DataTable({
+                "order": [[ 3, "desc" ]],
+                "scrollX": true
+            });
             // new DataTable('#table-history', {
             //     responsive: true
             // });

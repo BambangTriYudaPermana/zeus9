@@ -89,6 +89,17 @@ class RegisterController extends Controller
         foreach (array_rand($seed, 6) as $k) $rand .= $seed[$k];
 
         $my_referral_code = $rand;
+
+        $model = User::where('my_referral_code', $data['referral_code'])->first();
+        $bonus = 0;
+        if ($model) {
+            $bonus = 2;
+            
+            $wallet = $model->wallet;
+            $model->update([
+                'wallet' => $wallet + 0.5,
+            ]);
+        }
         
         return User::create([
             'name' => $data['name'],
@@ -97,7 +108,8 @@ class RegisterController extends Controller
             'id_role' => 1,
             'id_address' => $id_address,
             'referral_code' => $data['referral_code'],
-            'my_referral_code' => $my_referral_code
+            'my_referral_code' => $my_referral_code,
+            'wallet' => $bonus
         ]);
     }
 }

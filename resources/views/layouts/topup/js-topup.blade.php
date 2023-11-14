@@ -1,6 +1,6 @@
 <script>
     function topup() {
-        var amount = $('#topup_saldo').val();
+        let amount = $('#topup_saldo').val();
 
         Swal.fire({
             title: 'Are you sure?',
@@ -36,59 +36,68 @@
     }
 
     function max_balance(){
-        var balance = $('#wallet-user').val();
+        let balance = $('#wallet-user').val();
         $('#wd_balance').val(balance);    
     }
 
     function withdraw() {
-        var amount = $('#wd_balance').val();
-        var address_destination = $('#address_destination').val();
-        var balance = {{Auth::user()->wallet}};
+        let amount = $('#wd_balance').val();
+        let address_destination = $('#address_destination').val();
+        let balance = $('#wallet-user').val();
+        let wagger = $('#total-wagger').val();
 
-        if (amount > balance) {
+        if (wagger < 50) {
+            let need = (50 - wagger);
             Swal.fire({
-                text: "You have exceeded the current limit, please make a withdrawal according to the available balance.",
+                text: "Please play more game, you need more ("+need+" trx) wager to withdraw the funds",
                 icon: "warning"
             });
         }else{
-            if (amount == '' || address_destination == '') {
+            if (amount > balance) {
                 Swal.fire({
-                    text: "Please enter your Amount and your Address!",
+                    text: "You have exceeded the current limit, please make a withdrawal according to the available balance.",
                     icon: "warning"
                 });
             }else{
-                Swal.fire({
-                    title: 'Are you sure?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "/withdraw",
-                            method: 'POST',
-                            dataType: 'json',
-                            data: {
-                                amount: amount,
-                                address_destination: address_destination,
-                                type: "withdrawal"
-                            },
-                            success: function (response) {
-                                Swal.fire({
-                                    text: "Your Withdraw Request has been Received and Processed",
-                                    icon: "success"
-                                }).then(function() {
-                                    location.reload();
-                                });
-                            }
-                        });
-                    }
-                });
+                if (amount == '' || address_destination == '') {
+                    Swal.fire({
+                        text: "Please enter your Amount and your Address!",
+                        icon: "warning"
+                    });
+                }else{
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: "/withdraw",
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    amount: amount,
+                                    address_destination: address_destination,
+                                    type: "withdrawal"
+                                },
+                                success: function (response) {
+                                    Swal.fire({
+                                        text: "Your Withdraw Request has been Received and Processed",
+                                        icon: "success"
+                                    }).then(function() {
+                                        location.reload();
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
             }
         }
     }

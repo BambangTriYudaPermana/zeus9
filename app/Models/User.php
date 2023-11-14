@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
@@ -65,5 +67,12 @@ class User extends Authenticatable
     public function bonus_slot(): HasOne
     {
         return $this->hasOne(Bonus::class, 'id_user', 'id')->where(['game' => 'slot', 'status' => 1]);
+    }
+
+    public function totalBets()
+    {
+        return $this->hasOne(HisPlay::class, 'id_user', 'id')
+            ->selectRaw('id_user, sum(bet) as total_bet')
+            ->groupBy('id_user');
     }
 }

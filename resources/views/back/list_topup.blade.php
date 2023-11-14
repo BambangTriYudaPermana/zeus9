@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="basic-datatable">
                                 <thead>
                                     <tr>
                                         <th class="wd-15p border-bottom-0 text-center">No</th>
@@ -84,7 +84,10 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#basic-datatable').DataTable();
+            $('#basic-datatable').DataTable({
+                "order": [[ 6, "desc" ]],
+                "scrollX": true
+            });
         });
 
         function transaction(status, id_transaction, type) {

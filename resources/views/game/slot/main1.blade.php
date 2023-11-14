@@ -667,7 +667,7 @@
                 text.innerHTML = "YOU LOSE!"
                 status.style.background = "#962a2aa9"
                 // document.getElementById("body").style.background="#251111";
-                HisPlay("slot", 0.3, 0, "lose")
+                HisPlay("slot", 0.5, 0, "lose")
                 lose.play();
             }
             doing = false;

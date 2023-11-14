@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="basic-datatable">
                                 <thead>
                                     <tr>
                                         <th class="wd-10p border-bottom-0 text-center">Type</th>
@@ -53,6 +53,7 @@
                                         <?php $no++?>
                                     @endforeach
                                 </tbody>
+                                <tfoot></tfoot>
                             </table>
                         </div>
                     </div>
@@ -67,7 +68,10 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#basic-datatable').DataTable();
+            $('#basic-datatable').DataTable({
+                "order": [[ 3, "desc" ]],
+                "scrollX": true
+            });
         });
     </script>
 @endsection
