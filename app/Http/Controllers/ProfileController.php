@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\HisPlay;
+use App\Models\{
+    HisPlay,
+    User
+};
 
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +34,28 @@ class ProfileController extends Controller
             'play' => $get_play['play'],
             'history' => $get_history
         ]);
+    }
+
+    public function VerifyAcc(Request $request) 
+    {
+        $otp = $request->verify_code;
+        $model = User::findOrFail(Auth::user()->id);
+        if ($model) {
+            if ($otp == $model->otp) {
+                $model->update([
+                    'is_verify' => 1
+                ]);
+                
+                return [
+                    'status' => true,
+                ];
+            }else{
+                return [
+                    'status' => false,
+                ];
+            }
+        }
+        dd($otp);
     }
 
     /**

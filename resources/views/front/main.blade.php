@@ -105,6 +105,8 @@
 
 @section('js')
     <script>
+        $(document).ready(function () {
+        });
         var global_var = [];
 
         $(document).ready(function () {

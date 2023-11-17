@@ -32,6 +32,7 @@ Route::post('/send-otp/', 'App\Http\Controllers\SendEmailController@SendOtp');
 Route::resource('/', 'App\Http\Controllers\Transaction\DashboardController');
 
 Route::resource('/profile', 'App\Http\Controllers\ProfileController');
+Route::post('/verify-acc', 'App\Http\Controllers\ProfileController@VerifyAcc')->name('verify-acc');
 
 Route::post('/get_payout/', 'App\Http\Controllers\Transaction\PayoutController@getPayout');
 

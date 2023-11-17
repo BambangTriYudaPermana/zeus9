@@ -97,6 +97,42 @@
 			@include('layouts.footer')
 		</div>
 
+		<div class="modal fade" id="modalotp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog modal-dialog-centered modal-lg text-center" role="document">
+				<div class="modal-content modal-content-demo">
+					<div class="modal-header">
+						<h6 class="modal-title">Verify Account</h6>
+					</div>
+					<div class="modal-body">
+						<div class="card-body p-5 text-center">
+							{{-- <h4>Verify</h4> --}}
+							<p>Please verify your account!</p>
+				
+							<div class="otp-field mb-4">
+							  <input type="text" maxlength="1" id="otp1"/>
+							  <input type="text" maxlength="1" id="otp2"/>
+							  <input type="text" maxlength="1" id="otp3"/>
+							  <input type="text" maxlength="1" id="otp4"/>
+							  <input type="text" maxlength="1" id="otp5"/>
+							  <input type="text" maxlength="1" id="otp6"/>
+							</div>
+							<p><a href="javascript:void(0)" onclick="sendVerivyCode()">Send Verify Code</a></p>
+							<span id="text-otp" style="color: green"></span>
+							<hr>
+							<button class="btn btn-primary mb-3" onclick="verify()">Verify</button>
+				
+							<p class="resend text-muted mb-0">
+							  Didn't receive code? <a href="javascript:void(0)" onclick="sendVerivyCode()">Request again</a>
+							</p>
+						  </div>
+					</div>
+					<div class="modal-footer">
+						{{-- <button class="btn btn-light" data-bs-dismiss="modal" >Close</button> --}}
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- BACK-TO-TOP -->
 		<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
 
@@ -203,7 +239,78 @@
 
 				$("#tab-content-first").removeAttr('class');
 				$('#tab-content-first').addClass('tab_content active');
+
+				if ('{{Auth::user()}}' && '{{Auth::user()->is_verify}}' != 1) {
+                $('#modalotp').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#modalotp').modal('show');    
+            }
 			});
+
+		function sendVerivyCode() {
+            var email = '{{Auth::user()->email}}';
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/send-otp",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    email: email
+                },
+                success: function (response) {
+                    // console.log(response.message);
+                    if (response.status) {
+                        // $('#text-otp').show();
+                        $('#text-otp').html(response.message);
+                    }else{
+                        // $('#text-otp').hide();
+                        $('#text-otp').html(response.message);
+                    }
+                }
+            });
+		}
+
+        function verify() {
+            let otp1 = $('#otp1').val();
+            let otp2 = $('#otp2').val();
+            let otp3 = $('#otp3').val();
+            let otp4 = $('#otp4').val();
+            let otp5 = $('#otp5').val();
+            let otp6 = $('#otp6').val();
+
+            let verify_code = otp1+otp2+otp3+otp4+otp5+otp6;
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{route('verify-acc')}}",
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    verify_code: verify_code
+                },
+                success: function (response) {
+                    // console.log(response.message);
+                    if (response.status) {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Your account has been verified.",
+                            icon: "success"
+                        }).then(function() {
+                            location.reload();
+                        });
+                    }else{
+
+                    }
+                }
+            });
+        }
 		</script>
 	</body>
 </html>
