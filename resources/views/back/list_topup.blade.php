@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="basic-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="table-topup">
                                 <thead>
                                     <tr>
                                         <th class="wd-15p border-bottom-0 text-center">No</th>
@@ -40,7 +40,7 @@
                                     @foreach ($data as $item )
                                         <tr>
                                             <td>{{$no}}</td>
-                                            <td>{{$item->user->email}}</td>
+                                            <td>{{isset($item->user->email) ? $item->user->email : ''}}</td>
                                             <td>{{$item->type}}</td>
                                             <td><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{number_format($item['amount'])}} TRX</td>
                                             <td class="text-center">
@@ -84,9 +84,9 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#basic-datatable').DataTable({
+            $('#table-topup').DataTable({
                 "order": [[ 6, "desc" ]],
-                "scrollX": true
+                // "scrollX": true
             });
         });
 
