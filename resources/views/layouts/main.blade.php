@@ -177,6 +177,7 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" id="email" value="{{isset(Auth::user()->email) ? Auth::user()->email : ""}}">
 
 		<!-- BACK-TO-TOP -->
 		<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
@@ -298,11 +299,8 @@
 			});
 
 		function sendVerivyCode() {
-			if ('{{Auth::user()}}') {
-				let email = '{{isset(Auth::user()->email) ? Auth::user()->email : ""}}';
-			}else{
-				let email = '';
-			}
+			// console.log('masuk');
+			let email = $('#email').val();
             
 
             $.ajax({
