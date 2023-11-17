@@ -42,8 +42,8 @@
                                             <td>{{$no}}</td>
                                             <td>{{$item['name']}}</td>
                                             <td>{{$item['email']}}</td>
-                                            <td>{{$item['wallet']}}</td>
-                                            <td>{{isset($item->totalBets->total_bet) ? $item->totalBets->total_bet : 0}}</td>
+                                            <td><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{number_format($item['wallet'])}} TRX</td>
+                                            <td><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{isset($item->totalBets->total_bet) ? number_format($item->totalBets->total_bet) : 0}} TRX</td>
                                             <td>{{$item->address->address}}</td>
                                             <td>{{$item->address->balance_address}}</td>
                                             <td>

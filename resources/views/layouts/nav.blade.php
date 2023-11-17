@@ -20,7 +20,7 @@
         ?>
         <li><h3>Management</h3></li>
         <li>
-            <a class="side-menu__item" href="{{route('transaction.index')}}"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">List Topup</span></a>
+            <a class="side-menu__item" href="{{route('transaction.index')}}"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">List Transaction</span></a>
         </li>
         {{-- <li>
             <a class="side-menu__item" href="/address"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Address</span></a>

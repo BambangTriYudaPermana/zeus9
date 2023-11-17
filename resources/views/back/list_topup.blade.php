@@ -1,6 +1,14 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+    .dataTables_scrollHeadInner{
+        width: 100% !important; 
+    } 
+    .dataTables_scrollHeadInner table{
+        width: 100% !important; 
+    }
+</style>
 <div class="app-content">
     <div class="side-app">
 
@@ -27,6 +35,7 @@
                                     <tr>
                                         <th class="wd-15p border-bottom-0 text-center">No</th>
                                         <th class="wd-15p border-bottom-0 text-center">Email User</th>
+                                        <th class="wd-15p border-bottom-0 text-center">Wagger</th>
                                         <th class="wd-15p border-bottom-0 text-center">Type</th>
                                         <th class="wd-20p border-bottom-0 text-center">Amount</th>
                                         <th class="wd-15p border-bottom-0 text-center">Status</th>
@@ -41,6 +50,7 @@
                                         <tr>
                                             <td>{{$no}}</td>
                                             <td>{{isset($item->user->email) ? $item->user->email : ''}}</td>
+                                            <td><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{isset($item->user->totalBets->total_bet) ? $item->user->totalBets->total_bet : 0}} TRX</td>
                                             <td>{{$item->type}}</td>
                                             <td><img src="{{asset('assets/images/logo/trx.svg')}}" alt="" srcset="" width="20px" height="20px" class="m-0"> {{number_format($item['amount'])}} TRX</td>
                                             <td class="text-center">
@@ -86,7 +96,7 @@
         $(document).ready(function () {
             $('#table-topup').DataTable({
                 "order": [[ 6, "desc" ]],
-                // "scrollX": true
+                "scrollX": true
             });
         });
 
