@@ -14,7 +14,7 @@
                     <h3>Dear TrxGames</h3>
                 </div>
                 <div class="card-body">
-                    <p>Thank you for using TrxGames.online, Use This code to complate your action</p>
+                    <p>Thank you for using TrxGames.online, Use This code to complete your action</p>
                     <p>Security Code : <h3>{{$mailData['otp']}}</h3></p>
                     <p>Never share this code with anyone.</p>
                     <p>If you have no requested this, please ignore this message</p>
