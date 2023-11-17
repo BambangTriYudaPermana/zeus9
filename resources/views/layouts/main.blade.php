@@ -70,6 +70,51 @@
 
 		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
+		<style>
+			.otp-field {
+			flex-direction: row;
+			column-gap: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			}
+
+			.otp-field input {
+			height: 45px;
+			width: 42px;
+			border-radius: 6px;
+			outline: none;
+			font-size: 1.125rem;
+			text-align: center;
+			border: 1px solid #ddd;
+			}
+			.otp-field input:focus {
+			box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+			}
+			.otp-field input::-webkit-inner-spin-button,
+			.otp-field input::-webkit-outer-spin-button {
+			display: none;
+			}
+
+			.resend {
+			font-size: 12px;
+			}
+
+			.footer {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			color: black;
+			font-size: 12px;
+			text-align: right;
+			font-family: monospace;
+			}
+
+			.footer a {
+			color: black;
+			text-decoration: none;
+			}
+		</style>
 	</head>
 
 	<body class="app sidebar-mini dark-mode">
@@ -241,7 +286,8 @@
 				$('#tab-content-first').addClass('tab_content active');
 
 				if ('{{Auth::user()}}') {
-					if ('{{Auth::user()->is_verify}}' != 1) {
+					let is_verify = '{{isset(Auth::user()->is_verify) ? Auth::user()->is_verify : 0}}'
+					if (is_verify != 1) {
 						$('#modalotp').modal({
 							backdrop: 'static',
 							keyboard: false
@@ -252,7 +298,12 @@
 			});
 
 		function sendVerivyCode() {
-            var email = '{{Auth::user()->email}}';
+			if ('{{Auth::user()}}') {
+				let email = '{{isset(Auth::user()->email) ? Auth::user()->email : ""}}';
+			}else{
+				let email = '';
+			}
+            
 
             $.ajax({
                 headers: {
