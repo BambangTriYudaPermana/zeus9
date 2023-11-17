@@ -46,8 +46,8 @@
         let balance = $('#wallet-user').val();
         let wagger = $('#total-wagger').val();
 
-        if (wagger < 50) {
-            let need = (50 - wagger);
+        if (wagger < 100) {
+            let need = (100 - wagger);
             Swal.fire({
                 text: "Please play more game, you need more ("+need+" trx) wager to withdraw the funds",
                 icon: "warning"

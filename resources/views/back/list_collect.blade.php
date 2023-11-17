@@ -29,6 +29,7 @@
                                         <th class="wd-15p border-bottom-0">Name User</th>
                                         <th class="wd-15p border-bottom-0">Email</th>
                                         <th class="wd-15p border-bottom-0">Wallet</th>
+                                        <th class="wd-15p border-bottom-0">Wagger</th>
                                         <th class="wd-15p border-bottom-0">Address</th>
                                         <th class="wd-20p border-bottom-0">Balance Address</th>
                                         <th class="wd-25p border-bottom-0">Action</th>
@@ -42,6 +43,7 @@
                                             <td>{{$item['name']}}</td>
                                             <td>{{$item['email']}}</td>
                                             <td>{{$item['wallet']}}</td>
+                                            <td>{{isset($item->totalBets->total_bet) ? $item->totalBets->total_bet : 0}}</td>
                                             <td>{{$item->address->address}}</td>
                                             <td>{{$item->address->balance_address}}</td>
                                             <td>
