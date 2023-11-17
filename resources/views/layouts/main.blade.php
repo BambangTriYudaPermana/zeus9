@@ -240,13 +240,15 @@
 				$("#tab-content-first").removeAttr('class');
 				$('#tab-content-first').addClass('tab_content active');
 
-				if ('{{Auth::user()}}' && '{{Auth::user()->is_verify}}' != 1) {
-                $('#modalotp').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-                $('#modalotp').modal('show');    
-            }
+				if ('{{Auth::user()}}') {
+					if ('{{Auth::user()->is_verify}}' != 1) {
+						$('#modalotp').modal({
+							backdrop: 'static',
+							keyboard: false
+						});
+						$('#modalotp').modal('show');    	
+					}
+				}
 			});
 
 		function sendVerivyCode() {
