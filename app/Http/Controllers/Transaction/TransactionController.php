@@ -28,16 +28,22 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        // $data = HisTopup::orderBy('created_at', 'DESC')->get();
+        $type = isset($_GET['type']) ? $_GET['type'] : '';
+
         if (Auth::user()->id_role == 1) {   //for user
             $data = ActivityTransaction::where(['id_user' => Auth::user()->id])->orderBy('created_at', 'DESC')->get();
             return view('front.transaction',[
                 'data' => $data
             ]);
         }else if (Auth::user()->id_role == 2) { //for admin
-            $data = ActivityTransaction::orderBy('created_at', 'DESC')->get();
+            $data = ActivityTransaction::orderBy('created_at', 'DESC');
+            if ($type != '') {
+                $data = $data->where('type', $type);
+            }
+            $data = $data->get();
             return view('back.list_topup',[
-                'data' => $data
+                'data' => $data,
+                'type' => $type
             ]);
         }
     }

@@ -22,6 +22,32 @@
                 </ol>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Filter</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="get">
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="form-type">Type</label>
+                                <select name="type" id="from-type" class="form-control">
+                                    <option value=""></option>
+                                    <option {{isset($type) && $type == 'Withdrawal' ? 'selected' : ''}} value="Withdrawal">Withdrawal</option>
+                                    <option {{isset($type) && $type == 'Deposit' ? 'selected' : ''}} value="Deposit">Deposit</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <button class="btn btn-primary w-100" style="margin-top: 29px;"><i class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
@@ -95,7 +121,7 @@
     <script>
         $(document).ready(function () {
             $('#table-topup').DataTable({
-                "order": [[ 6, "desc" ]],
+                "order": [[ 7, "desc" ]],
                 "scrollX": true
             });
         });
