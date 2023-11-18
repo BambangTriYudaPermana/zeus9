@@ -117,7 +117,7 @@
         var global_var = [];
 
         $(document).ready(function () {
-            global_var.balance = parseInt('{{Auth::user()->wallet}}');
+            global_var.balance = parseFloat('{{Auth::user()->wallet}}');
             
             
         });
@@ -143,6 +143,7 @@
                 },
                 success: function (response) {
                     PlayAnimation(response.win_number, response.status, response.balance);
+                    global_var.balance = response.balance;
                     // trenball(data_index, response.data_number, response.win_number, response.balance, response.status);
                 }
             });

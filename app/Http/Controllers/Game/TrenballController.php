@@ -96,7 +96,8 @@ class TrenballController extends Controller
                 }
             }
         }
-        // dd($max);        
+        // dd($max);    
+        // $game = 'win';    
         $number = $this->getNumber($game, $min, $max, $roll, $request->type, $amount);
         return $number;
     }
@@ -105,12 +106,23 @@ class TrenballController extends Controller
     {
         $model = User::findOrFail(Auth::user()->id);
 
+        $balance = ($model->wallet) - $amount;
+        $model->wallet = $balance;
+        $model->save();
+
         $data_number = [0];
         if ($game == 'win') {
             $start = 0;
             $randomNumber = mt_rand($start, $max); 
 
             $ttl_win = ($model->ttl_win)-1;
+            if ($type_play == 'red') {
+                $amount = ($amount * 1.96);
+            }elseif ($type_play == 'green') {
+                $amount = ($amount * 2);
+            }else{
+                $amount = ($amount * 10);
+            }
             $balance = ($model->wallet) + $amount;
 
             $model->wallet = $balance;
@@ -127,11 +139,6 @@ class TrenballController extends Controller
                 $min = 100;
                 $max = 200;
             }
-
-            $balance = ($model->wallet) - $amount;
-
-            $model->wallet = $balance;
-            $model->save();
 
             $start = $min;
             $randomNumber = mt_rand($start, $max); 
