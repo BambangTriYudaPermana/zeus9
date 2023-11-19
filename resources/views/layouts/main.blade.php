@@ -7,9 +7,9 @@
 		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
 		
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="Tron-X.Game">
-		<meta name="author" content="Spruko Technologies Private Limited">
-		<meta name="keywords" content="admin, dashboard, dashboard ui, admin dashboard template, admin panel dashboard, admin panel html, admin panel html template, admin panel template, admin ui templates, administrative templates, best admin dashboard, best admin templates, bootstrap 4 admin template, bootstrap admin dashboard, bootstrap admin panel, html css admin templates, html5 admin template, premium bootstrap templates, responsive admin template, template admin bootstrap 4, themeforest html">
+		<meta name="description" content="Play online games and win bonuses. We have the best collection of games availalbe for YOU! Sign Up Sign In. Our Awesome Games">
+		<meta name="author" content="TrxGames.online">
+		<meta name="keywords" content="Tron Games, TronGames.online, Tron Online, Trx Games, Trx.games, TrxGames.online">
 
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 

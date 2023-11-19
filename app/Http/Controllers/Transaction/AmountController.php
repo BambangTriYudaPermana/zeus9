@@ -84,13 +84,16 @@ class AmountController extends Controller
         $get_payout = MPayout::where(['persen' => $request->win_change])->first();
         $mod_user = User::findOrFail(Auth::user()->id);
 
-        $amount_bet = str_replace(',','',$request->amount_bet);
-        $amount_bet = (float)$amount_bet;
+        // $amount_bet = str_replace(',','',$request->amount_bet);
+        // $amount_bet = (float)$amount_bet;
+        $amount_bet = (float)$request->amount_bet;
+        // dd($amount_bet);
 
         $data = [];
         if ($request->result_game == "WIN") {
-            $hitung = round( ($amount_bet * $get_payout->payout) - $amount_bet, 2);
-            $wallet = $hitung + $mod_user->wallet;
+            $balance = round($mod_user->wallet - $amount_bet, 4);
+            $hitung = round( ($amount_bet * $get_payout->payout), 4);
+            $wallet = round($hitung + $balance, 4);
 
             $mod_user->update([
                 'wallet' => $wallet
@@ -101,8 +104,10 @@ class AmountController extends Controller
             $data['wallet'] = $mod_user->wallet;
             $data['hitung'] = $hitung;
         }elseif ($request->result_game == "LOSE") {
+            $balance = round($mod_user->wallet - $amount_bet, 4);
+            // dd($balance);
             $mod_user->update([
-                'wallet' => ($mod_user->wallet - $amount_bet)
+                'wallet' => $balance
             ]);
         }
 
@@ -110,7 +115,9 @@ class AmountController extends Controller
             'status' => true,
             'message' => 'ok',
             'wallet' => $mod_user->wallet,
-            'data' => $data
+            'data' => $data,
+            'amount_bet' => $amount_bet,
+            // 'balance' => $balance
         ];
     }
 
